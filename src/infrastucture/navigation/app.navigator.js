@@ -1,6 +1,8 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Ionicons } from "@expo/vector-icons";
+import AdvertIcon from "../../../assets/advert_icon.svg";
+import HomeIcon from "../../../assets/home_icon.svg";
+import ProfileIcon from "../../../assets/profile_icon.svg";
 
 import { AdvertNavigator } from "./advert.navigator";
 import { HomeNavigator } from "./home.navigator";
@@ -8,18 +10,30 @@ import { ProfileNavigator } from "./profile.navigator";
 
 const Tab = createBottomTabNavigator();
 
-const TAB_ICON = {
-  Home: "home-outline",
-  Advert: "videocam-outline",
-  Profile: "person-outline",
-};
-
 const createScreenOptions = ({ route }) => {
-  const iconName = TAB_ICON[route.name];
   return {
-    tabBarIcon: ({ size, color }) => (
-      <Ionicons name={iconName} size={size} color={color} />
-    ),
+    tabBarActiveTintColor: "#131BF5",
+    tabBarInactiveTintColor: "#333333",
+    tabBarIcon: ({ focused, color, size }) => {
+      let iconName;
+
+      switch (route.name) {
+        case "Home":
+          iconName = <HomeIcon width={size} height={size} fill={color} />;
+          break;
+
+        case "Advert":
+          iconName = <AdvertIcon width={size} height={size} fill={color} />;
+          break;
+
+        case "Profile":
+          iconName = <ProfileIcon width={size} height={size} fill={color} />;
+          break;
+      }
+
+      return iconName;
+    },
+    tabBarShowLabel: false,
   };
 };
 
