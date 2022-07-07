@@ -12,8 +12,8 @@ const Tab = createBottomTabNavigator();
 
 const createScreenOptions = ({ route }) => {
   return {
-    tabBarActiveTintColor: "#131BF5",
-    tabBarInactiveTintColor: "#333333",
+    tabBarActiveTintColor: "#FFFFFF",
+    tabBarInactiveTintColor: "#696969",
     tabBarIcon: ({ focused, color, size }) => {
       let iconName;
 
@@ -30,10 +30,19 @@ const createScreenOptions = ({ route }) => {
           iconName = <ProfileIcon width={size} height={size} fill={color} />;
           break;
       }
-
       return iconName;
     },
     tabBarShowLabel: false,
+    tabBarStyle: {
+      position: "absolute",
+      bottom: 25,
+      left: 20,
+      right: 20,
+      elevation: 0,
+      backgroundColor: "#333333",
+      borderRadius: 50,
+      height: 45,
+    },
   };
 };
 
