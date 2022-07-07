@@ -8,12 +8,16 @@ import { AdvertNavigator } from "./advert.navigator";
 import { HomeNavigator } from "./home.navigator";
 import { ProfileNavigator } from "./profile.navigator";
 
+import UsedTheme from "../theme/use.theme";
+
 const Tab = createBottomTabNavigator();
 
 const createScreenOptions = ({ route }) => {
+  const theme = UsedTheme();
+
   return {
-    tabBarActiveTintColor: "#FFFFFF",
-    tabBarInactiveTintColor: "#696969",
+    tabBarActiveTintColor: theme.colors.ACTIVE,
+    tabBarInactiveTintColor: theme.colors.INACTIVE,
     tabBarIcon: ({ focused, color, size }) => {
       let iconName;
 
@@ -39,7 +43,7 @@ const createScreenOptions = ({ route }) => {
       left: 20,
       right: 20,
       elevation: 0,
-      backgroundColor: "#333333",
+      backgroundColor: theme.colors.PRIMARY,
       borderRadius: 50,
       height: 45,
     },
