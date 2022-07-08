@@ -2,6 +2,7 @@ import React from "react";
 import { Switch, Text, View } from "react-native";
 import UsedTheme from "../../../infrastucture/theme/use.theme";
 import { SafeArea } from "../../../components/safe.area.component";
+
 export const HomeScreen = () => {
   const theme = UsedTheme();
 

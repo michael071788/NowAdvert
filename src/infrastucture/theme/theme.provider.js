@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { colors } from "./colors";
+import { typography } from "./typography";
 
 export const ThemeContext = React.createContext();
 
@@ -9,6 +10,7 @@ const ThemeProvider = ({ children }) => {
 
   const theme = {
     colors: isDefaultTheme ? colors.defaultTheme : colors.lightTheme,
+    typography,
     toggleTheme,
     isDefaultTheme,
   };
