@@ -16,6 +16,7 @@ const createScreenOptions = ({ route }) => {
   const theme = UsedTheme();
 
   return {
+    headerShown: false,
     tabBarActiveTintColor: theme.colors.ACTIVE,
     tabBarInactiveTintColor: theme.colors.INACTIVE,
     tabBarIcon: ({ focused, color, size }) => {
