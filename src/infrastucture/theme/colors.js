@@ -3,13 +3,17 @@
 
 const defaultTheme = {
   PRIMARY: "#333333",
-  BACKGROUND: "#f5f4f4",
+  SECONDARY: "#cccccc",
+  TERTIARY: "#efefef",
+  BACKGROUND: "#ffffff",
   ACTIVE: "#ffffff",
   INACTIVE: "#696969",
 };
 
 const lightTheme = {
   PRIMARY: "#ffffff",
+  SECONDARY: "#cccccc",
+  TERTIARY: "#efefef",
   BACKGROUND: "#f5f4f4",
   ACTIVE: "#000000",
   INACTIVE: "#696969",
