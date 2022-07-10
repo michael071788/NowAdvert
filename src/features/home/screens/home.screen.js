@@ -3,6 +3,7 @@ import { Image, Text, View } from "react-native";
 import UsedTheme from "../../../infrastucture/theme/use.theme";
 import { tabBarTotalHeight } from "../../../infrastucture/theme/styles/app.navigator.style";
 import TicketIcon from "../../../../assets/ticket_icon";
+import { CommonScreenView } from "../../../infrastucture/theme/styles/container.screen.style";
 import {
   CommonView,
   InnerContentView,
@@ -12,14 +13,9 @@ export const HomeScreen = () => {
   const theme = UsedTheme();
 
   return (
-    <View
-      style={{
-        flex: 1,
-        backgroundColor: theme.colors.BACKGROUND,
-        paddingTop: 20,
-        paddingHorizontal: 5,
-        paddingBottom: tabBarTotalHeight + 10,
-      }}
+    <CommonScreenView
+      backgroundColor={theme.colors.BACKGROUND}
+      paddingBottom={tabBarTotalHeight + 10}
     >
       <CommonView flex={3}>
         <InnerContentView>
@@ -222,6 +218,6 @@ export const HomeScreen = () => {
           </View>
         </InnerContentView>
       </CommonView>
-    </View>
+    </CommonScreenView>
   );
 };
