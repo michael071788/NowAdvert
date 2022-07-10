@@ -1,7 +1,6 @@
 import React from "react";
 import { Image, Text, View } from "react-native";
 import UsedTheme from "../../../infrastucture/theme/use.theme";
-import { tabBarTotalHeight } from "../../../infrastucture/theme/styles/app.navigator.style";
 import TicketIcon from "../../../../assets/ticket_icon";
 import { CommonScreenView } from "../../../infrastucture/theme/styles/container.screen.style";
 import {
@@ -13,10 +12,7 @@ export const HomeScreen = () => {
   const theme = UsedTheme();
 
   return (
-    <CommonScreenView
-      backgroundColor={theme.colors.BACKGROUND}
-      paddingBottom={tabBarTotalHeight + 10}
-    >
+    <CommonScreenView theme={theme}>
       <CommonView flex={3}>
         <InnerContentView>
           <View

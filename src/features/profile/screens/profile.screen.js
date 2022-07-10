@@ -50,10 +50,7 @@ export const ProfileScreen = () => {
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
 
   return (
-    <CommonScreenView
-      backgroundColor={theme.colors.BACKGROUND}
-      paddingBottom={tabBarTotalHeight + 10}
-    >
+    <CommonScreenView theme={theme} paddingBottom={tabBarTotalHeight + 10}>
       <ScrollView vertical showsHorizontalScrollIndicator={false}>
         <CommonView flex={1}>
           <InnerContentView>
