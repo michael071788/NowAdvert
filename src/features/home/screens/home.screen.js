@@ -165,7 +165,7 @@ export const HomeScreen = () => {
             </View>
           </View>
           <View>
-            <View style={{ flexDirection: "row", marginTop: 20 }}>
+            <View style={{ flexDirection: "row", marginTop: 15 }}>
               <Image
                 source={require("../../../../assets/apple_logo.png")}
                 style={{

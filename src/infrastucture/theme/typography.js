@@ -1,5 +1,5 @@
 export const typography = {
-  PRIMARY: "normal",
+  PRIMARY: "Oswald_500Medium",
   ROBOTO: "Roboto",
   MONOSPACE: "MONOSPACE",
 };
