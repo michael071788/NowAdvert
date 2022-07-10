@@ -1,8 +1,12 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { Image, Text, View } from "react-native";
 import UsedTheme from "../../../infrastucture/theme/use.theme";
 import { tabBarTotalHeight } from "../../../infrastucture/theme/styles/app.navigator.style";
 import TicketIcon from "../../../../assets/ticket_icon";
+import {
+  CommonView,
+  InnerContentView,
+} from "../../../infrastucture/theme/styles/home.screen.style";
 
 export const HomeScreen = () => {
   const theme = UsedTheme();
@@ -11,28 +15,19 @@ export const HomeScreen = () => {
     <View
       style={{
         flex: 1,
-        // backgroundColor: "green",
         backgroundColor: theme.colors.BACKGROUND,
         paddingTop: 20,
-        paddingHorizontal: 20,
+        paddingHorizontal: 5,
         paddingBottom: tabBarTotalHeight + 10,
       }}
     >
-      <View
-        style={{
-          flex: 3,
-          // backgroundColor: "#EE2C38",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <View
-          style={{
-            // backgroundColor: "#ed454f",
-            justifyContent: "flex-end",
-          }}
-        >
-          <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
+      <CommonView flex={3}>
+        <InnerContentView>
+          <View
+            style={{
+              flexDirection: "column",
+            }}
+          >
             <Text
               style={{
                 fontSize: 80,
@@ -42,61 +37,70 @@ export const HomeScreen = () => {
             >
               2,000
             </Text>
-          </View>
-          <View
-            style={{
-              alignItems: "center",
-              flexDirection: "row",
-              justifyContent: "flex-end",
-              marginTop: -16, // Use this to overlap just a little bit
-            }}
-          >
-            <TicketIcon
+            <View
               style={{
-                width: 30,
-                height: 30,
-                marginRight: 5,
-                fill: theme.colors.PRIMARY,
-              }}
-            />
-            <Text
-              style={{
-                fontSize: 20,
-                color: theme.colors.PRIMARY,
-                fontFamily: theme.typography.PRIMARY,
+                alignItems: "center",
+                flexDirection: "row",
+                justifyContent: "flex-end",
+                marginTop: -20, // Use this to overlap just a little bit
+
+                paddingRight: 5,
               }}
             >
-              EARNED
-            </Text>
+              <TicketIcon
+                style={{
+                  width: 30,
+                  height: 30,
+                  marginRight: 5,
+                  fill: theme.colors.PRIMARY,
+                }}
+              />
+              <Text
+                style={{
+                  fontSize: 20,
+                  color: theme.colors.PRIMARY,
+                  fontFamily: theme.typography.PRIMARY,
+                }}
+              >
+                EARNED
+              </Text>
+            </View>
           </View>
-        </View>
-      </View>
-      <View
-        style={{
-          flex: 1,
-          // backgroundColor: "#FAA030",
-          paddingVertical: 5,
-        }}
-      >
-        <View
-          style={{
-            backgroundColor: theme.colors.SECONDARY,
-            flex: 1,
-            borderRadius: 10,
-            alignItems: "center",
-            justifyContent: "center",
-            padding: 5,
-          }}
-        >
+        </InnerContentView>
+      </CommonView>
+
+      <CommonView flex={1} backgroundColor={theme.colors.SECONDARY}>
+        <InnerContentView>
           <View
             style={{
               flexDirection: "row",
-              // , backgroundColor: "#b0b0b0"
             }}
           >
-            <View style={{ flexDirection: "column", marginRight: 10 }}>
-              <Text>11111111111</Text>
-              <Text>22222222222</Text>
+            <View
+              style={{
+                alignContent: "flex-start",
+                flexDirection: "column",
+                marginRight: 10,
+                paddingTop: 2,
+              }}
+            >
+              <Image
+                source={require("../../../../assets/google_play.png")}
+                style={{
+                  width: 90,
+                  height: 25,
+                  resizeMode: "stretch",
+                  marginBottom: 5,
+                }}
+              />
+              <Image
+                source={require("../../../../assets/app_store.png")}
+                style={{
+                  width: 90,
+                  height: 26,
+                  resizeMode: "stretch",
+                }}
+              />
             </View>
             <View style={{ flexDirection: "column" }}>
               <Text
@@ -128,30 +132,15 @@ export const HomeScreen = () => {
               </Text>
             </View>
           </View>
-        </View>
-      </View>
-      <View
-        style={{
-          flex: 2,
-          // backgroundColor: "#32B76C",
-          paddingVertical: 5,
-        }}
-      >
-        <View
-          style={{
-            backgroundColor: theme.colors.SECONDARY,
-            flex: 1,
-            borderRadius: 10,
-            alignItems: "center",
-            justifyContent: "center",
-            padding: 5,
-          }}
-        >
+        </InnerContentView>
+      </CommonView>
+
+      <CommonView flex={2} backgroundColor={theme.colors.SECONDARY}>
+        <InnerContentView>
           <View
             style={{
-              flex: 1,
-              justifyContent: "center",
-              // backgroundColor: "#b0b0b0",
+              flexDirection: "row",
+              alignSelf: "flex-start",
             }}
           >
             <View
@@ -174,8 +163,20 @@ export const HomeScreen = () => {
                 LIMITED TIME OFFER
               </Text>
             </View>
-            <View style={{ flexDirection: "row", marginTop: 10 }}>
-              <Text>222222222 </Text>
+          </View>
+          <View>
+            <View style={{ flexDirection: "row", marginTop: 20 }}>
+              <Image
+                source={require("../../../../assets/apple_logo.png")}
+                style={{
+                  width: 45,
+                  height: 55,
+                  resizeMode: "stretch",
+                  marginTop: 5,
+                  marginBottom: 5,
+                  marginRight: 20,
+                }}
+              />
               <View style={{ flexDirection: "column" }}>
                 <Text
                   style={{
@@ -200,16 +201,17 @@ export const HomeScreen = () => {
                     alignItems: "center",
                     justifyContent: "center",
                     backgroundColor: theme.colors.PRIMARY,
-                    width: 155,
-                    height: 25,
                     borderRadius: 15,
+                    width: 135,
+                    height: 28,
+                    marginTop: 5,
                   }}
                 >
                   <Text
                     style={{
                       color: theme.colors.BACKGROUND,
                       fontFamily: theme.typography.PRIMARY,
-                      fontSize: 15,
+                      fontSize: 14,
                     }}
                   >
                     SEE MECHANICS
@@ -218,8 +220,8 @@ export const HomeScreen = () => {
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </InnerContentView>
+      </CommonView>
     </View>
   );
 };

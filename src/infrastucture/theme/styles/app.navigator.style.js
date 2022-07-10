@@ -37,8 +37,8 @@ export const appNavigatorScreenOptions = ({ route }) => {
     tabBarStyle: {
       position: "absolute",
       bottom: tabBarBottom,
-      left: 20,
-      right: 20,
+      left: 15,
+      right: 15,
       elevation: 3,
       backgroundColor: theme.colors.PRIMARY,
       borderRadius: 50,
