@@ -1,12 +1,15 @@
 import React from "react";
 import { Image, View } from "react-native";
+import UsedTheme from "../../infrastucture/theme/use.theme";
 import {
   UserProfileBarContainer,
   UserProfileBarImageContainer,
-  UserFullNameStyle,
+  UserFullName,
 } from "../../infrastucture/theme/styles/user.profile.style";
 
 export const UserProfileBar = () => {
+  const theme = UsedTheme();
+
   return (
     <UserProfileBarContainer>
       <UserProfileBarImageContainer>
@@ -16,7 +19,7 @@ export const UserProfileBar = () => {
         />
       </UserProfileBarImageContainer>
       <View style={{ justifyContent: "center", alignItems: "center" }}>
-        <UserFullNameStyle userFullName={"calum scott"} />
+        <UserFullName theme={theme}>calum scott</UserFullName>
       </View>
     </UserProfileBarContainer>
   );

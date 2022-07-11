@@ -1,7 +1,5 @@
-import React from "react";
 import styled from "styled-components/native";
 import { Text, View } from "react-native";
-import UsedTheme from "../use.theme";
 
 export const UserProfileBarContainer = styled(View)`
   flex-direction: row;
@@ -32,18 +30,9 @@ export const InnerContentView = styled(View)`
   padding: 10px;
 `;
 
-export const UserFullNameStyle = ({ userFullName }) => {
-  const theme = UsedTheme();
-
-  return (
-    <Text
-      style={{
-        fontFamily: theme.typography.PRIMARY,
-        fontSize: 15,
-        textTransform: "uppercase",
-      }}
-    >
-      {userFullName}
-    </Text>
-  );
-};
+/* prettier-ignore */
+export const UserFullName = styled(Text)`
+  fontFamily: ${props => props.theme ? props.theme.typography.PRIMARY : "normal"};
+  fontSize: 15px;
+  textTransform: uppercase;
+`;
