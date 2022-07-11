@@ -7,20 +7,22 @@ import {
   UserFullName,
 } from "../../infrastucture/theme/styles/user.profile.style";
 
-export const UserProfileBar = () => {
+export const UserProfileBar = ({ isShown }) => {
   const theme = UsedTheme();
 
   return (
-    <UserProfileBarContainer>
-      <UserProfileBarImageContainer>
-        <Image
-          source={require("../../../assets/avatar_profile_icon.png")}
-          style={{ height: 33, width: 33 }}
-        />
-      </UserProfileBarImageContainer>
-      <View style={{ justifyContent: "center", alignItems: "center" }}>
-        <UserFullName theme={theme}>calum scott</UserFullName>
-      </View>
-    </UserProfileBarContainer>
+    <>
+      <UserProfileBarContainer isShown={isShown}>
+        <UserProfileBarImageContainer>
+          <Image
+            source={require("../../../assets/avatar_profile_icon.png")}
+            style={{ height: 33, width: 33 }}
+          />
+        </UserProfileBarImageContainer>
+        <View style={{ justifyContent: "center", alignItems: "center" }}>
+          <UserFullName theme={theme}>calum scott</UserFullName>
+        </View>
+      </UserProfileBarContainer>
+    </>
   );
 };

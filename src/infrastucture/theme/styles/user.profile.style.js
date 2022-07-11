@@ -1,10 +1,10 @@
 import styled from "styled-components/native";
 import { Text, View } from "react-native";
 
+/* prettier-ignore */
 export const UserProfileBarContainer = styled(View)`
   flex-direction: row;
-  justify-content: flex-end;
-  padding: 15px;
+  display: ${props => props.isShown ? "flex" : "none" };
 `;
 
 export const UserProfileBarImageContainer = styled(View)`
