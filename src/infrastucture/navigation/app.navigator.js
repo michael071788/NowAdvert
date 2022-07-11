@@ -8,11 +8,13 @@ import { ProfileNavigator } from "./profile.navigator";
 import { appNavigatorScreenOptions } from "../theme/styles/app.navigator.style";
 import { HeaderBarContainer } from "../theme/styles/app.header.style";
 import { UserProfileBar } from "../../features/profile/user.profile.bar";
+import { UsedPrimaryAppContext } from "../../services/primary.app.provider";
 
 const Tab = createBottomTabNavigator();
 
 export const AppNavigator = () => {
-  const isUserProfileShown = false;
+  const primaryContext = UsedPrimaryAppContext();
+  const isUserProfileShown = primaryContext.isShowUserProfileBar;
 
   return (
     <>
@@ -25,7 +27,17 @@ export const AppNavigator = () => {
           <UserProfileBar isShown={isUserProfileShown} />
         </HeaderBarContainer>
 
-        <Tab.Navigator screenOptions={appNavigatorScreenOptions}>
+        <Tab.Navigator
+          screenOptions={appNavigatorScreenOptions}
+          screenListeners={{
+            state: (e) => {
+              //Do not show User Profile Bar if user profile nav had been selected
+              primaryContext.ShowUserProfileBar(
+                e.data.state.index === 2 ? false : true
+              );
+            },
+          }}
+        >
           <Tab.Screen name="Home" component={HomeNavigator} />
           <Tab.Screen name="Advert" component={AdvertNavigator} />
           <Tab.Screen name="Profile" component={ProfileNavigator} />

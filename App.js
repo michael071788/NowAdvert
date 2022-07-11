@@ -11,6 +11,7 @@ import {
 import { Navigation } from "./src/infrastucture/navigation";
 
 import ThemeProvider from "./src/infrastucture/theme/theme.provider";
+import PrimaryAppProvider from "./src/services/primary.app.provider";
 
 export default function App() {
   const [oswaldLoaded] = useOswald({
@@ -24,7 +25,9 @@ export default function App() {
   return (
     <>
       <ThemeProvider>
-        <Navigation />
+        <PrimaryAppProvider>
+          <Navigation />
+        </PrimaryAppProvider>
       </ThemeProvider>
     </>
   );
