@@ -1,3 +1,4 @@
+import "./src/utils/ignoreWarnings.js";
 import React from "react";
 import {
   useFonts as useOswald,
