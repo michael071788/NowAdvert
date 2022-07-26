@@ -5,6 +5,7 @@ import { Card } from "react-native-paper";
 import Carousel from "react-native-snap-carousel";
 import { ViewportWidth, ViewportHeight, WinPix } from "../../../utils/index";
 import { scrollInterpolator, animatedStyles } from "../../../utils/animations";
+import { SvgIcon } from "../../../components/svg.icon";
 
 export const SlideHeight = ViewportHeight * 0.77;
 const slideWidth = WinPix(86);
@@ -42,6 +43,26 @@ export const ImageContainer = styled(Image)`
 flex: 1;
 borderRadius: 10px;
 `;
+
+/* prettier-ignore */
+export const RoundedView = styled(View)`
+  width: ${(props) => (props.size ? props.size : "45")}px;
+  height: ${(props) => (props.size ? props.size : "45")}px;
+  justifyContent: center;
+  alignItems: center;
+  padding: 10px;
+  borderRadius: ${(props) => (props.size ? props.size : "45")}px;
+  backgroundColor: ${(props) =>
+    props.theme ? props.theme.colors.INACTIVE : "transparent"};
+`;
+
+export const RoundedButton = ({ theme, name }) => {
+  return (
+    <RoundedView theme={theme}>
+      <SvgIcon name={name} />
+    </RoundedView>
+  );
+};
 
 export const AdvertCarousel = ({ data, renderItem }) => {
   return (
