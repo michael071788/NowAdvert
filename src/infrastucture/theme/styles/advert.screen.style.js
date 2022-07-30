@@ -71,7 +71,7 @@ export const ButtonContainer = ({ name, label }) => {
       style={{
         justifyContent: "center",
         alignItems: "center",
-        marginBottom: 5,
+        marginBottom: 12,
       }}
     >
       <RoundedButton name={name} />

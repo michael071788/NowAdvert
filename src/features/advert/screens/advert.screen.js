@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import UsedTheme from "../../../infrastucture/theme/use.theme";
 import { MOCK_ADVERT_LIST } from "../../../infrastucture/mockup/data.list";
 import {
@@ -10,6 +10,7 @@ import {
   SlideInner,
 } from "../../../infrastucture/theme/styles/advert.screen.style";
 import { ButtonContainer } from "../../../infrastucture/theme/styles/advert.screen.style";
+import { BlurView } from "expo-blur";
 
 export const AdvertScreen = () => {
   const theme = UsedTheme();
@@ -29,14 +30,14 @@ const renderItem = ({ item }) => {
         <ImageContainer source={{ uri: item.imageURI }} />
         <View
           style={{
-            borderColor: "rgba(0,0,0,0.2)",
-            backgroundColor: "#6638f0",
-            borderWidth: 4,
+            // borderColor: "rgba(0,0,0,0.2)",
+            // backgroundColor: "#6638f0",
+            // borderWidth: 4,
             height: 500,
             width: 110,
             borderRadius: 8,
             position: "absolute",
-            left: 195,
+            left: 190,
             zIndex: 1,
             alignContent: "center",
             alignItems: "flex-end",
@@ -45,7 +46,7 @@ const renderItem = ({ item }) => {
           <View
             style={{
               flex: 1,
-              backgroundColor: "#906ff2",
+              // backgroundColor: "#906ff2",
               alignContent: "center",
               alignItems: "center",
             }}
@@ -62,10 +63,19 @@ const renderItem = ({ item }) => {
                 alignItems: "center",
               }}
             >
-              <ButtonContainer name={"HEART"} label={"1.5k"} />
-              <ButtonContainer name={"BOOKMARK"} label={"3.5k"} />
-              <ButtonContainer name={"EYE"} label={"Save"} />
-              <ButtonContainer name={"SHARE"} label={"200"} />
+              <BlurView
+                intensity={75}
+                tint={"dark"}
+                style={{
+                  paddingHorizontal: 10,
+                  paddingVertical: 35,
+                  borderRadius: 30,
+                }}
+              >
+                <ButtonContainer name={"HEART"} label={"1.5k"} />
+                <ButtonContainer name={"EYE"} label={"300"} />
+                <ButtonContainer name={"SHARE"} label={"200"} />
+              </BlurView>
             </View>
           </View>
         </View>
