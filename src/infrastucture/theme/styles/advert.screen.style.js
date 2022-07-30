@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components/native";
-import { Image, View } from "react-native";
+import { Image, Text, View } from "react-native";
 import { Card } from "react-native-paper";
 import Carousel from "react-native-snap-carousel";
 import { ViewportWidth, ViewportHeight, WinPix } from "../../../utils/index";
@@ -52,15 +52,33 @@ export const RoundedView = styled(View)`
   alignItems: center;
   padding: 10px;
   borderRadius: ${(props) => (props.size ? props.size : "45")}px;
-  backgroundColor: ${(props) =>
-    props.theme ? props.theme.colors.INACTIVE : "transparent"};
+  backgroundColor: #696969;
 `;
+//   backgroundColor: ${(props) =>
+//     props.theme ? props.theme.colors.INACTIVE : "transparent"};
 
-export const RoundedButton = ({ theme, name }) => {
+export const RoundedButton = ({ name }) => {
   return (
-    <RoundedView theme={theme}>
+    <RoundedView>
       <SvgIcon name={name} />
     </RoundedView>
+  );
+};
+
+export const ButtonContainer = ({ name, label }) => {
+  return (
+    <View
+      style={{
+        justifyContent: "center",
+        alignItems: "center",
+        marginBottom: 5,
+      }}
+    >
+      <RoundedButton name={name} />
+      <Text style={{ fontFamily: "Oswald_500Medium", color: "white" }}>
+        {label}
+      </Text>
+    </View>
   );
 };
 
