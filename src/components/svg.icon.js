@@ -11,7 +11,7 @@ export const SvgIcon = ({ name, width, height }) => {
     <View>
       <Svg
         xmlns="http://www.w3.org/2000/svg"
-        fill={theme.colors.SECONDARY}
+        fill={theme.colors.BACKGROUND}
         viewBox={
           SvgIcons[name.toUpperCase()].VIEWBOX
             ? SvgIcons[name.toUpperCase()].VIEWBOX
