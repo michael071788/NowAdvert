@@ -3,10 +3,11 @@ import {
   Text,
   View,
   StyleSheet,
-  Button,
   TouchableWithoutFeedback,
+  TouchableOpacity,
 } from "react-native";
 import { Video } from "expo-av";
+import { ButtonContainer } from "../../../infrastucture/theme/styles/advert.screen.style";
 import { UsedPrimaryAppContext } from "../../../services/primary.app.provider";
 
 export const AdvertVideoScreen = ({ route, navigation }) => {
@@ -47,13 +48,21 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
         }}
       >
         <View style={{ flex: 1, alignItems: "flex-start" }}>
-          <Button
-            title={"Back"}
+          <TouchableOpacity
             onPress={() => {
               primaryContext.ShowUserProfileBar(true);
               navigation.goBack();
             }}
-          />
+            activeOpacity={0.8}
+          >
+            <View style={{ margin: 10 }}>
+              <ButtonContainer
+                name={"LEFTARROW"}
+                size={30}
+                bgcolor={"rgba(105, 105, 105, 0.37)"}
+              />
+            </View>
+          </TouchableOpacity>
         </View>
         <View
           style={{
