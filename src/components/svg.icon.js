@@ -4,14 +4,14 @@ import { Path, Svg } from "react-native-svg";
 import UsedTheme from "../infrastucture/theme/use.theme";
 import SvgIcons from "../../assets/svg.icons";
 
-export const SvgIcon = ({ name, width, height }) => {
+export const SvgIcon = ({ name, width, height, iconcolor }) => {
   const theme = UsedTheme();
 
   return (
     <View>
       <Svg
         xmlns="http://www.w3.org/2000/svg"
-        fill={theme.colors.BACKGROUND}
+        fill={iconcolor ? iconcolor : theme.colors.BACKGROUND}
         viewBox={
           SvgIcons[name.toUpperCase()].VIEWBOX
             ? SvgIcons[name.toUpperCase()].VIEWBOX

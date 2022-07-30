@@ -1,6 +1,5 @@
 import React, { useRef, useState } from "react";
 import {
-  Text,
   View,
   StyleSheet,
   TouchableWithoutFeedback,
@@ -57,7 +56,7 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
           >
             <View style={{ margin: 10 }}>
               <ButtonContainer
-                name={"LEFTARROW"}
+                name={"CARETLEFT"}
                 size={30}
                 bgcolor={"rgba(105, 105, 105, 0.37)"}
               />
@@ -69,23 +68,20 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
             flex: 1,
             alignItems: "center",
             flexDirection: "column-reverse",
-            marginBottom: 15,
           }}
         >
           <TouchableWithoutFeedback
             onPressIn={onPlayPressInOut}
             onPressOut={onPlayPressInOut}
           >
-            <View
-              style={{
-                width: 100,
-                height: 50,
-                backgroundColor: "lightblue",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Text>{status.isPlaying ? "Pause" : "Play"}</Text>
+            <View>
+              <ButtonContainer
+                name={status.isPlaying ? "PAUSE" : "CARETRIGHT"}
+                size={80}
+                bgcolor={"rgba(0, 0, 0, 0.25)"}
+                iconcolor={"black"}
+                iconsize={40}
+              />
             </View>
           </TouchableWithoutFeedback>
         </View>
@@ -98,7 +94,6 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#ffffff",
   },
   video: {
     width: "100%",
