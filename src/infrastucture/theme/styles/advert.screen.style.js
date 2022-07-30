@@ -52,20 +52,32 @@ export const RoundedView = styled(View)`
   alignItems: center;
   padding: 10px;
   borderRadius: ${(props) => (props.size ? props.size : "45")}px;
-  backgroundColor: #696969;
+  backgroundColor: ${(props) => (props.bgcolor ? props.bgcolor : "#696969")};
 `;
 //   backgroundColor: ${(props) =>
 //     props.theme ? props.theme.colors.INACTIVE : "transparent"};
 
-export const RoundedButton = ({ name }) => {
+export const RoundedButton = ({ name, size, bgcolor, iconcolor, iconsize }) => {
   return (
-    <RoundedView>
-      <SvgIcon name={name} />
+    <RoundedView size={size} bgcolor={bgcolor}>
+      <SvgIcon
+        name={name}
+        width={iconsize}
+        height={iconsize}
+        iconcolor={iconcolor}
+      />
     </RoundedView>
   );
 };
 
-export const ButtonContainer = ({ name, label }) => {
+export const ButtonContainer = ({
+  name,
+  label,
+  size,
+  bgcolor,
+  iconcolor,
+  iconsize,
+}) => {
   return (
     <View
       style={{
@@ -74,7 +86,13 @@ export const ButtonContainer = ({ name, label }) => {
         marginBottom: 12,
       }}
     >
-      <RoundedButton name={name} />
+      <RoundedButton
+        name={name}
+        size={size}
+        bgcolor={bgcolor}
+        iconcolor={iconcolor}
+        iconsize={iconsize}
+      />
       <Text style={{ fontFamily: "Oswald_500Medium", color: "white" }}>
         {label}
       </Text>

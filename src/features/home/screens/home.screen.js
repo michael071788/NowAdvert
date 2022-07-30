@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, Text, View } from "react-native";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 import UsedTheme from "../../../infrastucture/theme/use.theme";
 import TicketIcon from "../../../../assets/ticket_icon";
 import { CommonScreenView } from "../../../infrastucture/theme/styles/container.screen.style";
@@ -8,56 +8,62 @@ import {
   InnerContentView,
 } from "../../../infrastucture/theme/styles/home.screen.style";
 
-export const HomeScreen = () => {
+export const HomeScreen = ({ navigation }) => {
   const theme = UsedTheme();
 
   return (
     <CommonScreenView theme={theme}>
       <CommonView flex={3}>
         <InnerContentView>
-          <View
-            style={{
-              flexDirection: "column",
+          <TouchableOpacity
+            onPress={() => {
+              navigation.goBack();
             }}
           >
-            <Text
-              style={{
-                fontSize: 80,
-                color: theme.colors.PRIMARY,
-                fontFamily: theme.typography.PRIMARY,
-              }}
-            >
-              2,000
-            </Text>
             <View
               style={{
-                alignItems: "center",
-                flexDirection: "row",
-                justifyContent: "flex-end",
-                marginTop: -20, // Use this to overlap just a little bit
-
-                paddingRight: 5,
+                flexDirection: "column",
               }}
             >
-              <TicketIcon
-                style={{
-                  width: 30,
-                  height: 30,
-                  marginRight: 5,
-                  fill: theme.colors.PRIMARY,
-                }}
-              />
               <Text
                 style={{
-                  fontSize: 20,
+                  fontSize: 80,
                   color: theme.colors.PRIMARY,
                   fontFamily: theme.typography.PRIMARY,
                 }}
               >
-                EARNED
+                2,000
               </Text>
+              <View
+                style={{
+                  alignItems: "center",
+                  flexDirection: "row",
+                  justifyContent: "flex-end",
+                  marginTop: -20, // Use this to overlap just a little bit
+
+                  paddingRight: 5,
+                }}
+              >
+                <TicketIcon
+                  style={{
+                    width: 30,
+                    height: 30,
+                    marginRight: 5,
+                    fill: theme.colors.PRIMARY,
+                  }}
+                />
+                <Text
+                  style={{
+                    fontSize: 20,
+                    color: theme.colors.PRIMARY,
+                    fontFamily: theme.typography.PRIMARY,
+                  }}
+                >
+                  EARNED
+                </Text>
+              </View>
             </View>
-          </View>
+          </TouchableOpacity>
         </InnerContentView>
       </CommonView>
 
