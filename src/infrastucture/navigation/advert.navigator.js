@@ -13,6 +13,7 @@ export const AdvertNavigator = () => {
       screenOptions={({ route, navigation }) => ({
         headerShown: false,
       })}
+      initialRouteName="AdvertScreen"
     >
       <AdvertStack.Screen name="AdvertScreen" component={AdvertScreen} />
       <AdvertStack.Screen
