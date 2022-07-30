@@ -18,7 +18,12 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
   const [status, setStatus] = useState({});
 
   const onPlayPressInOut = () => {
-    status.isPlaying ? video.current.pauseAsync() : video.current.playAsync();
+    if (status.isPlaying) {
+      video.current.replayAsync();
+      video.current.pauseAsync();
+    } else {
+      video.current.playAsync();
+    }
   };
 
   return (
