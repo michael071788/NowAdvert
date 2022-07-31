@@ -1,5 +1,10 @@
-import React, { useRef, useState } from "react";
-import { View, TouchableWithoutFeedback, TouchableOpacity } from "react-native";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import {
+  View,
+  Text,
+  TouchableWithoutFeedback,
+  TouchableOpacity,
+} from "react-native";
 import { Video } from "expo-av";
 import {
   MainScreenView,
@@ -24,15 +29,27 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
   const video = useRef(null);
   const [status, setStatus] = useState({});
   const [isPreloading, setIsPreloading] = useState(true);
+  const [remainingSecs, setRemainingSecs] = useState();
 
-  const onPlayPressInOut = () => {
+  const onPlayPressInOut = useCallback(async () => {
     if (status.isPlaying) {
-      video.current.replayAsync();
       video.current.pauseAsync();
     } else {
-      video.current.playAsync();
+      if (!status.didJustFinish) {
+        status.positionMillis
+          ? video.current.replayAsync()
+          : video.current.playAsync();
+      }
     }
-  };
+  }, [status]);
+
+  useEffect(() => {
+    if (!isPreloading) {
+      setRemainingSecs(
+        Math.trunc((status.durationMillis - status.positionMillis) / 1000)
+      );
+    }
+  }, [status, isPreloading]);
 
   return (
     <MainScreenView>
@@ -70,6 +87,10 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
               />
             </View>
           </TouchableWithoutFeedback>
+          <Text style={{ fontFamily: theme.typography.PRIMARY, fontSize: 20 }}>
+            {remainingSecs}
+            {"s"}
+          </Text>
         </Container2>
         <Container3 />
       </VideoButtonContainer>
