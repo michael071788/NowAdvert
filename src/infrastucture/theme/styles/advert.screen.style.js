@@ -1,10 +1,11 @@
 import React from "react";
 import styled from "styled-components/native";
-import { Image, View } from "react-native";
+import { Image, Text, View } from "react-native";
 import { Card } from "react-native-paper";
 import Carousel from "react-native-snap-carousel";
 import { ViewportWidth, ViewportHeight, WinPix } from "../../../utils/index";
 import { scrollInterpolator, animatedStyles } from "../../../utils/animations";
+import { SvgIcon } from "../../../components/svg.icon";
 
 export const SlideHeight = ViewportHeight * 0.77;
 const slideWidth = WinPix(86);
@@ -42,6 +43,62 @@ export const ImageContainer = styled(Image)`
 flex: 1;
 borderRadius: 10px;
 `;
+
+/* prettier-ignore */
+export const RoundedView = styled(View)`
+  width: ${(props) => (props.size ? props.size : "45")}px;
+  height: ${(props) => (props.size ? props.size : "45")}px;
+  justifyContent: center;
+  alignItems: center;
+  padding: 10px;
+  borderRadius: ${(props) => (props.size ? props.size : "45")}px;
+  backgroundColor: ${(props) => (props.bgcolor ? props.bgcolor : "#696969")};
+`;
+//   backgroundColor: ${(props) =>
+//     props.theme ? props.theme.colors.INACTIVE : "transparent"};
+
+export const RoundedButton = ({ name, size, bgcolor, iconcolor, iconsize }) => {
+  return (
+    <RoundedView size={size} bgcolor={bgcolor}>
+      <SvgIcon
+        name={name}
+        width={iconsize}
+        height={iconsize}
+        iconcolor={iconcolor}
+      />
+    </RoundedView>
+  );
+};
+
+export const ButtonContainer = ({
+  name,
+  label,
+  size,
+  bgcolor,
+  iconcolor,
+  iconsize,
+}) => {
+  return (
+    <View
+      style={{
+        justifyContent: "center",
+        alignItems: "center",
+        marginBottom: 12,
+      }}
+    >
+      <RoundedButton
+        name={name}
+        size={size}
+        bgcolor={bgcolor}
+        iconcolor={iconcolor}
+        iconsize={iconsize}
+      />
+      <Text style={{ fontFamily: "Oswald_500Medium", color: "white" }}>
+        {label}
+      </Text>
+    </View>
+  );
+};
 
 export const AdvertCarousel = ({ data, renderItem }) => {
   return (
