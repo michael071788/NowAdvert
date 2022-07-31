@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components/native";
-import { View } from "react-native";
+import { ActivityIndicator, View } from "react-native";
 import { ButtonContainer } from "../styles/advert.screen.style";
 
 /* prettier-ignore */
@@ -62,6 +62,25 @@ export const PlayButtonContainer = ({ name }) => {
       bgcolor={"rgba(0, 0, 0, 0.25)"}
       iconcolor={"black"}
       iconsize={40}
+    />
+  );
+};
+
+export const LoadingScreen = ({ theme }) => {
+  return (
+    <ActivityIndicator
+      animating
+      color={theme.colors.PRIMARY}
+      size="large"
+      style={{
+        flex: 1,
+        backgroundColor: theme.colors.BACKGROUND,
+        position: "absolute",
+        top: 0,
+        left: 0,
+        bottom: 0,
+        right: 0,
+      }}
     />
   );
 };

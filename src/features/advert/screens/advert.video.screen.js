@@ -10,16 +10,20 @@ import {
   Container3,
   BackButtonContainer,
   PlayButtonContainer,
+  LoadingScreen,
 } from "../../../infrastucture/theme/styles/advert.video.screen.style";
 import { UsedPrimaryAppContext } from "../../../services/primary.app.provider";
+import UsedTheme from "../../../infrastucture/theme/use.theme";
 
 export const AdvertVideoScreen = ({ route, navigation }) => {
   const primaryContext = UsedPrimaryAppContext();
+  const theme = UsedTheme();
 
   const { videoURI } = route.params;
 
   const video = useRef(null);
   const [status, setStatus] = useState({});
+  const [isPreloading, setIsPreloading] = useState(true);
 
   const onPlayPressInOut = () => {
     if (status.isPlaying) {
@@ -34,6 +38,8 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
     <MainScreenView>
       <Video
         ref={video}
+        onLoadStart={() => setIsPreloading(true)}
+        onReadyForDisplay={() => setIsPreloading(false)}
         style={VideoStyle}
         source={{
           uri: videoURI,
@@ -41,7 +47,6 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
         resizeMode="cover"
         onPlaybackStatusUpdate={(e) => setStatus(e)}
       />
-
       <VideoButtonContainer>
         <Container1>
           <TouchableOpacity
@@ -68,6 +73,8 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
         </Container2>
         <Container3 />
       </VideoButtonContainer>
+
+      {isPreloading && <LoadingScreen theme={theme} />}
     </MainScreenView>
   );
 };
