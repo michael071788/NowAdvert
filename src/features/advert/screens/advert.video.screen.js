@@ -5,6 +5,7 @@ import {
   TouchableWithoutFeedback,
   TouchableOpacity,
 } from "react-native";
+import CircularProgress from "react-native-circular-progress-indicator";
 import { Video } from "expo-av";
 import {
   MainScreenView,
@@ -30,6 +31,7 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
   const [status, setStatus] = useState({});
   const [isPreloading, setIsPreloading] = useState(true);
   const [remainingSecs, setRemainingSecs] = useState();
+  const [durationMillis, setDurationMillis] = useState();
 
   const onPlayPressInOut = useCallback(async () => {
     if (status.isPlaying) {
@@ -48,6 +50,10 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
       setRemainingSecs(
         Math.trunc((status.durationMillis - status.positionMillis) / 1000)
       );
+    }
+
+    if (status.isLoaded) {
+      setDurationMillis(Math.trunc(status.durationMillis / 1000));
     }
   }, [status, isPreloading]);
 
@@ -82,12 +88,32 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
             onPressOut={onPlayPressInOut}
           >
             <View>
-              <PlayButtonContainer
-                name={status.isPlaying ? "PAUSE" : "CARETRIGHT"}
-              />
+              <View>
+                <CircularProgress
+                  value={remainingSecs}
+                  radius={50}
+                  duration={1000}
+                  activeStrokeColor={theme.colors.INACTIVE}
+                  maxValue={durationMillis}
+                  showProgressValue={false}
+                  delay={0}
+                />
+              </View>
+              <View style={{ marginTop: -90 }}>
+                <PlayButtonContainer
+                  name={status.isPlaying ? "PAUSE" : "CARETRIGHT"}
+                  iconcolor={theme.colors.INACTIVE}
+                />
+              </View>
             </View>
           </TouchableWithoutFeedback>
-          <Text style={{ fontFamily: theme.typography.PRIMARY, fontSize: 20 }}>
+          <Text
+            style={{
+              fontFamily: theme.typography.PRIMARY,
+              fontSize: 20,
+              color: theme.colors.INACTIVE,
+            }}
+          >
             {remainingSecs}
             {"s"}
           </Text>

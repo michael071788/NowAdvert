@@ -54,13 +54,13 @@ export const BackButtonContainer = () => {
   );
 };
 
-export const PlayButtonContainer = ({ name }) => {
+export const PlayButtonContainer = ({ name, iconcolor }) => {
   return (
     <ButtonContainer
       name={name}
       size={80}
       bgcolor={"rgba(0, 0, 0, 0.25)"}
-      iconcolor={"black"}
+      iconcolor={iconcolor ? iconcolor : "black"}
       iconsize={40}
     />
   );
