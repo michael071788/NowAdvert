@@ -1,5 +1,5 @@
 import React from "react";
-import { TouchableOpacity, View } from "react-native";
+import { TouchableOpacity, View, Text } from "react-native";
 import UsedTheme from "../../../infrastucture/theme/use.theme";
 import { MOCK_ADVERT_LIST } from "../../../infrastucture/mockup/data.list";
 import {
@@ -38,41 +38,39 @@ export const AdvertScreen = ({ navigation }) => {
           </TouchableOpacity>
           <View
             style={{
-              // borderColor: "rgba(0,0,0,0.2)",
-              // backgroundColor: "#6638f0",
-              // borderWidth: 4,
-              height: 500,
-              width: 110,
+              flex: 1,
               borderRadius: 8,
               position: "absolute",
-              left: 190,
+              right: 10,
               zIndex: 1,
-              alignContent: "center",
-              alignItems: "flex-end",
+              bottom: 20,
+              top: 20,
+              justifyContent: "center",
             }}
           >
             <View
               style={{
                 flex: 1,
-                // backgroundColor: "#906ff2",
-                alignContent: "center",
-                alignItems: "center",
+                justifyContent: "space-around",
               }}
             >
-              <View style={{ flex: 1 }} />
-
-              <View style={{ flex: 2 }} />
+              <View
+                style={{
+                  overflow: "hidden",
+                  borderRadius: 30,
+                }}
+              >
+                <ButtonContainer name={"BOOKMARK"} />
+              </View>
 
               <View
                 style={{
-                  flex: 5,
-                  flexDirection: "column",
-                  alignContent: "center",
-                  alignItems: "center",
+                  overflow: "hidden",
+                  borderRadius: 30,
                 }}
               >
                 <BlurView
-                  intensity={75}
+                  intensity={40}
                   tint={"dark"}
                   style={{
                     paddingHorizontal: 10,
@@ -84,6 +82,17 @@ export const AdvertScreen = ({ navigation }) => {
                   <ButtonContainer name={"EYE"} label={"300"} />
                   <ButtonContainer name={"SHARE"} label={"200"} />
                 </BlurView>
+              </View>
+
+              <View
+                style={{
+                  alignItems: "center",
+                  overflow: "hidden",
+                  borderRadius: 30,
+                }}
+              >
+                <Text style={{ fontSize: 12 }}>Receive</Text>
+                <Text style={{ fontSize: 25 }}>5000</Text>
               </View>
             </View>
           </View>
