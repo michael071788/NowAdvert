@@ -32,6 +32,7 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
   const [isPreloading, setIsPreloading] = useState(true);
   const [remainingSecs, setRemainingSecs] = useState();
   const [durationMillis, setDurationMillis] = useState();
+  const [positionMillis, setPositionMillis] = useState(0);
 
   const onPlayPressInOut = useCallback(async () => {
     if (status.isPlaying) {
@@ -54,6 +55,7 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
 
     if (status.isLoaded) {
       setDurationMillis(Math.trunc(status.durationMillis / 1000));
+      setPositionMillis(Math.trunc(status.positionMillis / 1000));
     }
   }, [status, isPreloading]);
 
@@ -90,16 +92,19 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
             <View>
               <View>
                 <CircularProgress
-                  value={remainingSecs}
-                  radius={50}
+                  value={positionMillis}
+                  radius={45}
                   duration={1000}
-                  activeStrokeColor={theme.colors.INACTIVE}
+                  activeStrokeColor={theme.colors.ACTIVE}
+                  inActiveStrokeColor={"rgba(0, 0, 0, 0.25)"}
+                  activeStrokeWidth={5}
+                  inActiveStrokeWidth={5}
                   maxValue={durationMillis}
                   showProgressValue={false}
                   delay={0}
                 />
               </View>
-              <View style={{ marginTop: -90 }}>
+              <View style={{ marginTop: -85 }}>
                 <PlayButtonContainer
                   name={status.isPlaying ? "PAUSE" : "CARETRIGHT"}
                   iconcolor={theme.colors.INACTIVE}
