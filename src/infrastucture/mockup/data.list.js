@@ -23,11 +23,11 @@ export const MOCK_ADVERT_LIST = [
   },
   {
     id: 3,
-    companyName: "The Ice Cream Company",
+    companyName: "Crepe 'N Roll",
     imageURI:
       "https://s3.eu-west-3.amazonaws.com/www.gccfmt.com/test/IceCream1_Img.png",
     logoURI:
-      "https://s3.eu-west-3.amazonaws.com/www.gccfmt.com/test/ice_cream_company.jpg",
+      "https://s3.eu-west-3.amazonaws.com/www.gccfmt.com/test/crepe_n_roll.jpg",
     videoURI:
       "https://s3.eu-west-3.amazonaws.com/www.gccfmt.com/test/IceCream1.mp4",
 
@@ -35,7 +35,7 @@ export const MOCK_ADVERT_LIST = [
   },
   {
     id: 4,
-    companyName: "Crepe N Roll",
+    companyName: "The Ice Cream Company",
     imageURI:
       "https://s3.eu-west-3.amazonaws.com/www.gccfmt.com/test/IceCream2_Img.png",
     logoURI:

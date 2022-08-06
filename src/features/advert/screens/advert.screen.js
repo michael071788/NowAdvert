@@ -1,13 +1,19 @@
 import React from "react";
-import { Image, TouchableOpacity, View, Text } from "react-native";
+import { TouchableOpacity, View, Text } from "react-native";
 import UsedTheme from "../../../infrastucture/theme/use.theme";
 import { MOCK_ADVERT_LIST } from "../../../infrastucture/mockup/data.list";
 import {
   AdvertCarousel,
+  BottomLeftContainer,
+  BottomRightContainer,
+  ButtonAdvertContainer,
+  ButtonAdvertInnerContainer,
   ImageContainer,
+  LogoCompanyNameContainer,
+  LogoImageContainer,
   MainScreenView,
-  SlideView,
   SlideInner,
+  SlideView,
 } from "../../../infrastucture/theme/styles/advert.screen.style";
 import { ButtonContainer } from "../../../infrastucture/theme/styles/advert.screen.style";
 import { BlurView } from "expo-blur";
@@ -37,24 +43,9 @@ export const AdvertScreen = ({ navigation }) => {
           >
             <ImageContainer source={{ uri: item.imageURI }} />
           </TouchableOpacity>
-          <View
-            style={{
-              flex: 1,
-              borderRadius: 8,
-              position: "absolute",
-              right: 10,
-              zIndex: 1,
-              bottom: 20,
-              top: 20,
-              justifyContent: "center",
-            }}
-          >
-            <View
-              style={{
-                flex: 1,
-                justifyContent: "space-around",
-              }}
-            >
+
+          <ButtonAdvertContainer>
+            <ButtonAdvertInnerContainer>
               <View
                 style={{
                   overflow: "hidden",
@@ -92,33 +83,12 @@ export const AdvertScreen = ({ navigation }) => {
                   borderRadius: 30,
                 }}
               />
-            </View>
-          </View>
+            </ButtonAdvertInnerContainer>
+          </ButtonAdvertContainer>
 
-          <View
-            style={{
-              flex: 1,
-              borderRadius: 8,
-              position: "absolute",
-              left: 10,
-              zIndex: 1,
-              bottom: 13,
-              justifyContent: "center",
-              flexDirection: "column",
-            }}
-          >
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <Image
-                source={{ uri: item.logoURI }}
-                style={{
-                  width: 50,
-                  height: 50,
-                  borderRadius: 50,
-                  marginRight: 5,
-                  resizeMode: "contain",
-                }}
-              />
-
+          <BottomLeftContainer>
+            <LogoCompanyNameContainer>
+              <LogoImageContainer source={item.logoURI} />
               <Text
                 style={{
                   fontSize: 12,
@@ -129,7 +99,7 @@ export const AdvertScreen = ({ navigation }) => {
               >
                 {item.companyName}
               </Text>
-            </View>
+            </LogoCompanyNameContainer>
             <View style={{ alignItems: "flex-start" }}>
               <Text
                 style={{
@@ -141,22 +111,9 @@ export const AdvertScreen = ({ navigation }) => {
                 WATCH & WIN
               </Text>
             </View>
-          </View>
+          </BottomLeftContainer>
 
-          <View
-            style={{
-              flex: 1,
-              borderRadius: 8,
-              position: "absolute",
-              right: 10,
-              zIndex: 1,
-              bottom: 10,
-              justifyContent: "center",
-              alignItems: "center",
-              overflow: "hidden",
-              flexDirection: "column",
-            }}
-          >
+          <BottomRightContainer>
             <Text
               style={{
                 fontSize: 12,
@@ -176,7 +133,6 @@ export const AdvertScreen = ({ navigation }) => {
               >
                 <SvgIcon name={"TICKET"} iconcolor={theme.colors.INACTIVE} />
               </View>
-
               <Text
                 style={{
                   fontSize: 23,
@@ -187,7 +143,7 @@ export const AdvertScreen = ({ navigation }) => {
                 {item.ticketValue}
               </Text>
             </View>
-          </View>
+          </BottomRightContainer>
         </SlideInner>
       </SlideView>
     );
