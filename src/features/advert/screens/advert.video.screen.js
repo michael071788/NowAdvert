@@ -1,22 +1,32 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
-  View,
   Text,
-  TouchableWithoutFeedback,
   TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
 } from "react-native";
 import CircularProgress from "react-native-circular-progress-indicator";
 import { Video } from "expo-av";
 import {
-  MainScreenView,
-  VideoStyle,
-  VideoButtonContainer,
+  BackButtonContainer,
   Container1,
   Container2,
   Container3,
-  BackButtonContainer,
-  PlayButtonContainer,
   LoadingScreen,
+  MainScreenView,
+  PlayButtonContainer,
+  VideoButtonContainer,
+  VideoStyle,
+  ModalContainerStyle,
+  ModalContainer1,
+  ModalContainer2,
+  ModalContainer3,
+  TicketContainer,
+  TicketInnerContainer1,
+  TicketInnerContainer2,
+  TicketInnerContainer3,
+  FlexCenterContainer,
+  TicketStatusContainer,
 } from "../../../infrastucture/theme/styles/advert.video.screen.style";
 import { UsedPrimaryAppContext } from "../../../services/primary.app.provider";
 import UsedTheme from "../../../infrastucture/theme/use.theme";
@@ -34,7 +44,6 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
   const video = useRef(null);
   const [status, setStatus] = useState({});
   const [isPreloading, setIsPreloading] = useState(true);
-  // const [remainingSecs, setRemainingSecs] = useState();
   const [durationMillis, setDurationMillis] = useState();
   const [positionMillis, setPositionMillis] = useState(0);
   const [visibleModal, setVisibleModal] = useState(false);
@@ -60,12 +69,6 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
   }, [status]);
 
   useEffect(() => {
-    // if (!isPreloading) {
-    //   setRemainingSecs(
-    //     Math.trunc((status.durationMillis - status.positionMillis) / 1000)
-    //   );
-    // }
-
     if (status.isLoaded) {
       setDurationMillis(Math.trunc(status.durationMillis / 1000));
       setPositionMillis(Math.trunc(status.positionMillis / 1000));
@@ -128,16 +131,6 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
               </View>
             </View>
           </TouchableWithoutFeedback>
-          {/* <Text
-            style={{
-              fontFamily: theme.typography.PRIMARY,
-              fontSize: 20,
-              color: theme.colors.INACTIVE,
-            }}
-          >
-            {remainingSecs}
-            {"s"}
-          </Text> */}
         </Container2>
         <Container3 />
       </VideoButtonContainer>
@@ -145,18 +138,9 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
       <Modal
         visible={visibleModal}
         onDismiss={hideModal}
-        contentContainerStyle={{
-          flex: 1,
-          flexDirection: "column",
-        }}
+        contentContainerStyle={ModalContainerStyle}
       >
-        <View
-          style={{
-            flex: 1,
-            justifyContent: "flex-end",
-            flexDirection: "row",
-          }}
-        >
+        <ModalContainer1>
           <View style={{ marginRight: 15 }}>
             <TouchableOpacity
               onPress={() => {
@@ -172,16 +156,8 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
               />
             </TouchableOpacity>
           </View>
-        </View>
-        <View
-          style={{
-            flex: 1,
-
-            justifyContent: "center",
-            alignItems: "center",
-            marginBottom: 10,
-          }}
-        >
+        </ModalContainer1>
+        <ModalContainer2>
           <Text
             style={{
               fontFamily: theme.typography.PRIMARY,
@@ -191,25 +167,10 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
           >
             HOORAY! YOU JUST WON
           </Text>
-        </View>
-        <View style={{ flex: 20 }}>
-          <View
-            style={{
-              flex: 1,
-              borderRadius: 15,
-              backgroundColor: "white",
-              alignItems: "stretch",
-              marginHorizontal: 15,
-              paddingHorizontal: 15,
-            }}
-          >
-            <View
-              style={{
-                flex: 1,
-                justifyContent: "center",
-                flexDirection: "column",
-              }}
-            >
+        </ModalContainer2>
+        <ModalContainer3 style={{ flex: 20 }}>
+          <TicketContainer>
+            <TicketInnerContainer1>
               <View style={{ flex: 1 }}>
                 <Image
                   source={require("../../../../assets/nowadvert_bg1.png")}
@@ -221,15 +182,8 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
                 />
               </View>
               <Divider />
-            </View>
-            <View
-              style={{
-                flex: 1,
-                justifyContent: "center",
-                flexDirection: "row",
-                alignItems: "center",
-              }}
-            >
+            </TicketInnerContainer1>
+            <TicketInnerContainer2>
               <View style={{ flex: 1, alignItems: "center" }}>
                 <Text
                   style={{
@@ -253,26 +207,10 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
                   000-01234687-4817-01
                 </Text>
               </View>
-            </View>
-            <View
-              style={{
-                flex: 1,
-
-                justifyContent: "center",
-                flexDirection: "row",
-              }}
-            >
-              <View style={{ flex: 1, alignItems: "center" }}>
-                <View
-                  style={{
-                    backgroundColor: theme.colors.SECONDARY,
-                    borderRadius: 15,
-                    alignItems: "center",
-                    alignContent: "center",
-                    width: "45%",
-                    height: "40%",
-                  }}
-                >
+            </TicketInnerContainer2>
+            <TicketInnerContainer3>
+              <FlexCenterContainer>
+                <TicketStatusContainer bgcolor={theme.colors.SECONDARY}>
                   <Text
                     style={{
                       fontFamily: theme.typography.PRIMARY,
@@ -282,10 +220,9 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
                   >
                     ACTIVE
                   </Text>
-                </View>
-              </View>
-
-              <View style={{ flex: 1, alignItems: "center" }}>
+                </TicketStatusContainer>
+              </FlexCenterContainer>
+              <FlexCenterContainer>
                 <Text
                   style={{
                     fontFamily: theme.typography.PRIMARY,
@@ -295,11 +232,11 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
                 >
                   000-01234687-4817-01
                 </Text>
-              </View>
-            </View>
-          </View>
+              </FlexCenterContainer>
+            </TicketInnerContainer3>
+          </TicketContainer>
           <View style={{ flex: 2 }} />
-        </View>
+        </ModalContainer3>
       </Modal>
 
       {isPreloading && <LoadingScreen theme={theme} />}
