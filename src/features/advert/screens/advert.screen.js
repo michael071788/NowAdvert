@@ -4,14 +4,21 @@ import UsedTheme from "../../../infrastucture/theme/use.theme";
 import { MOCK_ADVERT_LIST } from "../../../infrastucture/mockup/data.list";
 import {
   AdvertCarousel,
+  BottomLeftContainer,
+  BottomRightContainer,
+  ButtonAdvertContainer,
+  ButtonAdvertInnerContainer,
   ImageContainer,
+  LogoCompanyNameContainer,
+  LogoImageContainer,
   MainScreenView,
-  SlideView,
   SlideInner,
+  SlideView,
 } from "../../../infrastucture/theme/styles/advert.screen.style";
 import { ButtonContainer } from "../../../infrastucture/theme/styles/advert.screen.style";
 import { BlurView } from "expo-blur";
 import { UsedPrimaryAppContext } from "../../../services/primary.app.provider";
+import { SvgIcon } from "../../../components/svg.icon";
 
 export const AdvertScreen = ({ navigation }) => {
   const theme = UsedTheme();
@@ -36,24 +43,9 @@ export const AdvertScreen = ({ navigation }) => {
           >
             <ImageContainer source={{ uri: item.imageURI }} />
           </TouchableOpacity>
-          <View
-            style={{
-              flex: 1,
-              borderRadius: 8,
-              position: "absolute",
-              right: 10,
-              zIndex: 1,
-              bottom: 20,
-              top: 20,
-              justifyContent: "center",
-            }}
-          >
-            <View
-              style={{
-                flex: 1,
-                justifyContent: "space-around",
-              }}
-            >
+
+          <ButtonAdvertContainer>
+            <ButtonAdvertInnerContainer>
               <View
                 style={{
                   overflow: "hidden",
@@ -90,12 +82,68 @@ export const AdvertScreen = ({ navigation }) => {
                   overflow: "hidden",
                   borderRadius: 30,
                 }}
+              />
+            </ButtonAdvertInnerContainer>
+          </ButtonAdvertContainer>
+
+          <BottomLeftContainer>
+            <LogoCompanyNameContainer>
+              <LogoImageContainer source={item.logoURI} />
+              <Text
+                style={{
+                  fontSize: 12,
+                  fontFamily: theme.typography.PRIMARY,
+                  color: theme.colors.PRIMARY,
+                  textTransform: "uppercase",
+                }}
               >
-                <Text style={{ fontSize: 12 }}>Receive</Text>
-                <Text style={{ fontSize: 25 }}>5000</Text>
-              </View>
+                {item.companyName}
+              </Text>
+            </LogoCompanyNameContainer>
+            <View style={{ alignItems: "flex-start" }}>
+              <Text
+                style={{
+                  fontSize: 15,
+                  fontFamily: theme.typography.PRIMARY,
+                  color: theme.colors.PRIMARY,
+                }}
+              >
+                WATCH & WIN
+              </Text>
             </View>
-          </View>
+          </BottomLeftContainer>
+
+          <BottomRightContainer>
+            <Text
+              style={{
+                fontSize: 12,
+                fontFamily: theme.typography.PRIMARY,
+                color: theme.colors.PRIMARY,
+              }}
+            >
+              You'll Receive
+            </Text>
+            <View style={{ flexDirection: "row", marginTop: -7 }}>
+              <View
+                style={{
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginRight: 3,
+                }}
+              >
+                <SvgIcon name={"TICKET"} iconcolor={theme.colors.INACTIVE} />
+              </View>
+              <Text
+                style={{
+                  fontSize: 23,
+                  fontFamily: theme.typography.PRIMARY,
+                  color: theme.colors.PRIMARY,
+                }}
+              >
+                {item.ticketValue}
+              </Text>
+            </View>
+          </BottomRightContainer>
         </SlideInner>
       </SlideView>
     );
