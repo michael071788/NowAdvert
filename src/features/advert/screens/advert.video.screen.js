@@ -1,25 +1,39 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
-  View,
   Text,
-  TouchableWithoutFeedback,
   TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
 } from "react-native";
 import CircularProgress from "react-native-circular-progress-indicator";
 import { Video } from "expo-av";
 import {
-  MainScreenView,
-  VideoStyle,
-  VideoButtonContainer,
+  BackButtonContainer,
   Container1,
   Container2,
   Container3,
-  BackButtonContainer,
-  PlayButtonContainer,
   LoadingScreen,
+  MainScreenView,
+  PlayButtonContainer,
+  VideoButtonContainer,
+  VideoStyle,
+  ModalContainerStyle,
+  ModalContainer1,
+  ModalContainer2,
+  ModalContainer3,
+  TicketContainer,
+  TicketInnerContainer1,
+  TicketInnerContainer2,
+  TicketInnerContainer3,
+  FlexCenterContainer,
+  TicketStatusContainer,
 } from "../../../infrastucture/theme/styles/advert.video.screen.style";
 import { UsedPrimaryAppContext } from "../../../services/primary.app.provider";
 import UsedTheme from "../../../infrastucture/theme/use.theme";
+import { Modal } from "react-native-paper";
+import { ButtonContainer } from "../../../infrastucture/theme/styles/advert.screen.style";
+import { Image } from "react-native";
+import { Divider } from "react-native-paper";
 
 export const AdvertVideoScreen = ({ route, navigation }) => {
   const primaryContext = UsedPrimaryAppContext();
@@ -30,8 +44,17 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
   const video = useRef(null);
   const [status, setStatus] = useState({});
   const [isPreloading, setIsPreloading] = useState(true);
-  const [remainingSecs, setRemainingSecs] = useState();
   const [durationMillis, setDurationMillis] = useState();
+  const [positionMillis, setPositionMillis] = useState(0);
+  const [visibleModal, setVisibleModal] = useState(false);
+
+  const showModal = () => setVisibleModal(true);
+  const hideModal = () => setVisibleModal(false);
+
+  const goBackAdvertScreen = () => {
+    primaryContext.ShowUserProfileBar(true);
+    navigation.goBack();
+  };
 
   const onPlayPressInOut = useCallback(async () => {
     if (status.isPlaying) {
@@ -46,14 +69,13 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
   }, [status]);
 
   useEffect(() => {
-    if (!isPreloading) {
-      setRemainingSecs(
-        Math.trunc((status.durationMillis - status.positionMillis) / 1000)
-      );
-    }
-
     if (status.isLoaded) {
       setDurationMillis(Math.trunc(status.durationMillis / 1000));
+      setPositionMillis(Math.trunc(status.positionMillis / 1000));
+    }
+
+    if (status.didJustFinish) {
+      showModal();
     }
   }, [status, isPreloading]);
 
@@ -74,8 +96,7 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
         <Container1>
           <TouchableOpacity
             onPress={() => {
-              primaryContext.ShowUserProfileBar(true);
-              navigation.goBack();
+              goBackAdvertScreen();
             }}
             activeOpacity={0.8}
           >
@@ -90,16 +111,19 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
             <View>
               <View>
                 <CircularProgress
-                  value={remainingSecs}
-                  radius={50}
+                  value={positionMillis}
+                  radius={45}
                   duration={1000}
-                  activeStrokeColor={theme.colors.INACTIVE}
+                  activeStrokeColor={theme.colors.ACTIVE}
+                  inActiveStrokeColor={"rgba(0, 0, 0, 0.25)"}
+                  activeStrokeWidth={5}
+                  inActiveStrokeWidth={5}
                   maxValue={durationMillis}
                   showProgressValue={false}
                   delay={0}
                 />
               </View>
-              <View style={{ marginTop: -90 }}>
+              <View style={{ marginTop: -85 }}>
                 <PlayButtonContainer
                   name={status.isPlaying ? "PAUSE" : "CARETRIGHT"}
                   iconcolor={theme.colors.INACTIVE}
@@ -107,19 +131,113 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
               </View>
             </View>
           </TouchableWithoutFeedback>
+        </Container2>
+        <Container3 />
+      </VideoButtonContainer>
+
+      <Modal
+        visible={visibleModal}
+        onDismiss={hideModal}
+        contentContainerStyle={ModalContainerStyle}
+      >
+        <ModalContainer1>
+          <View style={{ marginRight: 15 }}>
+            <TouchableOpacity
+              onPress={() => {
+                hideModal();
+                goBackAdvertScreen();
+              }}
+              activeOpacity={0.8}
+            >
+              <ButtonContainer
+                name={"XMARK"}
+                size={30}
+                bgcolor={"rgba(105, 105, 105, 0.37)"}
+              />
+            </TouchableOpacity>
+          </View>
+        </ModalContainer1>
+        <ModalContainer2>
           <Text
             style={{
               fontFamily: theme.typography.PRIMARY,
               fontSize: 20,
-              color: theme.colors.INACTIVE,
+              color: theme.colors.ACTIVE,
             }}
           >
-            {remainingSecs}
-            {"s"}
+            HOORAY! YOU JUST WON
           </Text>
-        </Container2>
-        <Container3 />
-      </VideoButtonContainer>
+        </ModalContainer2>
+        <ModalContainer3 style={{ flex: 20 }}>
+          <TicketContainer>
+            <TicketInnerContainer1>
+              <View style={{ flex: 1 }}>
+                <Image
+                  source={require("../../../../assets/nowadvert_bg1.png")}
+                  style={{
+                    width: 200,
+                    height: 100,
+                    resizeMode: "contain",
+                  }}
+                />
+              </View>
+              <Divider />
+            </TicketInnerContainer1>
+            <TicketInnerContainer2>
+              <View style={{ flex: 1, alignItems: "center" }}>
+                <Text
+                  style={{
+                    fontFamily: theme.typography.PRIMARY,
+                    fontSize: 15,
+                    color: theme.colors.PRIMARY,
+                  }}
+                >
+                  TICKET NUMBER
+                </Text>
+              </View>
+
+              <View style={{ flex: 1, alignItems: "center" }}>
+                <Text
+                  style={{
+                    fontFamily: theme.typography.PRIMARY,
+                    fontSize: 15,
+                    color: theme.colors.PRIMARY,
+                  }}
+                >
+                  000-01234687-4817-01
+                </Text>
+              </View>
+            </TicketInnerContainer2>
+            <TicketInnerContainer3>
+              <FlexCenterContainer>
+                <TicketStatusContainer bgcolor={theme.colors.SECONDARY}>
+                  <Text
+                    style={{
+                      fontFamily: theme.typography.PRIMARY,
+                      fontSize: 15,
+                      color: theme.colors.PRIMARY,
+                    }}
+                  >
+                    ACTIVE
+                  </Text>
+                </TicketStatusContainer>
+              </FlexCenterContainer>
+              <FlexCenterContainer>
+                <Text
+                  style={{
+                    fontFamily: theme.typography.PRIMARY,
+                    fontSize: 15,
+                    color: theme.colors.ACTIVE,
+                  }}
+                >
+                  000-01234687-4817-01
+                </Text>
+              </FlexCenterContainer>
+            </TicketInnerContainer3>
+          </TicketContainer>
+          <View style={{ flex: 2 }} />
+        </ModalContainer3>
+      </Modal>
 
       {isPreloading && <LoadingScreen theme={theme} />}
     </MainScreenView>

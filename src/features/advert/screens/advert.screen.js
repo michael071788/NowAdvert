@@ -1,17 +1,24 @@
 import React from "react";
-import { TouchableOpacity, View } from "react-native";
+import { TouchableOpacity, View, Text } from "react-native";
 import UsedTheme from "../../../infrastucture/theme/use.theme";
 import { MOCK_ADVERT_LIST } from "../../../infrastucture/mockup/data.list";
 import {
   AdvertCarousel,
+  BottomLeftContainer,
+  BottomRightContainer,
+  ButtonAdvertContainer,
+  ButtonAdvertInnerContainer,
   ImageContainer,
+  LogoCompanyNameContainer,
+  LogoImageContainer,
   MainScreenView,
-  SlideView,
   SlideInner,
+  SlideView,
 } from "../../../infrastucture/theme/styles/advert.screen.style";
 import { ButtonContainer } from "../../../infrastucture/theme/styles/advert.screen.style";
 import { BlurView } from "expo-blur";
 import { UsedPrimaryAppContext } from "../../../services/primary.app.provider";
+import { SvgIcon } from "../../../components/svg.icon";
 
 export const AdvertScreen = ({ navigation }) => {
   const theme = UsedTheme();
@@ -36,43 +43,26 @@ export const AdvertScreen = ({ navigation }) => {
           >
             <ImageContainer source={{ uri: item.imageURI }} />
           </TouchableOpacity>
-          <View
-            style={{
-              // borderColor: "rgba(0,0,0,0.2)",
-              // backgroundColor: "#6638f0",
-              // borderWidth: 4,
-              height: 500,
-              width: 110,
-              borderRadius: 8,
-              position: "absolute",
-              left: 190,
-              zIndex: 1,
-              alignContent: "center",
-              alignItems: "flex-end",
-            }}
-          >
-            <View
-              style={{
-                flex: 1,
-                // backgroundColor: "#906ff2",
-                alignContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <View style={{ flex: 1 }} />
 
-              <View style={{ flex: 2 }} />
+          <ButtonAdvertContainer>
+            <ButtonAdvertInnerContainer>
+              <View
+                style={{
+                  overflow: "hidden",
+                  borderRadius: 30,
+                }}
+              >
+                <ButtonContainer name={"BOOKMARK"} />
+              </View>
 
               <View
                 style={{
-                  flex: 5,
-                  flexDirection: "column",
-                  alignContent: "center",
-                  alignItems: "center",
+                  overflow: "hidden",
+                  borderRadius: 30,
                 }}
               >
                 <BlurView
-                  intensity={75}
+                  intensity={40}
                   tint={"dark"}
                   style={{
                     paddingHorizontal: 10,
@@ -85,8 +75,75 @@ export const AdvertScreen = ({ navigation }) => {
                   <ButtonContainer name={"SHARE"} label={"200"} />
                 </BlurView>
               </View>
+
+              <View
+                style={{
+                  alignItems: "center",
+                  overflow: "hidden",
+                  borderRadius: 30,
+                }}
+              />
+            </ButtonAdvertInnerContainer>
+          </ButtonAdvertContainer>
+
+          <BottomLeftContainer>
+            <LogoCompanyNameContainer>
+              <LogoImageContainer source={item.logoURI} />
+              <Text
+                style={{
+                  fontSize: 12,
+                  fontFamily: theme.typography.PRIMARY,
+                  color: theme.colors.PRIMARY,
+                  textTransform: "uppercase",
+                }}
+              >
+                {item.companyName}
+              </Text>
+            </LogoCompanyNameContainer>
+            <View style={{ alignItems: "flex-start" }}>
+              <Text
+                style={{
+                  fontSize: 15,
+                  fontFamily: theme.typography.PRIMARY,
+                  color: theme.colors.PRIMARY,
+                }}
+              >
+                WATCH & WIN
+              </Text>
             </View>
-          </View>
+          </BottomLeftContainer>
+
+          <BottomRightContainer>
+            <Text
+              style={{
+                fontSize: 12,
+                fontFamily: theme.typography.PRIMARY,
+                color: theme.colors.PRIMARY,
+              }}
+            >
+              You'll Receive
+            </Text>
+            <View style={{ flexDirection: "row", marginTop: -7 }}>
+              <View
+                style={{
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginRight: 3,
+                }}
+              >
+                <SvgIcon name={"TICKET"} iconcolor={theme.colors.INACTIVE} />
+              </View>
+              <Text
+                style={{
+                  fontSize: 23,
+                  fontFamily: theme.typography.PRIMARY,
+                  color: theme.colors.PRIMARY,
+                }}
+              >
+                {item.ticketValue}
+              </Text>
+            </View>
+          </BottomRightContainer>
         </SlideInner>
       </SlideView>
     );

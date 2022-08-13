@@ -54,8 +54,69 @@ export const RoundedView = styled(View)`
   borderRadius: ${(props) => (props.size ? props.size : "45")}px;
   backgroundColor: ${(props) => (props.bgcolor ? props.bgcolor : "#696969")};
 `;
-//   backgroundColor: ${(props) =>
-//     props.theme ? props.theme.colors.INACTIVE : "transparent"};
+
+/* prettier-ignore */
+export const ButtonAdvertContainer = styled(View)`
+ flex: 1;
+ borderRadius: 8px;
+ position: absolute;
+ right: 10px;
+ zIndex: 1;
+ bottom: 20px;
+ top: 20px;
+ justifyContent: center;
+`;
+
+/* prettier-ignore */
+export const ButtonAdvertInnerContainer = styled(View)`
+ flex: 1;
+ justifyContext: space-around;
+`;
+
+/* prettier-ignore */
+export const BottomLeftContainer = styled(View)`
+ flex: 1;
+ borderRadius: 8px;
+ position: absolute;
+ left: 10px;
+ zIndex: 1;
+ bottom: 13px;
+ justifyContent: center;
+ flexDirection: column;
+`;
+
+/* prettier-ignore */
+export const LogoCompanyNameContainer = styled(View)`
+ flexDirection: row;
+ alignItems: center;
+`;
+
+/* prettier-ignore */
+export const LogoImageStyled = styled(Image)`
+width: 50px;
+height: 50px;
+borderRadius: 50px;
+marginRight: 5px;
+resizeMode: contain;
+`;
+
+/* prettier-ignore */
+export const BottomRightContainer = styled(View)`
+flex: 1;
+borderRadius: 8px;
+position: absolute;
+right: 10px;
+zIndex: 1;
+bottom: 10px;
+justifyContent: center;
+alignItems: center;
+overflow: hidden;
+flexDirection: column;
+`;
+
+export const LogoImageContainer = ({ source }) => {
+  return <LogoImageStyled source={{ uri: source }} />;
+};
 
 export const RoundedButton = ({ name, size, bgcolor, iconcolor, iconsize }) => {
   return (
