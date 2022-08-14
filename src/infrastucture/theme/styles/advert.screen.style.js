@@ -181,6 +181,8 @@ export const AdvertCarousel = ({ data, renderItem }) => {
       slideInterpolatedStyle={animatedStyles}
       useScrollView={true}
       vertical={true}
+      activeSlideOffset={1}
+      enableSnap={true}
     />
   );
 };
