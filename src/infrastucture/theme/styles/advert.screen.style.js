@@ -18,9 +18,15 @@ export const ItemWidth = slideWidth + itemHorizontalMargin * 2;
 /* prettier-ignore */
 export const MainScreenView = styled(View)`
   flex: 1;
-  alignItems: center;
+  flexDirection: column;
   backgroundColor: ${(props) =>
     props.theme ? props.theme.colors.BACKGROUND : "transparent"};
+`;
+
+/* prettier-ignore */
+export const AdvertCarouselContainer = styled(View)`
+flex: 1;
+alignItems: center;
 `;
 
 /* prettier-ignore */

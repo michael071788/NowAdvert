@@ -4,6 +4,7 @@ import UsedTheme from "../../../infrastucture/theme/use.theme";
 import { MOCK_ADVERT_LIST } from "../../../infrastucture/mockup/data.list";
 import {
   AdvertCarousel,
+  AdvertCarouselContainer,
   BottomLeftContainer,
   BottomRightContainer,
   ButtonAdvertContainer,
@@ -19,6 +20,8 @@ import { ButtonContainer } from "../../../infrastucture/theme/styles/advert.scre
 import { BlurView } from "expo-blur";
 import { UsedPrimaryAppContext } from "../../../services/primary.app.provider";
 import { SvgIcon } from "../../../components/svg.icon";
+import { HeaderBarContainer } from "../../../infrastucture/theme/styles/app.header.style";
+import { UserProfileBar } from "../../profile/user.profile.bar";
 
 export const AdvertScreen = ({ navigation }) => {
   const theme = UsedTheme();
@@ -34,7 +37,7 @@ export const AdvertScreen = ({ navigation }) => {
             style={{ flex: 1 }}
             onPress={() => {
               primaryContext.ShowUserProfileBar(false);
-              navigation.push("AdvertVideoScreen", {
+              navigation.navigate("AdvertVideoScreen", {
                 id: item.id,
                 videoURI: item.videoURI,
               });
@@ -151,7 +154,12 @@ export const AdvertScreen = ({ navigation }) => {
 
   return (
     <MainScreenView theme={theme}>
-      <AdvertCarousel data={MOCK_ADVERT_LIST} renderItem={renderItem} />
+      <HeaderBarContainer>
+        <UserProfileBar isShown={true} />
+      </HeaderBarContainer>
+      <AdvertCarouselContainer>
+        <AdvertCarousel data={MOCK_ADVERT_LIST} renderItem={renderItem} />
+      </AdvertCarouselContainer>
     </MainScreenView>
   );
 };
