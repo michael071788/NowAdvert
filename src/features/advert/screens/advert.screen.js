@@ -33,11 +33,11 @@ export const AdvertScreen = ({ navigation }) => {
           <TouchableOpacity
             style={{ flex: 1 }}
             onPress={() => {
+              primaryContext.ShowUserProfileBar(false);
               navigation.push("AdvertVideoScreen", {
                 id: item.id,
                 videoURI: item.videoURI,
               });
-              primaryContext.ShowUserProfileBar(false);
             }}
             activeOpacity={0.8}
           >
