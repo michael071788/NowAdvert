@@ -46,8 +46,7 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
   const video = useRef(null);
   const [status, setStatus] = useState({});
   const [isPreloading, setIsPreloading] = useState(true);
-  const [durationMillis, setDurationMillis] = useState();
-  const [positionMillis, setPositionMillis] = useState(0);
+  const [isReadyForDisplay, setReadyForDisplay] = useState(false);
   const [visibleModal, setVisibleModal] = useState(false);
 
   const showModal = () => setVisibleModal(true);
@@ -58,29 +57,6 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
     navigation.goBack();
   }, [primaryContext, navigation]);
 
-  const onPlayPressInOut = useCallback(async () => {
-    if (status.isPlaying) {
-      video.current.pauseAsync();
-    } else {
-      if (!status.didJustFinish) {
-        status.positionMillis
-          ? video.current.replayAsync()
-          : video.current.playAsync();
-      }
-    }
-  }, [status]);
-
-  useEffect(() => {
-    if (status.isLoaded) {
-      setDurationMillis(Math.trunc(status.durationMillis / 1000));
-      setPositionMillis(Math.trunc(status.positionMillis / 1000));
-    }
-
-    if (status.didJustFinish) {
-      showModal();
-    }
-  }, [status, isPreloading]);
-
   useEffect(() => {
     mounted.current = true;
 
@@ -89,6 +65,29 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
     };
   }, []);
 
+  const onLongPress = useCallback(async () => {
+    if (!status.didJustFinish) {
+      video.current.playAsync();
+    }
+  }, [status.didJustFinish]);
+
+  const onPressOut = useCallback(async () => {
+    if (!status.didJustFinish) {
+      video.current.stopAsync();
+    }
+  }, [status.didJustFinish]);
+
+  useEffect(() => {
+    if (isReadyForDisplay) {
+      //show modal ticket when done
+      if (status.positionMillis === status.durationMillis) {
+        if (status.didJustFinish) {
+          showModal();
+        }
+      }
+    }
+  }, [status, isReadyForDisplay]);
+
   return (
     <MainScreenView>
       {mounted && (
@@ -96,7 +95,10 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
           <Video
             ref={video}
             onLoadStart={() => setIsPreloading(true)}
-            onReadyForDisplay={() => setIsPreloading(false)}
+            onReadyForDisplay={() => {
+              setIsPreloading(false);
+              setReadyForDisplay(true);
+            }}
             style={VideoStyle}
             source={{
               uri: videoURI,
@@ -117,20 +119,20 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
             </Container1>
             <Container2>
               <TouchableWithoutFeedback
-                onPressIn={onPlayPressInOut}
-                onPressOut={onPlayPressInOut}
+                onLongPress={onLongPress}
+                onPressOut={onPressOut}
               >
                 <View>
                   <View>
                     <CircularProgress
-                      value={positionMillis}
+                      value={status.positionMillis || 0}
                       radius={45}
                       duration={1000}
                       activeStrokeColor={theme.colors.ACTIVE}
                       inActiveStrokeColor={"rgba(0, 0, 0, 0.25)"}
                       activeStrokeWidth={5}
                       inActiveStrokeWidth={5}
-                      maxValue={durationMillis}
+                      maxValue={status.durationMillis || 0}
                       showProgressValue={false}
                       delay={0}
                     />
@@ -155,7 +157,6 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
               <View style={{ marginRight: 15 }}>
                 <TouchableOpacity
                   onPress={() => {
-                    hideModal();
                     goBackAdvertScreen();
                   }}
                   activeOpacity={0.8}
