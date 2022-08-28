@@ -7,62 +7,68 @@ import {
   TextInput,
 } from "react-native";
 import UsedTheme from "../../../infrastucture/theme/use.theme";
+import { CommonScreenView } from "../../../infrastucture/theme/styles/container.screen.style";
 import {
   CommonView,
   InnerContentView,
 } from "../../../infrastucture/theme/styles/user.profile.style";
-import { CommonScreenView } from "../../../infrastucture/theme/styles/container.screen.style";
 
-export default EditProfile = () => {
+export default ChangePassword = () => {
   const theme = UsedTheme();
-
   return (
     <CommonScreenView theme={theme} paddingBottom={tabBarTotalHeight + 10}>
       <ScrollView vertical showsHorizontalScrollIndicator={false}>
-        <SafeAreaView style={styles.container}>
-          <CommonView flex={1}>
-            <InnerContentView>
-              <View
+        {/* start of profile */}
+        <CommonView flex={1}>
+          <InnerContentView>
+            <View
+              style={{
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <Image
+                source={require("../../../../assets/avatar_profile_icon.png")}
+                style={{ height: 180, width: 180 }}
+              />
+              <Text
                 style={{
-                  flexDirection: "column",
-                  alignItems: "center",
+                  fontFamily: theme.typography.PRIMARY,
+                  fontSize: 20,
+                  textTransform: "uppercase",
                 }}
               >
-                <Image
-                  source={require("../../../../assets/avatar_profile_icon.png")}
-                  style={{ height: 180, width: 180 }}
-                />
-                <Text
-                  style={{
-                    fontFamily: theme.typography.PRIMARY,
-                    fontSize: 20,
-                    textTransform: "uppercase",
-                  }}
-                >
-                  calum scott
-                </Text>
-                <Text
-                  style={{
-                    color: theme.colors.SECONDARY,
-                    fontFamily: theme.typography.PRIMARY,
-                    fontSize: 15,
-                    textTransform: "uppercase",
-                  }}
-                >
-                  active: 26 May 2022
-                </Text>
-              </View>
-            </InnerContentView>
-          </CommonView>
+                calum scott
+              </Text>
+              <Text
+                style={{
+                  color: theme.colors.SECONDARY,
+                  fontFamily: theme.typography.PRIMARY,
+                  fontSize: 15,
+                  textTransform: "uppercase",
+                }}
+              >
+                active: 26 May 2022
+              </Text>
+            </View>
+          </InnerContentView>
+        </CommonView>
+        {/* end of profile */}
 
-          {/* start input field */}
-
-          <View style={{ flex: 1, margin: 10 }}>
+        {/* start input field */}
+        <SafeAreaView
+          style={{ width: "100%", flex: 1, padding: 10, paddingHorizontal: 20 }}
+        >
+          <View>
             <View style={{ width: "100%", marginVertical: 10 }}>
               <Text
-                style={{ fontFamily: theme.typography.PRIMARY, color: "#aaa" }}
+                style={{
+                  fontFamily: theme.typography.PRIMARY,
+                  color: "#aaa",
+                  textTransform: "uppercase",
+                }}
               >
-                NAME
+                current password
               </Text>
               <TextInput
                 style={{
@@ -72,15 +78,21 @@ export default EditProfile = () => {
                   paddingVertical: 2,
                   fontSize: 22,
                   fontWeight: "bold",
+                  letterSpacing: 2,
                 }}
+                secureTextEntry={true}
               />
             </View>
 
             <View style={{ width: "100%", marginVertical: 10 }}>
               <Text
-                style={{ fontFamily: theme.typography.PRIMARY, color: "#aaa" }}
+                style={{
+                  fontFamily: theme.typography.PRIMARY,
+                  color: "#aaa",
+                  textTransform: "uppercase",
+                }}
               >
-                EMAIL
+                new password
               </Text>
               <TextInput
                 style={{
@@ -90,15 +102,21 @@ export default EditProfile = () => {
                   paddingVertical: 2,
                   fontSize: 22,
                   fontWeight: "bold",
+                  letterSpacing: 2,
                 }}
+                secureTextEntry={true}
               />
             </View>
 
             <View style={{ width: "100%", marginVertical: 10 }}>
               <Text
-                style={{ fontFamily: theme.typography.PRIMARY, color: "#aaa" }}
+                style={{
+                  fontFamily: theme.typography.PRIMARY,
+                  color: "#aaa",
+                  textTransform: "uppercase",
+                }}
               >
-                MOBILE NUMBER
+                confirm password
               </Text>
               <TextInput
                 style={{
@@ -108,11 +126,13 @@ export default EditProfile = () => {
                   paddingVertical: 2,
                   fontSize: 22,
                   fontWeight: "bold",
+                  letterSpacing: 2,
                 }}
+                secureTextEntry={true}
               />
             </View>
           </View>
-          {/* end input field */}
+          {/* end of input field  */}
 
           {/* button */}
           <View
@@ -125,7 +145,6 @@ export default EditProfile = () => {
             <TouchableOpacity>
               <View
                 style={{
-                  fontFamily: theme.typography.PRIMARY,
                   width: 150,
                   backgroundColor: "#333",
                   borderRadius: 20,
@@ -135,11 +154,20 @@ export default EditProfile = () => {
                   alignItems: "center",
                 }}
               >
-                <Text style={{ fontSize: 14, color: "#fff" }}>UPDATE</Text>
+                <Text
+                  style={{
+                    fontFamily: theme.typography.PRIMARY,
+                    fontSize: 14,
+                    color: "#fff",
+                  }}
+                >
+                  UPDATE
+                </Text>
               </View>
             </TouchableOpacity>
           </View>
         </SafeAreaView>
+        {/* end of button */}
       </ScrollView>
     </CommonScreenView>
   );
