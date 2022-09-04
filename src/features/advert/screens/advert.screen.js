@@ -109,11 +109,7 @@ export const AdvertScreen = ({ navigation }) => {
                 >
                   <ButtonContainer name={"HEART"} label={"1.5k"} />
                   <ButtonContainer name={"EYE"} label={"300"} />
-                  <ButtonContainer
-                    onpress={shareToFacebook}
-                    name={"SHARE"}
-                    label={"200"}
-                  />
+                  <ButtonContainer name={"SHARE"} label={"200"} />
                 </BlurView>
               </View>
 
