@@ -167,6 +167,37 @@ export const ButtonContainer = ({
   );
 };
 
+export const PlayButtonContainerStyle = ({
+  name,
+  label,
+  size,
+  bgcolor,
+  iconcolor,
+  iconsize,
+}) => {
+  return (
+    <View
+      style={{
+        justifyContent: "center",
+        alignItems: "center",
+        marginBottom: 12,
+      }}
+    >
+      <RoundedView size={size} bgcolor={bgcolor}>
+        <SvgIcon
+          name={name}
+          width={iconsize}
+          height={iconsize}
+          iconcolor={iconcolor}
+        />
+      </RoundedView>
+      <Text style={{ fontFamily: "Oswald_500Medium", color: "white" }}>
+        {label}
+      </Text>
+    </View>
+  );
+};
+
 export const AdvertCarousel = ({ data, renderItem }) => {
   return (
     <Carousel
