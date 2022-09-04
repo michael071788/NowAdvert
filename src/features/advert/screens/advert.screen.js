@@ -1,5 +1,6 @@
 import React from "react";
 import { TouchableOpacity, View, Text } from "react-native";
+import Share from "react-native-share";
 import UsedTheme from "../../../infrastucture/theme/use.theme";
 import { MOCK_ADVERT_LIST } from "../../../infrastucture/mockup/data.list";
 import {
@@ -22,11 +23,44 @@ import { UsedPrimaryAppContext } from "../../../services/primary.app.provider";
 import { SvgIcon } from "../../../components/svg.icon";
 import { HeaderBarContainer } from "../../../infrastucture/theme/styles/app.header.style";
 import { UserProfileBar } from "../../profile/user.profile.bar";
+import images from "../../../../assets/imagesBase64";
+
+function getErrorString(error, defaultValue) {
+  let e = defaultValue || "Something went wrong. Please try again";
+  if (typeof error === "string") {
+    e = error;
+  } else if (error && error.message) {
+    e = error.message;
+  } else if (error && error.props) {
+    e = error.props;
+  }
+  return e;
+}
 
 export const AdvertScreen = ({ navigation }) => {
   const theme = UsedTheme();
 
   const primaryContext = UsedPrimaryAppContext();
+
+  const shareToFacebook = async () => {
+    const shareOptions = {
+      title: "Share my link to FB",
+      message: "This sample message only, just to share though!",
+      backgroundImage: images.image1,
+      icon: images.image1, //"data:<data_type>/<file_extension>;base64,<base64_data>"
+      social: Share.Social.FACEBOOK,
+      url: "https://react-native-share.github.io/react-native-share/docs/install",
+    };
+
+    try {
+      const ShareResponse = await Share.shareSingle(shareOptions);
+      // setResult(JSON.stringify(ShareResponse, null, 2));
+      console.log("ShareResponse: ", ShareResponse);
+    } catch (error) {
+      console.log("Error =>", error);
+      console.log("error: ".concat(getErrorString(error)));
+    }
+  };
 
   const renderItem = ({ item }) => {
     // Having an error on using themes here, still looking for a solution
@@ -75,7 +109,11 @@ export const AdvertScreen = ({ navigation }) => {
                 >
                   <ButtonContainer name={"HEART"} label={"1.5k"} />
                   <ButtonContainer name={"EYE"} label={"300"} />
-                  <ButtonContainer name={"SHARE"} label={"200"} />
+                  <ButtonContainer
+                    onpress={shareToFacebook}
+                    name={"SHARE"}
+                    label={"200"}
+                  />
                 </BlurView>
               </View>
 
