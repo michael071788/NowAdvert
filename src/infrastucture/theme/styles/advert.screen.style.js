@@ -99,9 +99,9 @@ export const LogoCompanyNameContainer = styled(View)`
 
 /* prettier-ignore */
 export const LogoImageStyled = styled(Image)`
-width: 50px;
-height: 50px;
-borderRadius: 50px;
+width: ${(props) => (props.size ? props.size : "50")}px;
+height: ${(props) => (props.size ? props.size : "50")}px;
+borderRadius: ${(props) => (props.size ? props.size : "50")}px;
 marginRight: 5px;
 resizeMode: contain;
 `;
@@ -120,8 +120,8 @@ overflow: hidden;
 flexDirection: column;
 `;
 
-export const LogoImageContainer = ({ source }) => {
-  return <LogoImageStyled source={{ uri: source }} />;
+export const LogoImageContainer = ({ source, size }) => {
+  return <LogoImageStyled source={{ uri: source }} size={size} />;
 };
 
 export const RoundedButton = ({

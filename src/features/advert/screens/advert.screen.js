@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TouchableOpacity, View, Text } from "react-native";
+import { Image, TouchableOpacity, View, Text } from "react-native";
 import { Modal } from "react-native-paper";
 import Share from "react-native-share";
 import UsedTheme from "../../../infrastucture/theme/use.theme";
@@ -18,7 +18,6 @@ import {
   SlideInner,
   SlideView,
 } from "../../../infrastucture/theme/styles/advert.screen.style";
-import { ModalContainerStyle } from "../../../infrastucture/theme/styles/advert.video.screen.style";
 import { ButtonContainer } from "../../../infrastucture/theme/styles/advert.screen.style";
 import { BlurView } from "expo-blur";
 import { UsedPrimaryAppContext } from "../../../services/primary.app.provider";
@@ -56,8 +55,59 @@ export const AdvertScreen = ({ navigation }) => {
 
     try {
       const ShareResponse = await Share.shareSingle(shareOptions);
-      // setResult(JSON.stringify(ShareResponse, null, 2));
-      console.log("ShareResponse: ", ShareResponse);
+      const result = ShareResponse;
+      /** Note if result.message is blank, it means that the app is not installed**/
+      if (result.success) hideShareModal();
+    } catch (error) {
+      console.log("Error =>", error);
+      console.log("error: ".concat(getErrorString(error)));
+    }
+  };
+
+  const shareToWhatsApp = async () => {
+    const shareOptions = {
+      title: "Share my link to Whats App",
+      message:
+        "This sample message only intended for Whats App, just to share though!\n" +
+        "Test next line 1\n" +
+        "Test next line 2\n" +
+        "Test next line 3\n",
+      backgroundImage: images.image1,
+      icon: images.image1, //"data:<data_type>/<file_extension>;base64,<base64_data>"
+      social: Share.Social.WHATSAPP,
+      url: "https://react-native-share.github.io/react-native-share/docs/install",
+    };
+
+    try {
+      const ShareResponse = await Share.shareSingle(shareOptions);
+      const result = ShareResponse;
+      console.log("result: ", result); //added temp
+      if (result.success) hideShareModal();
+    } catch (error) {
+      console.log("Error =>", error);
+      console.log("error: ".concat(getErrorString(error)));
+    }
+  };
+
+  const shareToTwitter = async () => {
+    const shareOptions = {
+      title: "Share my link to Twitter",
+      message:
+        "This sample message only intended for Twitter, just to share though!\n" +
+        "Test next line 1\n" +
+        "Test next line 2\n" +
+        "Test next line 3\n",
+      backgroundImage: images.image1,
+      icon: images.image1, //"data:<data_type>/<file_extension>;base64,<base64_data>"
+      social: Share.Social.TWITTER,
+      url: "https://react-native-share.github.io/react-native-share/docs/install",
+    };
+
+    try {
+      const ShareResponse = await Share.shareSingle(shareOptions);
+      const result = ShareResponse;
+      console.log("result: ", result); //added temp
+      if (result.success) hideShareModal();
     } catch (error) {
       console.log("Error =>", error);
       console.log("error: ".concat(getErrorString(error)));
@@ -210,10 +260,109 @@ export const AdvertScreen = ({ navigation }) => {
       <Modal
         visible={visibleShareModal}
         onDismiss={hideShareModal}
-        contentContainerStyle={ModalContainerStyle}
+        contentContainerStyle={{ flex: 1, flexDirection: "column" }}
       >
-        <View>
-          <Text>AAAAAAAAAAAA</Text>
+        <View style={{ flex: 10 }} />
+        <View
+          style={{
+            flex: 5,
+            paddingTop: 10,
+            paddingHorizontal: 10,
+          }}
+        >
+          <View
+            style={{
+              flex: 1,
+              backgroundColor: "white",
+              borderTopLeftRadius: 10,
+              borderTopRightRadius: 10,
+              paddingTop: 25,
+              paddingHorizontal: 25,
+              flexDirection: "column",
+            }}
+          >
+            <View style={{ flexDirection: "row" }}>
+              <View style={{ flex: 1, alignItems: "flex-start" }}>
+                <LogoImageContainer
+                  source={
+                    "https://s3.eu-west-3.amazonaws.com/www.gccfmt.com/test/sweet_candy_shop.png"
+                  }
+                  size={25}
+                />
+              </View>
+              <View style={{ flex: 1, alignItems: "flex-end" }}>
+                <TouchableOpacity onPress={hideShareModal} activeOpacity={0.8}>
+                  <SvgIcon
+                    name={"XMARK"}
+                    height={25}
+                    width={25}
+                    iconcolor={theme.colors.TERTIARY}
+                  />
+                </TouchableOpacity>
+              </View>
+            </View>
+            <View
+              style={{
+                alignItems: "flex-start",
+                marginTop: 10,
+              }}
+            >
+              <Text
+                style={{
+                  fontFamily: theme.typography.PRIMARY,
+                  fontSize: 15,
+                  textTransform: "uppercase",
+                }}
+              >
+                SHARE THIS ADVERT
+              </Text>
+            </View>
+            <View
+              style={{
+                alignItems: "flex-start",
+              }}
+            >
+              <Text
+                style={{
+                  fontFamily: theme.typography.PRIMARY,
+                  fontSize: 10,
+                  textTransform: "uppercase",
+                  color: theme.colors.SECONDARY,
+                }}
+              >
+                SHARE THIS ADVERT WITH YOUR FRIENDS &amp; FAMILY
+              </Text>
+            </View>
+            <View
+              style={{
+                marginTop: 25,
+                alignItems: "center",
+                flexDirection: "row",
+                justifyContent: "center",
+              }}
+            >
+              <TouchableOpacity onPress={shareToWhatsApp} activeOpacity={0.8}>
+                <Image
+                  source={require("../../../../assets/whatsapp_icon.png")}
+                  style={{ height: 50, width: 50, marginRight: 15 }}
+                />
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={shareToFacebook} activeOpacity={0.8}>
+                <Image
+                  source={require("../../../../assets/facebook_icon.png")}
+                  style={{ height: 50, width: 50, marginRight: 15 }}
+                />
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={shareToTwitter} activeOpacity={0.8}>
+                <Image
+                  source={require("../../../../assets/twitter_icon.png")}
+                  style={{ height: 50, width: 50 }}
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
         </View>
       </Modal>
     </>
