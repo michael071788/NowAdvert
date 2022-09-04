@@ -119,13 +119,14 @@ width: 45%;
 height: 40%;
 `;
 
-export const BackButtonContainer = () => {
+export const BackButtonContainer = ({ onpress }) => {
   return (
     <View style={{ margin: 10 }}>
       <ButtonContainer
         name={"CARETLEFT"}
         size={30}
         bgcolor={"rgba(105, 105, 105, 0.37)"}
+        onpress={onpress}
       />
     </View>
   );

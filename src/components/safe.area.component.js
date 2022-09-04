@@ -1,10 +1,10 @@
-import { StatusBar, SafeAreaView } from "react-native";
+import { SafeAreaView } from "react-native";
 import styled from "styled-components/native";
 
 /* prettier-ignore */
 /* Ignore the  backgroundColor casing here */
-// backgroundColor: "red";
+/* Remove checking of status bar height*/
+//  ${StatusBar.currentHeight && `margin-top: ${StatusBar.currentHeight}px`};
 export const SafeArea = styled(SafeAreaView)`
   flex: 1;
-  ${StatusBar.currentHeight && `margin-top: ${StatusBar.currentHeight}px`};
 `;

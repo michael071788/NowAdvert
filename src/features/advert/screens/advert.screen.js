@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { TouchableOpacity, View, Text } from "react-native";
+import { Modal } from "react-native-paper";
 import Share from "react-native-share";
 import UsedTheme from "../../../infrastucture/theme/use.theme";
 import { MOCK_ADVERT_LIST } from "../../../infrastucture/mockup/data.list";
@@ -17,6 +18,7 @@ import {
   SlideInner,
   SlideView,
 } from "../../../infrastucture/theme/styles/advert.screen.style";
+import { ModalContainerStyle } from "../../../infrastucture/theme/styles/advert.video.screen.style";
 import { ButtonContainer } from "../../../infrastucture/theme/styles/advert.screen.style";
 import { BlurView } from "expo-blur";
 import { UsedPrimaryAppContext } from "../../../services/primary.app.provider";
@@ -61,6 +63,11 @@ export const AdvertScreen = ({ navigation }) => {
       console.log("error: ".concat(getErrorString(error)));
     }
   };
+
+  const [visibleShareModal, setVisibleShareModal] = useState(false);
+
+  const showShareModal = () => setVisibleShareModal(true);
+  const hideShareModal = () => setVisibleShareModal(false);
 
   const renderItem = ({ item }) => {
     // Having an error on using themes here, still looking for a solution
@@ -109,7 +116,11 @@ export const AdvertScreen = ({ navigation }) => {
                 >
                   <ButtonContainer name={"HEART"} label={"1.5k"} />
                   <ButtonContainer name={"EYE"} label={"300"} />
-                  <ButtonContainer name={"SHARE"} label={"200"} />
+                  <ButtonContainer
+                    name={"SHARE"}
+                    label={"200"}
+                    onpress={showShareModal}
+                  />
                 </BlurView>
               </View>
 
@@ -187,13 +198,24 @@ export const AdvertScreen = ({ navigation }) => {
   };
 
   return (
-    <MainScreenView theme={theme}>
-      <HeaderBarContainer>
-        <UserProfileBar isShown={true} />
-      </HeaderBarContainer>
-      <AdvertCarouselContainer>
-        <AdvertCarousel data={MOCK_ADVERT_LIST} renderItem={renderItem} />
-      </AdvertCarouselContainer>
-    </MainScreenView>
+    <>
+      <MainScreenView theme={theme}>
+        <HeaderBarContainer>
+          <UserProfileBar isShown={true} />
+        </HeaderBarContainer>
+        <AdvertCarouselContainer>
+          <AdvertCarousel data={MOCK_ADVERT_LIST} renderItem={renderItem} />
+        </AdvertCarouselContainer>
+      </MainScreenView>
+      <Modal
+        visible={visibleShareModal}
+        onDismiss={hideShareModal}
+        contentContainerStyle={ModalContainerStyle}
+      >
+        <View>
+          <Text>AAAAAAAAAAAA</Text>
+        </View>
+      </Modal>
+    </>
   );
 };

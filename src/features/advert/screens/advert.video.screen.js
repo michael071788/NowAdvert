@@ -1,11 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import {
-  Image,
-  Text,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  View,
-} from "react-native";
+import { Image, Text, TouchableWithoutFeedback, View } from "react-native";
 import CircularProgress from "react-native-circular-progress-indicator";
 import { Video } from "expo-av";
 import {
@@ -108,14 +102,7 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
           />
           <VideoButtonContainer>
             <Container1>
-              <TouchableOpacity
-                onPress={() => {
-                  goBackAdvertScreen();
-                }}
-                activeOpacity={0.8}
-              >
-                <BackButtonContainer />
-              </TouchableOpacity>
+              <BackButtonContainer onpress={goBackAdvertScreen} />
             </Container1>
             <Container2>
               <TouchableWithoutFeedback
@@ -155,18 +142,12 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
           >
             <ModalContainer1>
               <View style={{ marginRight: 15 }}>
-                <TouchableOpacity
-                  onPress={() => {
-                    goBackAdvertScreen();
-                  }}
-                  activeOpacity={0.8}
-                >
-                  <ButtonContainer
-                    name={"XMARK"}
-                    size={30}
-                    bgcolor={"rgba(105, 105, 105, 0.37)"}
-                  />
-                </TouchableOpacity>
+                <ButtonContainer
+                  name={"XMARK"}
+                  size={30}
+                  bgcolor={"rgba(105, 105, 105, 0.37)"}
+                  onpress={goBackAdvertScreen}
+                />
               </View>
             </ModalContainer1>
             <ModalContainer2>

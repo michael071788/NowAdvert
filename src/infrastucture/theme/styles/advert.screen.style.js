@@ -124,16 +124,25 @@ export const LogoImageContainer = ({ source }) => {
   return <LogoImageStyled source={{ uri: source }} />;
 };
 
-export const RoundedButton = ({ name, size, bgcolor, iconcolor, iconsize }) => {
+export const RoundedButton = ({
+  name,
+  size,
+  bgcolor,
+  iconcolor,
+  iconsize,
+  onpress,
+}) => {
   return (
-    <RoundedView size={size} bgcolor={bgcolor}>
-      <SvgIcon
-        name={name}
-        width={iconsize}
-        height={iconsize}
-        iconcolor={iconcolor}
-      />
-    </RoundedView>
+    <TouchableOpacity onPress={onpress} activeOpacity={0.8}>
+      <RoundedView size={size} bgcolor={bgcolor}>
+        <SvgIcon
+          name={name}
+          width={iconsize}
+          height={iconsize}
+          iconcolor={iconcolor}
+        />
+      </RoundedView>
+    </TouchableOpacity>
   );
 };
 
@@ -144,6 +153,7 @@ export const ButtonContainer = ({
   bgcolor,
   iconcolor,
   iconsize,
+  onpress,
 }) => {
   return (
     <View
@@ -159,6 +169,7 @@ export const ButtonContainer = ({
         bgcolor={bgcolor}
         iconcolor={iconcolor}
         iconsize={iconsize}
+        onpress={onpress}
       />
       <Text style={{ fontFamily: "Oswald_500Medium", color: "white" }}>
         {label}
