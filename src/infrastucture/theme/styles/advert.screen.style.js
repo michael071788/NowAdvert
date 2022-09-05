@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components/native";
-import { Image, Text, View } from "react-native";
+import { Image, Text, View, TouchableOpacity } from "react-native";
 import { Card } from "react-native-paper";
 import Carousel from "react-native-snap-carousel";
 import { ViewportWidth, ViewportHeight, WinPix } from "../../../utils/index";
@@ -18,9 +18,15 @@ export const ItemWidth = slideWidth + itemHorizontalMargin * 2;
 /* prettier-ignore */
 export const MainScreenView = styled(View)`
   flex: 1;
-  alignItems: center;
+  flexDirection: column;
   backgroundColor: ${(props) =>
     props.theme ? props.theme.colors.BACKGROUND : "transparent"};
+`;
+
+/* prettier-ignore */
+export const AdvertCarouselContainer = styled(View)`
+flex: 1;
+alignItems: center;
 `;
 
 /* prettier-ignore */
@@ -93,9 +99,9 @@ export const LogoCompanyNameContainer = styled(View)`
 
 /* prettier-ignore */
 export const LogoImageStyled = styled(Image)`
-width: 50px;
-height: 50px;
-borderRadius: 50px;
+width: ${(props) => (props.size ? props.size : "50")}px;
+height: ${(props) => (props.size ? props.size : "50")}px;
+borderRadius: ${(props) => (props.size ? props.size : "50")}px;
 marginRight: 5px;
 resizeMode: contain;
 `;
@@ -114,20 +120,29 @@ overflow: hidden;
 flexDirection: column;
 `;
 
-export const LogoImageContainer = ({ source }) => {
-  return <LogoImageStyled source={{ uri: source }} />;
+export const LogoImageContainer = ({ source, size }) => {
+  return <LogoImageStyled source={{ uri: source }} size={size} />;
 };
 
-export const RoundedButton = ({ name, size, bgcolor, iconcolor, iconsize }) => {
+export const RoundedButton = ({
+  name,
+  size,
+  bgcolor,
+  iconcolor,
+  iconsize,
+  onpress,
+}) => {
   return (
-    <RoundedView size={size} bgcolor={bgcolor}>
-      <SvgIcon
-        name={name}
-        width={iconsize}
-        height={iconsize}
-        iconcolor={iconcolor}
-      />
-    </RoundedView>
+    <TouchableOpacity onPress={onpress} activeOpacity={0.8}>
+      <RoundedView size={size} bgcolor={bgcolor}>
+        <SvgIcon
+          name={name}
+          width={iconsize}
+          height={iconsize}
+          iconcolor={iconcolor}
+        />
+      </RoundedView>
+    </TouchableOpacity>
   );
 };
 
@@ -138,6 +153,7 @@ export const ButtonContainer = ({
   bgcolor,
   iconcolor,
   iconsize,
+  onpress,
 }) => {
   return (
     <View
@@ -153,7 +169,39 @@ export const ButtonContainer = ({
         bgcolor={bgcolor}
         iconcolor={iconcolor}
         iconsize={iconsize}
+        onpress={onpress}
       />
+      <Text style={{ fontFamily: "Oswald_500Medium", color: "white" }}>
+        {label}
+      </Text>
+    </View>
+  );
+};
+
+export const PlayButtonContainerStyle = ({
+  name,
+  label,
+  size,
+  bgcolor,
+  iconcolor,
+  iconsize,
+}) => {
+  return (
+    <View
+      style={{
+        justifyContent: "center",
+        alignItems: "center",
+        marginBottom: 12,
+      }}
+    >
+      <RoundedView size={size} bgcolor={bgcolor}>
+        <SvgIcon
+          name={name}
+          width={iconsize}
+          height={iconsize}
+          iconcolor={iconcolor}
+        />
+      </RoundedView>
       <Text style={{ fontFamily: "Oswald_500Medium", color: "white" }}>
         {label}
       </Text>
@@ -175,6 +223,8 @@ export const AdvertCarousel = ({ data, renderItem }) => {
       slideInterpolatedStyle={animatedStyles}
       useScrollView={true}
       vertical={true}
+      activeSlideOffset={1}
+      enableSnap={true}
     />
   );
 };

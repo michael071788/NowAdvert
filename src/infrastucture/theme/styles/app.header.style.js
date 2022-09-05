@@ -4,4 +4,6 @@ import { View } from "react-native";
 /* prettier-ignore */
 export const HeaderBarContainer = styled(View)`
   flex-direction: row;
+  justifyContent: flex-end;
+  padding: 10px;
 `;
