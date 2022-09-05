@@ -1,39 +1,43 @@
 import React from "react";
 import { SafeArea } from "../../components/safe.area.component";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { AdvertNavigator } from "./advert.navigator";
+import { createStackNavigator } from "@react-navigation/stack";
 import { ProfileNavigator } from "./profile.navigator";
+import { AdvertScreen } from "../../features/advert/screens/advert.screen";
+import { AdvertVideoScreen } from "../../features/advert/screens/advert.video.screen";
 
 import { appNavigatorScreenOptions } from "../theme/styles/app.navigator.style";
+<<<<<<< HEAD
 import { HeaderBarContainer } from "../theme/styles/app.header.style";
 import { UserProfileBar } from "../../features/profile/user.profile.bar";
 import { UsedPrimaryAppContext } from "../../services/primary.app.provider";
 
 const Tab = createBottomTabNavigator();
+=======
+
+const AppStackNavigator = createStackNavigator();
+>>>>>>> develop
 
 export const AppNavigator = () => {
-  const primaryContext = UsedPrimaryAppContext();
-  const isUserProfileShown = primaryContext.isShowUserProfileBar;
-
   return (
     <>
       <SafeArea>
-        <HeaderBarContainer
-          style={{
-            padding: isUserProfileShown ? 15 : 0,
-            justifyContent: isUserProfileShown ? "flex-end" : "flex-start",
-          }}
-        >
-          <UserProfileBar isShown={isUserProfileShown} />
-        </HeaderBarContainer>
-
-        <Tab.Navigator
+        <AppStackNavigator.Navigator
           screenOptions={appNavigatorScreenOptions}
-          initialRouteName="Advert"
+          initialRouteName="AdvertScreen"
         >
-          <Tab.Screen name="Advert" component={AdvertNavigator} />
-          <Tab.Screen name="Profile" component={ProfileNavigator} />
-        </Tab.Navigator>
+          <AppStackNavigator.Screen
+            name="AdvertScreen"
+            component={AdvertScreen}
+          />
+          <AppStackNavigator.Screen
+            name="AdvertVideoScreen"
+            component={AdvertVideoScreen}
+          />
+          <AppStackNavigator.Screen
+            name="Profile"
+            component={ProfileNavigator}
+          />
+        </AppStackNavigator.Navigator>
       </SafeArea>
     </>
   );
