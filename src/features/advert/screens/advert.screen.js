@@ -37,6 +37,7 @@ export const AdvertScreen = ({ navigation }) => {
                 id: item.id,
                 videoURI: item.videoURI,
               });
+
               primaryContext.ShowUserProfileBar(false);
             }}
             activeOpacity={0.8}
@@ -85,7 +86,6 @@ export const AdvertScreen = ({ navigation }) => {
               />
             </ButtonAdvertInnerContainer>
           </ButtonAdvertContainer>
-
           <BottomLeftContainer>
             <LogoCompanyNameContainer>
               <LogoImageContainer source={item.logoURI} />
@@ -112,7 +112,6 @@ export const AdvertScreen = ({ navigation }) => {
               </Text>
             </View>
           </BottomLeftContainer>
-
           <BottomRightContainer>
             <Text
               style={{

@@ -8,6 +8,7 @@ import { appNavigatorScreenOptions } from "../theme/styles/app.navigator.style";
 import { HeaderBarContainer } from "../theme/styles/app.header.style";
 import { UserProfileBar } from "../../features/profile/user.profile.bar";
 import { UsedPrimaryAppContext } from "../../services/primary.app.provider";
+
 const Tab = createBottomTabNavigator();
 
 export const AppNavigator = () => {

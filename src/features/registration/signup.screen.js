@@ -170,7 +170,7 @@ const SignUp = ({ navigation }) => {
 
           {/* button */}
           <View>
-            <TouchableOpacity>
+            <hableOpacity>
               <View
                 style={{
                   width: "100%",
@@ -193,7 +193,7 @@ const SignUp = ({ navigation }) => {
                   sign up
                 </Text>
               </View>
-            </TouchableOpacity>
+            </hableOpacity>
           </View>
           <View
             style={{

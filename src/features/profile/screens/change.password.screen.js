@@ -3,17 +3,19 @@ import {
   ScrollView,
   Text,
   SafeAreaView,
-  TouchableOpacity,
   TextInput,
+  Image,
 } from "react-native";
+import { Button } from "react-native-paper";
 import UsedTheme from "../../../infrastucture/theme/use.theme";
 import { CommonScreenView } from "../../../infrastucture/theme/styles/container.screen.style";
 import {
   CommonView,
   InnerContentView,
 } from "../../../infrastucture/theme/styles/user.profile.style";
+import { tabBarTotalHeight } from "../../../infrastucture/theme/styles/app.navigator.style";
 
-export default ChangePassword = () => {
+const ChangePassword = () => {
   const theme = UsedTheme();
   return (
     <CommonScreenView theme={theme} paddingBottom={tabBarTotalHeight + 10}>
@@ -29,7 +31,7 @@ export default ChangePassword = () => {
             >
               <Image
                 source={require("../../../../assets/avatar_profile_icon.png")}
-                style={{ height: 180, width: 180 }}
+                style={{ height: 150, width: 150 }}
               />
               <Text
                 style={{
@@ -60,75 +62,68 @@ export default ChangePassword = () => {
           style={{ width: "100%", flex: 1, padding: 10, paddingHorizontal: 20 }}
         >
           <View>
-            <View style={{ width: "100%", marginVertical: 10 }}>
+            <View style={{ marginVertical: 10 }}>
               <Text
                 style={{
                   fontFamily: theme.typography.PRIMARY,
                   color: "#aaa",
-                  textTransform: "uppercase",
                 }}
               >
-                current password
+                CURRENT PASSWORD
               </Text>
               <TextInput
+                secureTextEntry
                 style={{
-                  fontFamily: theme.typography.PRIMARY,
-                  borderBottomColor: "#aaa",
+                  backgroundColor: "transparent",
                   borderBottomWidth: 1,
-                  paddingVertical: 2,
-                  fontSize: 22,
-                  fontWeight: "bold",
-                  letterSpacing: 2,
+                  fontFamily: theme.typography.PRIMARY,
+                  fontSize: 30,
+                  paddingHorizontal: 0,
                 }}
-                secureTextEntry={true}
               />
             </View>
 
-            <View style={{ width: "100%", marginVertical: 10 }}>
+            <View style={{ marginVertical: 10 }}>
               <Text
                 style={{
-                  fontFamily: theme.typography.PRIMARY,
                   color: "#aaa",
-                  textTransform: "uppercase",
+                  fontWeight: "bold",
+                  fontFamily: theme.typography.PRIMARY,
                 }}
               >
-                new password
+                CURRENT PASSWORD
               </Text>
               <TextInput
+                secureTextEntry
                 style={{
-                  fontFamily: theme.typography.PRIMARY,
-                  borderBottomColor: "#aaa",
+                  backgroundColor: "transparent",
                   borderBottomWidth: 1,
-                  paddingVertical: 2,
-                  fontSize: 22,
-                  fontWeight: "bold",
-                  letterSpacing: 2,
+                  fontFamily: theme.typography.PRIMARY,
+                  fontSize: 30,
+                  paddingHorizontal: 0,
                 }}
-                secureTextEntry={true}
               />
             </View>
 
-            <View style={{ width: "100%", marginVertical: 10 }}>
+            <View style={{ marginVertical: 10 }}>
               <Text
                 style={{
-                  fontFamily: theme.typography.PRIMARY,
                   color: "#aaa",
-                  textTransform: "uppercase",
+                  fontWeight: "bold",
+                  fontFamily: theme.typography.PRIMARY,
                 }}
               >
-                confirm password
+                CURRENT PASSWORD
               </Text>
               <TextInput
+                secureTextEntry
                 style={{
-                  fontFamily: theme.typography.PRIMARY,
-                  borderBottomColor: "#aaa",
+                  backgroundColor: "transparent",
                   borderBottomWidth: 1,
-                  paddingVertical: 2,
-                  fontSize: 22,
-                  fontWeight: "bold",
-                  letterSpacing: 2,
+                  fontFamily: theme.typography.PRIMARY,
+                  fontSize: 30,
+                  paddingHorizontal: 0,
                 }}
-                secureTextEntry={true}
               />
             </View>
           </View>
@@ -137,38 +132,29 @@ export default ChangePassword = () => {
           {/* button */}
           <View
             style={{
-              marginTop: 20,
+              marginTop: 10,
               justifyContent: "center",
               alignItems: "center",
             }}
           >
-            <TouchableOpacity>
-              <View
-                style={{
-                  width: 150,
-                  backgroundColor: "#333",
-                  borderRadius: 20,
-                  paddingVertical: 10,
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Text
-                  style={{
-                    fontFamily: theme.typography.PRIMARY,
-                    fontSize: 14,
-                    color: "#fff",
-                  }}
-                >
-                  UPDATE
-                </Text>
-              </View>
-            </TouchableOpacity>
+            <Button
+              mode="contained"
+              buttonColor="#000"
+              style={{
+                width: "50%",
+                borderRadius: 20,
+                backgroundColor: "#333",
+                fontFamily: theme.typography.PRIMARY,
+              }}
+            >
+              LOGIN
+            </Button>
           </View>
+
+          {/* end of button */}
         </SafeAreaView>
-        {/* end of button */}
       </ScrollView>
     </CommonScreenView>
   );
 };
+export default ChangePassword;

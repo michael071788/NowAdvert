@@ -1,15 +1,10 @@
-import {
-  View,
-  ScrollView,
-  Text,
-  SafeAreaView,
-  TouchableOpacity,
-  TextInput,
-} from "react-native";
+import { View, ScrollView, Text, SafeAreaView, TextInput } from "react-native";
+import { Button } from "react-native-paper";
 import UsedTheme from "../../../infrastucture/theme/use.theme";
 import { CommonScreenView } from "../../../infrastucture/theme/styles/container.screen.style";
+import { tabBarTotalHeight } from "../../infrastucture/theme/styles/app.navigator.style";
 
-export default Login = ({ navigation }) => {
+const Login = ({ navigation }) => {
   const theme = UsedTheme();
 
   return (
@@ -94,30 +89,10 @@ export default Login = ({ navigation }) => {
 
           {/* button */}
           <View>
-            <TouchableOpacity>
-              <View
-                style={{
-                  width: "100%",
-                  backgroundColor: "#333",
-                  borderRadius: 20,
-                  paddingVertical: 10,
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Text
-                  style={{
-                    fontFamily: theme.typography.PRIMARY,
-                    textTransform: "uppercase",
-                    fontSize: 18,
-                    color: "#fff",
-                  }}
-                >
-                  login
-                </Text>
-              </View>
-            </TouchableOpacity>
+            <Button mode="contained" buttonColor="#333">
+              LOGIN
+            </Button>
+
             <View
               style={{
                 marginVertical: 10,
@@ -132,59 +107,29 @@ export default Login = ({ navigation }) => {
                 - OR -
               </Text>
             </View>
+
             <View style={{ marginBottom: 10 }}>
-              <TouchableOpacity>
-                <View
-                  style={{
-                    width: "100%",
-                    borderWidth: 1,
-                    borderColor: "#000",
-                    borderRadius: 20,
-                    paddingVertical: 10,
-                    flexDirection: "row",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    marginBottom: 10,
-                  }}
-                >
-                  <Text
-                    style={{
-                      fontFamily: theme.typography.PRIMARY,
-                      textTransform: "uppercase",
-                      fontSize: 18,
-                      color: "#333",
-                    }}
-                  >
-                    continue with google
-                  </Text>
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity>
-                <View
-                  style={{
-                    width: "100%",
-                    backgroundColor: "#fff",
-                    borderWidth: 1,
-                    borderColor: "#000",
-                    borderRadius: 20,
-                    paddingVertical: 10,
-                    flexDirection: "row",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <Text
-                    style={{
-                      fontFamily: theme.typography.PRIMARY,
-                      textTransform: "uppercase",
-                      fontSize: 18,
-                      color: "#333",
-                    }}
-                  >
-                    continue with apple
-                  </Text>
-                </View>
-              </TouchableOpacity>
+              <Button
+                mode="outlined"
+                color="#000"
+                textColor="#000"
+                style={{ marginBottom: 20 }}
+                onPress={() => alert("pressed")}
+              >
+                CONTINUE WITH GOOGLE
+              </Button>
+            </View>
+
+            <View style={{ marginBottom: 10 }}>
+              <Button
+                mode="outlined"
+                color="#000"
+                textColor="#000"
+                style={{ marginBottom: 20 }}
+                onPress={() => alert("pressed")}
+              >
+                CONTINUE WITH APPLE
+              </Button>
             </View>
           </View>
           <View
@@ -200,11 +145,18 @@ export default Login = ({ navigation }) => {
             >
               NEW USER?{" "}
             </Text>
-            <TouchableOpacity onPress={() => navigation.navigate("SIGNUP")}>
-              <Text style={{ fontFamily: theme.typography.PRIMARY }}>
-                SIGN UP
-              </Text>
-            </TouchableOpacity>
+
+            <Button
+              mode="contained"
+              onPress={() => navigation.navigate("SIGNUP")}
+              buttonColor="#000"
+              style={{
+                width: "50%",
+                fontFamily: theme.typography.PRIMARY,
+              }}
+            >
+              SIGN UP
+            </Button>
           </View>
         </SafeAreaView>
         {/* end of button */}
@@ -212,3 +164,4 @@ export default Login = ({ navigation }) => {
     </CommonScreenView>
   );
 };
+export default Login;

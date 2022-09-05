@@ -3,17 +3,19 @@ import {
   ScrollView,
   Text,
   SafeAreaView,
-  TouchableOpacity,
   TextInput,
+  Image,
 } from "react-native";
+import { Button } from "react-native-paper";
 import UsedTheme from "../../../infrastucture/theme/use.theme";
 import { CommonScreenView } from "../../../infrastucture/theme/styles/container.screen.style";
 import {
   CommonView,
   InnerContentView,
 } from "../../../infrastucture/theme/styles/user.profile.style";
+import { tabBarTotalHeight } from "../../../infrastucture/theme/styles/app.navigator.style";
 
-export default LinkedAccounts = () => {
+const LinkedAccounts = () => {
   const theme = UsedTheme();
   return (
     <CommonScreenView theme={theme} paddingBottom={tabBarTotalHeight + 10}>
@@ -151,6 +153,7 @@ export default LinkedAccounts = () => {
           {/* end of input field  */}
 
           {/* button */}
+
           <View
             style={{
               marginTop: 20,
@@ -158,29 +161,19 @@ export default LinkedAccounts = () => {
               alignItems: "center",
             }}
           >
-            <TouchableOpacity>
-              <View
-                style={{
-                  width: 150,
-                  backgroundColor: "#333",
-                  borderRadius: 20,
-                  paddingVertical: 10,
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Text
-                  style={{
-                    fontFamily: theme.typography.PRIMARY,
-                    fontSize: 14,
-                    color: "#fff",
-                  }}
-                >
-                  UPDATE
-                </Text>
-              </View>
-            </TouchableOpacity>
+            <Button
+              mode="contained"
+              onPress={() => alert("pressed")}
+              buttonColor="#000"
+              style={{
+                width: "50%",
+                borderRadius: 20,
+                backgroundColor: "#333",
+                fontFamily: theme.typography.PRIMARY,
+              }}
+            >
+              UPDATE
+            </Button>
           </View>
         </SafeAreaView>
         {/* end of button */}
@@ -188,3 +181,4 @@ export default LinkedAccounts = () => {
     </CommonScreenView>
   );
 };
+export default LinkedAccounts;

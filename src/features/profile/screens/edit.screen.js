@@ -3,23 +3,25 @@ import {
   ScrollView,
   Text,
   SafeAreaView,
-  TouchableOpacity,
   TextInput,
+  Image,
 } from "react-native";
+import { Button } from "react-native-paper";
 import UsedTheme from "../../../infrastucture/theme/use.theme";
 import {
   CommonView,
   InnerContentView,
 } from "../../../infrastucture/theme/styles/user.profile.style";
 import { CommonScreenView } from "../../../infrastucture/theme/styles/container.screen.style";
+import { tabBarTotalHeight } from "../../../infrastucture/theme/styles/app.navigator.style";
 
-export default EditProfile = () => {
+const EditProfile = () => {
   const theme = UsedTheme();
 
   return (
     <CommonScreenView theme={theme} paddingBottom={tabBarTotalHeight + 10}>
       <ScrollView vertical showsHorizontalScrollIndicator={false}>
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView>
           <CommonView flex={1}>
             <InnerContentView>
               <View
@@ -71,7 +73,6 @@ export default EditProfile = () => {
                   borderBottomWidth: 1,
                   paddingVertical: 2,
                   fontSize: 22,
-                  fontWeight: "bold",
                 }}
               />
             </View>
@@ -89,7 +90,6 @@ export default EditProfile = () => {
                   borderBottomWidth: 1,
                   paddingVertical: 2,
                   fontSize: 22,
-                  fontWeight: "bold",
                 }}
               />
             </View>
@@ -107,7 +107,6 @@ export default EditProfile = () => {
                   borderBottomWidth: 1,
                   paddingVertical: 2,
                   fontSize: 22,
-                  fontWeight: "bold",
                 }}
               />
             </View>
@@ -122,25 +121,23 @@ export default EditProfile = () => {
               alignItems: "center",
             }}
           >
-            <TouchableOpacity>
-              <View
-                style={{
-                  fontFamily: theme.typography.PRIMARY,
-                  width: 150,
-                  backgroundColor: "#333",
-                  borderRadius: 20,
-                  paddingVertical: 10,
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Text style={{ fontSize: 14, color: "#fff" }}>UPDATE</Text>
-              </View>
-            </TouchableOpacity>
+            <Button
+              mode="contained"
+              buttonColor="#000"
+              style={{
+                width: "50%",
+                borderRadius: 20,
+                backgroundColor: "#333",
+                fontFamily: theme.typography.PRIMARY,
+              }}
+            >
+              LOGIN
+            </Button>
           </View>
+          {/* end of button */}
         </SafeAreaView>
       </ScrollView>
     </CommonScreenView>
   );
 };
+export default EditProfile;
