@@ -6,16 +6,8 @@ import { AdvertScreen } from "../../features/advert/screens/advert.screen";
 import { AdvertVideoScreen } from "../../features/advert/screens/advert.video.screen";
 
 import { appNavigatorScreenOptions } from "../theme/styles/app.navigator.style";
-<<<<<<< HEAD
-import { HeaderBarContainer } from "../theme/styles/app.header.style";
-import { UserProfileBar } from "../../features/profile/user.profile.bar";
-import { UsedPrimaryAppContext } from "../../services/primary.app.provider";
-
-const Tab = createBottomTabNavigator();
-=======
 
 const AppStackNavigator = createStackNavigator();
->>>>>>> develop
 
 export const AppNavigator = () => {
   return (
