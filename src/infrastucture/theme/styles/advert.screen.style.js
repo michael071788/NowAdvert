@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components/native";
 import { Image, Text, View, TouchableOpacity } from "react-native";
-import { Card } from "react-native-paper";
+import { Card, Modal } from "react-native-paper";
+import Share from "react-native-share";
 import Carousel from "react-native-snap-carousel";
 import { ViewportWidth, ViewportHeight, WinPix } from "../../../utils/index";
 import { scrollInterpolator, animatedStyles } from "../../../utils/animations";
@@ -228,3 +229,154 @@ export const AdvertCarousel = ({ data, renderItem }) => {
     />
   );
 };
+
+//[Start] - Social Media Modal
+
+/* prettier-ignore */
+const UpperContainer = styled(View)`
+flex: 10;
+`;
+
+/* prettier-ignore */
+const BottomContainer = styled(View)`
+flex: 5;
+padding-top: 10px;
+padding-horizontal: 10px;
+`;
+
+/* prettier-ignore */
+const BottomInnerContainer = styled(View)`
+flex: 1;
+background-color: white;
+border-top-left-radius: 10px;
+border-top-right-radius: 10px;
+padding-top: 25px;
+padding-horizontal: 25px;
+flex-direction: column;
+`;
+
+/* prettier-ignore */
+const HeaderModalContainer = styled(View)`
+flex-direction: row;
+`;
+
+/* prettier-ignore */
+const HeaderModalLeftContainer = styled(View)`
+flex: 1;
+align-items: flex-start;
+`;
+
+/* prettier-ignore */
+const HeaderModalRightContainer = styled(View)`
+flex: 1;
+align-items: flex-end;
+`;
+
+/* prettier-ignore */
+const TitleModalContainer = styled(View)`
+align-items: flex-start;
+margin-top: 10px;
+`;
+
+/* prettier-ignore */
+const DescriptionModalContainer = styled(View)`
+align-items: flex-start;
+`;
+
+/* prettier-ignore */
+const SocialMediaContainer = styled(View)`
+margin-top: 25px;
+align-items: center;
+flex-direction: row;
+justify-content: space-evenly;
+`;
+
+//props.visible
+//props.onDismiss
+//props.onPressClose
+//props.theme
+//props.data.logoURI
+export const ShareModalContainer = (props) => {
+  return (
+    <Modal
+      visible={props.visible}
+      onDismiss={props.onDismiss}
+      contentContainerStyle={{ flex: 1, flexDirection: "column" }}
+    >
+      <UpperContainer />
+      <BottomContainer>
+        <BottomInnerContainer>
+          <HeaderModalContainer>
+            <HeaderModalLeftContainer>
+              <LogoImageContainer source={props.logoURI} size={25} />
+            </HeaderModalLeftContainer>
+            <HeaderModalRightContainer>
+              <TouchableOpacity onPress={props.onDismiss} activeOpacity={0.8}>
+                <SvgIcon
+                  name={"XMARK"}
+                  height={25}
+                  width={25}
+                  iconcolor={props.theme.colors.TERTIARY}
+                />
+              </TouchableOpacity>
+            </HeaderModalRightContainer>
+          </HeaderModalContainer>
+          <TitleModalContainer>
+            <Text
+              style={{
+                fontFamily: props.theme.typography.PRIMARY,
+                fontSize: 15,
+                textTransform: "uppercase",
+              }}
+            >
+              SHARE THIS ADVERT
+            </Text>
+          </TitleModalContainer>
+          <DescriptionModalContainer>
+            <Text
+              style={{
+                fontFamily: props.theme.typography.PRIMARY,
+                fontSize: 10,
+                textTransform: "uppercase",
+                color: props.theme.colors.SECONDARY,
+              }}
+            >
+              SHARE THIS ADVERT WITH YOUR FRIENDS &amp; FAMILY
+            </Text>
+          </DescriptionModalContainer>
+          <SocialMediaContainer>
+            <TouchableOpacity
+              onPress={() => props.shareToSocial(Share.Social.WHATSAPP)}
+              activeOpacity={0.8}
+            >
+              <Image
+                source={require("../../../../assets/whatsapp_icon.png")}
+                style={{ height: 50, width: 50 }}
+              />
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => props.shareToSocial(Share.Social.FACEBOOK)}
+              activeOpacity={0.8}
+            >
+              <Image
+                source={require("../../../../assets/facebook_icon.png")}
+                style={{ height: 50, width: 50 }}
+              />
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => props.shareToSocial(Share.Social.TWITTER)}
+              activeOpacity={0.8}
+            >
+              <Image
+                source={require("../../../../assets/twitter_icon.png")}
+                style={{ height: 50, width: 50 }}
+              />
+            </TouchableOpacity>
+          </SocialMediaContainer>
+        </BottomInnerContainer>
+      </BottomContainer>
+    </Modal>
+  );
+}; //[End] - Social Media Modal
