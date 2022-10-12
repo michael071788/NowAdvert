@@ -212,7 +212,7 @@ export const AdvertScreen = ({ navigation }) => {
     <>
       <MainScreenView theme={theme}>
         <HeaderBarContainer>
-          <UserProfileBar isShown={true} />
+          <UserProfileBar isShown={true} navigation={navigation} />
         </HeaderBarContainer>
         <AdvertCarouselContainer>
           <AdvertCarousel data={MOCK_ADVERT_LIST} renderItem={renderItem} />

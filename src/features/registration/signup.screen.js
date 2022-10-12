@@ -6,8 +6,9 @@ import {
   TouchableOpacity,
   TextInput,
 } from "react-native";
-import UsedTheme from "../../../infrastucture/theme/use.theme";
-import { CommonScreenView } from "../../../infrastucture/theme/styles/container.screen.style";
+import UsedTheme from "../../infrastucture/theme/use.theme";
+import { CommonScreenView } from "../../infrastucture/theme/styles/container.screen.style";
+import { tabBarTotalHeight } from "../../infrastucture/theme/styles/app.navigator.style";
 
 const SignUp = ({ navigation }) => {
   const theme = UsedTheme();
@@ -170,7 +171,7 @@ const SignUp = ({ navigation }) => {
 
           {/* button */}
           <View>
-            <hableOpacity>
+            <TouchableOpacity>
               <View
                 style={{
                   width: "100%",
@@ -193,7 +194,7 @@ const SignUp = ({ navigation }) => {
                   sign up
                 </Text>
               </View>
-            </hableOpacity>
+            </TouchableOpacity>
           </View>
           <View
             style={{

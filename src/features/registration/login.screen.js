@@ -1,7 +1,7 @@
 import { View, ScrollView, Text, SafeAreaView, TextInput } from "react-native";
 import { Button } from "react-native-paper";
-import UsedTheme from "../../../infrastucture/theme/use.theme";
-import { CommonScreenView } from "../../../infrastucture/theme/styles/container.screen.style";
+import UsedTheme from "../../infrastucture/theme/use.theme";
+import { CommonScreenView } from "../../infrastucture/theme/styles/container.screen.style";
 import { tabBarTotalHeight } from "../../infrastucture/theme/styles/app.navigator.style";
 
 const Login = ({ navigation }) => {

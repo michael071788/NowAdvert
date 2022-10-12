@@ -37,7 +37,7 @@ import {
 //   </TouchableOpacity>
 // );
 
-export const ProfileScreen = () => {
+export const ProfileScreen = ({ navigation }) => {
   const theme = UsedTheme();
 
   // const [selectedId, setSelectedId] = useState(null);
@@ -114,7 +114,13 @@ export const ProfileScreen = () => {
               ACCOUNT
             </Text>
             <Divider />
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate("Register")}>
+              <Text>Register</Text>
+            </TouchableOpacity>
+            {/* Edit Profile */}
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Edit Profile")}
+            >
               <View style={{ flexDirection: "row" }}>
                 <View
                   style={{
@@ -145,7 +151,10 @@ export const ProfileScreen = () => {
                 </View>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity>
+            {/* Change Password */}
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Change Password")}
+            >
               <View style={{ flexDirection: "row" }}>
                 <View
                   style={{
@@ -176,7 +185,10 @@ export const ProfileScreen = () => {
                 </View>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity>
+            {/* Linked Accounts */}
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Linked Accounts")}
+            >
               <View style={{ flexDirection: "row" }}>
                 <View
                   style={{
