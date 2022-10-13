@@ -87,11 +87,10 @@ const ChangePassword = () => {
               <Text
                 style={{
                   color: "#aaa",
-                  fontWeight: "bold",
                   fontFamily: theme.typography.PRIMARY,
                 }}
               >
-                CURRENT PASSWORD
+                NEW PASSWORD
               </Text>
               <TextInput
                 secureTextEntry
@@ -109,11 +108,10 @@ const ChangePassword = () => {
               <Text
                 style={{
                   color: "#aaa",
-                  fontWeight: "bold",
                   fontFamily: theme.typography.PRIMARY,
                 }}
               >
-                CURRENT PASSWORD
+                CONFIRM PASSWORD
               </Text>
               <TextInput
                 secureTextEntry

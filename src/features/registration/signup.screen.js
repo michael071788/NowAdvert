@@ -5,225 +5,302 @@ import {
   SafeAreaView,
   TouchableOpacity,
   TextInput,
+  StatusBar,
+  KeyboardAvoidingView,
 } from "react-native";
 import UsedTheme from "../../infrastucture/theme/use.theme";
-import { CommonScreenView } from "../../infrastucture/theme/styles/container.screen.style";
-import { tabBarTotalHeight } from "../../infrastucture/theme/styles/app.navigator.style";
+import {
+  HeaderText,
+  Input,
+} from "../../infrastucture/theme/styles/auth.components";
+import { useForm, Controller } from "react-hook-form";
+import { StackActions } from "@react-navigation/native";
 
 const SignUp = ({ navigation }) => {
   const theme = UsedTheme();
+  const {
+    control,
+    handleSubmit,
+    reset,
+    watch,
+    getValues,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      email: "",
+      name: "",
+      phone: "",
+      password: "",
+      cpassword: "",
+    },
+  });
+  const onSubmit = (data) => {
+    // register(data);
+    navigation.dispatch(StackActions.replace("Verify"));
+    reset();
+    // alert("Register Successfully!");
+  };
   return (
-    <CommonScreenView theme={theme} paddingBottom={tabBarTotalHeight + 10}>
-      <ScrollView vertical showsHorizontalScrollIndicator={false}>
-        {/* start input field */}
-        <SafeAreaView
+    <View
+      style={{
+        flex: 1,
+        paddingHorizontal: 11,
+      }}
+    >
+      <ScrollView scrollEnabled={false} showsVerticalScrollIndicator={false}>
+        <View
           style={{
-            width: "100%",
-            flex: 1,
-            paddingHorizontal: 20,
-            paddingTop: 120,
+            flex: 5,
+            alignItems: "center",
+            paddingVertical: 50,
           }}
         >
-          <View>
-            <View>
-              <Text
-                style={{
-                  fontFamily: theme.typography.PRIMARY,
-                  fontWeight: "bold",
-                  fontSize: 30,
-                  textTransform: "uppercase",
+          <View
+            style={{
+              flex: 1,
+              justifyContent: "flex-end",
+              alignItems: "baseline",
+              marginBottom: 5,
+            }}
+          >
+            <HeaderText title="Sign up" subtitle="Create your account now" />
+            <View style={{ flex: 3 }}>
+              {/* email input */}
+              <Controller
+                name="email"
+                control={control}
+                rules={{
+                  required: "This is required",
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                    message: "Email is invalid",
+                  },
                 }}
-              >
-                signup
-              </Text>
-              <Text
-                style={{
-                  fontFamily: theme.typography.PRIMARY,
-                  fontSize: 12,
-                  fontWeight: "bold",
-                  textTransform: "uppercase",
+                render={({ field: { onChange, value } }) => (
+                  <Input
+                    placeholder="EMAIL ADDRESS"
+                    onChangeText={onChange}
+                    value={value}
+                  />
+                )}
+              />
+              <View style={{ height: 18, fontSize: 15 }}>
+                {errors.email ? (
+                  <>
+                    {errors.email.type === "required" && (
+                      <Text style={{ color: "red" }}>
+                        {errors.email.message}
+                      </Text>
+                    )}
+                    {errors.email.type === "pattern" && (
+                      <Text style={{ color: "red" }}>
+                        {errors.email.message}
+                      </Text>
+                    )}
+                  </>
+                ) : null}
+              </View>
+
+              {/* name input */}
+              <Controller
+                name="name"
+                control={control}
+                rules={{
+                  required: "This is required",
                 }}
-              >
-                create your account now
-              </Text>
-            </View>
-
-            <View style={{ marginVertical: 18 }}>
-              <View style={{ width: "100%", marginVertical: 5 }}>
-                <TextInput
-                  style={{
-                    fontFamily: theme.typography.PRIMARY,
-                    borderRadius: 20,
-                    padding: 2,
-                    paddingHorizontal: 20,
-                    fontSize: 14,
-                    backgroundColor: "#ccc",
-                    fontWeight: "bold",
-                  }}
-                  placeholder="EMAIL ADDRESS"
-                  placeholderTextColor="#aaa"
-                />
+                render={({ field: { onChange, value } }) => (
+                  <Input
+                    placeholder="First & Last Name"
+                    onChangeText={onChange}
+                    value={value}
+                  />
+                )}
+              />
+              <View style={{ height: 18, fontSize: 15 }}>
+                {errors.name && (
+                  <Text style={{ color: "red" }}>This is required.</Text>
+                )}
               </View>
 
-              <View style={{ width: "100%", marginVertical: 5 }}>
-                <TextInput
-                  style={{
-                    fontFamily: theme.typography.PRIMARY,
-                    borderRadius: 20,
-                    padding: 2,
-                    paddingHorizontal: 20,
-                    fontSize: 14,
-                    backgroundColor: "#ccc",
-                    fontWeight: "bold",
-                  }}
-                  placeholder="FIRST & LAST NAME"
-                  placeholderTextColor="#aaa"
-                />
-              </View>
-
-              <View style={{ width: "100%", marginVertical: 5 }}>
-                <TextInput
-                  style={{
-                    fontFamily: theme.typography.PRIMARY,
-                    borderRadius: 20,
-                    padding: 2,
-                    paddingHorizontal: 20,
-                    fontSize: 14,
-                    backgroundColor: "#ccc",
-                    fontWeight: "bold",
-                  }}
-                  placeholder="MOBILE NUMBER"
-                  placeholderTextColor="#aaa"
-                />
-              </View>
-
-              <View style={{ width: "100%", marginVertical: 5 }}>
-                <TextInput
-                  style={{
-                    fontFamily: theme.typography.PRIMARY,
-                    borderRadius: 20,
-                    padding: 2,
-                    paddingHorizontal: 20,
-                    fontSize: 14,
-                    backgroundColor: "#ccc",
-                    fontWeight: "bold",
-                  }}
-                  placeholder="PASSWORD"
-                  placeholderTextColor="#aaa"
-                  secureTextEntry={true}
-                />
-              </View>
-
-              <View style={{ width: "100%", marginVertical: 5 }}>
-                <TextInput
-                  style={{
-                    fontFamily: theme.typography.PRIMARY,
-                    borderRadius: 20,
-                    padding: 2,
-                    paddingHorizontal: 20,
-                    fontSize: 14,
-                    backgroundColor: "#ccc",
-                    fontWeight: "bold",
-                  }}
-                  placeholder="CONFIRM PASSWORD"
-                  secureTextEntry={true}
-                  placeholderTextColor="#aaa"
-                />
-              </View>
-              {/* end of input fields */}
-
-              <Text
-                style={{
-                  fontFamily: theme.typography.PRIMARY,
-                  textTransform: "uppercase",
-                  marginVertical: 10,
-                  color: "#aaa",
+              {/* phone input */}
+              <Controller
+                name="phone"
+                control={control}
+                rules={{
+                  required: "This is required",
                 }}
-              >
-                by signing up, you aggre to our
-                <Text
-                  style={{
-                    fontFamily: theme.typography.PRIMARY,
-                    fontWeight: "bold",
-                    marginHorizontal: 5,
-                    color: "#000",
-                  }}
-                  onPress={() => alert("You agreed to our terms and condition")}
-                >
-                  {" "}
-                  terms and condition{" "}
-                </Text>
-                and
-                <Text
-                  style={{
-                    fontFamily: theme.typography.PRIMARY,
-                    fontWeight: "bold",
-                    color: "#000",
-                  }}
-                  onPress={() => alert("You agreed to our privacy policy")}
-                >
-                  {" "}
-                  PRIVACY PLOICY
-                </Text>
-              </Text>
-            </View>
-          </View>
+                render={({ field: { onChange, value } }) => (
+                  <Input
+                    keyboardType="numeric"
+                    placeholder="Mobile Number"
+                    onChangeText={onChange}
+                    value={value}
+                  />
+                )}
+              />
+              <View style={{ height: 18, fontSize: 15 }}>
+                {errors.phone && (
+                  <Text style={{ color: "red" }}>This is required.</Text>
+                )}
+              </View>
 
-          {/* button */}
-          <View>
-            <TouchableOpacity>
+              {/* password input */}
+              <Controller
+                name="password"
+                control={control}
+                rules={{
+                  required: "This is required",
+                }}
+                render={({ field: { onChange, value } }) => (
+                  <Input
+                    placeholder="Password"
+                    onChangeText={onChange}
+                    value={value}
+                    secureTextEntry={true}
+                  />
+                )}
+              />
+              <View style={{ height: 18, fontSize: 15 }}>
+                {errors.password && (
+                  <Text style={{ color: "red" }}>This is required.</Text>
+                )}
+              </View>
+
+              {/* confirm password input */}
+              <Controller
+                name="cpassword"
+                control={control}
+                rules={{
+                  required: "This is required",
+                }}
+                render={({ field: { onChange, value } }) => (
+                  <Input
+                    placeholder="Confirm Password"
+                    onChangeText={onChange}
+                    secureTextEntry={true}
+                    value={value}
+                  />
+                )}
+              />
+              <View style={{ height: 18, fontSize: 15 }}>
+                {errors.cpassword && (
+                  <Text style={{ color: "red" }}>This is required.</Text>
+                )}
+                {watch("cpassword") !== watch("password") &&
+                getValues("cpassword") ? (
+                  <Text style={{ color: "red" }}>Password not match</Text>
+                ) : null}
+              </View>
+
+              {/* link */}
               <View
                 style={{
-                  width: "100%",
-                  backgroundColor: "#333",
-                  borderRadius: 20,
-                  paddingVertical: 10,
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  alignItems: "center",
+                  flex: 1,
+                  justifyContent: "space-between",
                 }}
               >
                 <Text
                   style={{
                     fontFamily: theme.typography.PRIMARY,
                     textTransform: "uppercase",
-                    fontSize: 18,
-                    color: "#fff",
+                    marginVertical: 10,
+                    color: "#aaa",
                   }}
                 >
-                  sign up
+                  by signing up, you aggree to our
+                  <Text
+                    style={{
+                      marginHorizontal: 5,
+                      color: "#000",
+                      fontFamily: theme.typography.PRIMARY,
+                    }}
+                    onPress={() =>
+                      alert("You agreed to our terms and condition")
+                    }
+                  >
+                    {" "}
+                    terms and conditions
+                  </Text>
+                  <Text style={{ fontFamily: theme.typography.PRIMARY }}>
+                    {" "}
+                    and{" "}
+                  </Text>
+                  <Text
+                    style={{
+                      fontFamily: theme.typography.PRIMARY,
+                      color: "#000",
+                    }}
+                    onPress={() => alert("You agreed to our privacy policy")}
+                  >
+                    PRIVACY POLICY
+                  </Text>
                 </Text>
+                <View>
+                  <TouchableOpacity
+                    style={{
+                      backgroundColor: "#333",
+                      borderRadius: 20,
+                      paddingVertical: 10,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      // marginVertical: 10,
+                    }}
+                    onPress={handleSubmit(onSubmit)}
+                  >
+                    <Text
+                      style={{
+                        color: "#fff",
+                        fontFamily: theme.typography.PRIMARY,
+                      }}
+                    >
+                      SIGN UP
+                    </Text>
+                  </TouchableOpacity>
+                </View>
               </View>
-            </TouchableOpacity>
+            </View>
           </View>
+        </View>
+        <View
+          style={{
+            flex: 1,
+            // justifyContent: "flex-end",
+          }}
+        >
           <View
             style={{
-              height: 100,
-              flexDirection: "row",
-              alignItems: "flex-end",
-              justifyContent: "center",
+              flex: 1,
+              justifyContent: "flex-end",
             }}
           >
-            <Text
+            <View
               style={{
-                fontFamily: theme.typography.PRIMARY,
-                color: "#aaa",
-                textTransform: "uppercase",
-                marginRight: 5,
+                height: 40,
+                flexDirection: "row",
+                alignItems: "flex-start",
+                justifyContent: "center",
               }}
             >
-              already a user?
-            </Text>
-            <TouchableOpacity onPress={() => navigation.navigate("LOGIN")}>
-              <Text style={{ fontFamily: theme.typography.PRIMARY }}>
-                SIGN IN
+              <Text
+                style={{
+                  fontFamily: theme.typography.PRIMARY,
+                  color: "#aaa",
+                  textTransform: "uppercase",
+                  marginRight: 5,
+                }}
+              >
+                already a user?
               </Text>
-            </TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+                <Text style={{ fontFamily: theme.typography.PRIMARY }}>
+                  SIGN IN
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </SafeAreaView>
-        {/* end of button */}
+        </View>
       </ScrollView>
-    </CommonScreenView>
+    </View>
   );
 };
 

@@ -114,9 +114,7 @@ export const ProfileScreen = ({ navigation }) => {
               ACCOUNT
             </Text>
             <Divider />
-            <TouchableOpacity onPress={() => navigation.navigate("Register")}>
-              <Text>Register</Text>
-            </TouchableOpacity>
+
             {/* Edit Profile */}
             <TouchableOpacity
               onPress={() => navigation.navigate("Edit Profile")}
@@ -317,7 +315,7 @@ export const ProfileScreen = ({ navigation }) => {
               TICKETS
             </Text>
             <Divider />
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate("Tickets")}>
               <View style={{ flexDirection: "row" }}>
                 <View
                   style={{
