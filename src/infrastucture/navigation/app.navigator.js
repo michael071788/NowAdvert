@@ -6,14 +6,14 @@ import { AdvertScreen } from "../../features/advert/screens/advert.screen";
 import { AdvertVideoScreen } from "../../features/advert/screens/advert.video.screen";
 
 import { appNavigatorScreenOptions } from "../theme/styles/app.navigator.style";
-import { ProfileScreen } from "../../features/profile/screens/profile.screen";
-import EditProfile from "../../features/profile/screens/edit.screen";
-import ChangePassword from "../../features/profile/screens/change.password.screen";
-import LinkedAccounts from "../../features/profile/screens/linked.accounts.screen";
+// import { ProfileScreen } from "../../features/profile/screens/profile.screen";
+// import EditProfile from "../../features/profile/screens/edit.screen";
+// import ChangePassword from "../../features/profile/screens/change.password.screen";
+// import LinkedAccounts from "../../features/profile/screens/linked.accounts.screen";
 import Tickets from "../../features/profile/screens/tickets.screen";
-import SignUp from "../../features/registration/signup.screen";
-import Login from "../../features/registration/login.screen";
-import Verification from "../../features/registration/verification.screen";
+// import SignUp from "../../features/registration/signup.screen";
+// import Login from "../../features/registration/login.screen";
+// import Verification from "../../features/registration/verification.screen";
 
 const AppStackNavigator = createStackNavigator();
 

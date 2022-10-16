@@ -1,23 +1,28 @@
+import React from "react";
 import {
   View,
   ScrollView,
   Text,
   SafeAreaView,
   TextInput,
-  Image,
+  // Image,
   TouchableOpacity,
 } from "react-native";
-import { Button } from "react-native-paper";
+// import { Button } from "react-native-paper";
 import UsedTheme from "../../../infrastucture/theme/use.theme";
-import { CommonScreenView } from "../../../infrastucture/theme/styles/container.screen.style";
-import {
-  CommonView,
-  InnerContentView,
-} from "../../../infrastucture/theme/styles/user.profile.style";
-import { tabBarTotalHeight } from "../../../infrastucture/theme/styles/app.navigator.style";
+// import { CommonScreenView } from "../../../infrastucture/theme/styles/container.screen.style";
+// import {
+//   CommonView,
+//   InnerContentView,
+// } from "../../../infrastucture/theme/styles/user.profile.style";
+// import { tabBarTotalHeight } from "../../../infrastucture/theme/styles/app.navigator.style";
+import UsedProfile from "../../../services/use.user.profile";
 
 const ChangePassword = () => {
   const theme = UsedTheme();
+  const contextProfile = UsedProfile();
+  contextProfile.SetCurrentLocation("Change Password");
+
   return (
     // <CommonScreenView theme={theme}>
     <ScrollView vertical showsHorizontalScrollIndicator={false}>

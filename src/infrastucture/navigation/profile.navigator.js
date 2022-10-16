@@ -5,23 +5,29 @@ import { ProfileScreen } from "../../features/profile/screens/profile.screen";
 import EditProfile from "../../features/profile/screens/edit.screen";
 import ChangePassword from "../../features/profile/screens/change.password.screen";
 import LinkedAccounts from "../../features/profile/screens/linked.accounts.screen";
-import Tickets from "../../features/profile/screens/tickets.screen";
+// import Tickets from "../../features/profile/screens/tickets.screen";
 import {
   View,
   Image,
-  ScrollView,
-  Switch,
+  // ScrollView,
+  // Switch,
   Text,
-  TouchableOpacity,
+  // TouchableOpacity,
 } from "react-native";
 import UsedTheme from "../../infrastucture/theme/use.theme";
+import UsedProfile from "../../services/use.user.profile";
 
 const ProfileStack = createStackNavigator();
 
 export const ProfileNavigator = () => {
   const theme = UsedTheme();
+  const contextProfile = UsedProfile();
+  contextProfile.SetCurrentLocation("");
   return (
     <View style={{ flex: 1 }}>
+      <View>
+        <Text>AAAAAAAA BBBB - {contextProfile.currentLocation}</Text>
+      </View>
       <View style={{ flex: 1 }}>
         <View style={{ flex: 1, paddingTop: 20 }}>
           <View

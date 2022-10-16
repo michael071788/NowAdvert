@@ -1,5 +1,5 @@
-import { View, Text, SafeAreaView, ScrollView } from "react-native";
 import React from "react";
+import { View, Text, SafeAreaView, ScrollView } from "react-native";
 import { Divider } from "react-native-paper";
 import UsedTheme from "../../../infrastucture/theme/use.theme";
 

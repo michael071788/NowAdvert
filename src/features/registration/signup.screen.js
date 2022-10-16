@@ -1,12 +1,13 @@
+import React from "react";
 import {
   View,
   ScrollView,
   Text,
-  SafeAreaView,
+  // SafeAreaView,
   TouchableOpacity,
-  TextInput,
-  StatusBar,
-  KeyboardAvoidingView,
+  // TextInput,
+  // StatusBar,
+  // KeyboardAvoidingView,
 } from "react-native";
 import UsedTheme from "../../infrastucture/theme/use.theme";
 import {

@@ -1,3 +1,4 @@
+import React from "react";
 import { View, Text, SafeAreaView, TouchableOpacity } from "react-native";
 import UsedTheme from "../../infrastucture/theme/use.theme";
 import {
@@ -22,7 +23,7 @@ const Login = ({ navigation }) => {
   });
   const onSubmit = (data) => {
     // register(data);
-    navigation.dispatch(StackActions.replace("Verify"));
+    //navigation.dispatch(StackActions.replace("Verify"));
     reset();
     // alert("Register Successfully!");
   };
