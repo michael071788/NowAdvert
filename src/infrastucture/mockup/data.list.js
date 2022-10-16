@@ -1,86 +1,121 @@
 export const MOCK_ADVERT_LIST = [
   {
     id: 1,
-    companyName: "The Sweet Candy Shop",
+    companyName: "ACI FMA",
     imageURI:
-      "https://s3.eu-west-3.amazonaws.com/www.gccfmt.com/test/Candy_Img.png",
+      "https://s3.eu-west-3.amazonaws.com/www.gccfmt.com/test/NowAdvert/Images/ACI+Operations.png",
     logoURI:
-      "https://s3.eu-west-3.amazonaws.com/www.gccfmt.com/test/sweet_candy_shop.png",
+      "https://s3.eu-west-3.amazonaws.com/www.gccfmt.com/test/NowAdvert/Images/aci_logo.png",
     videoURI:
-      "https://s3.eu-west-3.amazonaws.com/www.gccfmt.com/test/Candy.mp4",
+      "https://s3.eu-west-3.amazonaws.com/www.gccfmt.com/test/NowAdvert/Videos/ACI+Operations.mp4",
     ticketValue: "5000",
     share: {
-      title: "The Sweet Candy Shop",
+      title: "ACI Financial Markets Association",
       message:
-        "Sweet Candy Company is one of the oldest family-owned and operated candy companies in the United States. Sweet Candy Company has been making taffy, milk chocolate and dark chocolate orange sticks, and cinnamon bears for 125 years. Additionally, Sweet Candy Company makes an array of gourmet chocolate candies, holiday candy, sugar free candy, and nostalgic candy - an assortment ranging from chocolate covered peanut clusters to marshmallow Easter eggs and jelly beans.",
-      url: "https://www.sweetcandy.com/",
+        "ACI Financial Markets Association (ACI FMA) is a leading global trade association representing the interests of the professional wholesale financial markets community. Established in 1955, ACI FMA is focused on enhancing best market practice and supporting market participants to adhere to principles of ethical conduct.",
+      url: "https://www.astcdubai.com/about",
     },
   },
   {
     id: 2,
-    companyName: "The Coffee House",
+    companyName: "ASTC",
     imageURI:
-      "https://s3.eu-west-3.amazonaws.com/www.gccfmt.com/test/Coffee_Img.png",
+      "https://s3.eu-west-3.amazonaws.com/www.gccfmt.com/test/NowAdvert/Images/ACI_Derivates_Reel.png",
     logoURI:
-      "https://s3.eu-west-3.amazonaws.com/www.gccfmt.com/test/the_coffee_house.png",
+      "https://s3.eu-west-3.amazonaws.com/www.gccfmt.com/test/NowAdvert/Images/ASTC.jpg",
     videoURI:
-      "https://s3.eu-west-3.amazonaws.com/www.gccfmt.com/test/Coffee.mp4",
+      "https://s3.eu-west-3.amazonaws.com/www.gccfmt.com/test/NowAdvert/Videos/ACI_Derivates_Reel.mp4",
     ticketValue: "2500",
     share: {
-      title: "The Coffee House",
+      title: "Advanced Studies and Training Centre",
       message:
-        "BREW92 IS A KSA BASED SPECIALTY CAFÉ AND ROASTERY THAT WAS FOUNDED IN 2016 BY A TEAM OF TALENTED COFFEE EXPERTS, ARTISTIC ROASTERS, AND PASSIONATE BARISTAS. CARING ABOUT QUALITY OVER QUANTITY, WE FOCUSED ON DEVELOPING OUR TEAM BY TRAINING THEM UNDER SCA (SPECIALTY COFFEE ASSOCIATION) STANDARDS; AND NOT JUST FOUNDATION OR INTERMEDIATE LEVELS, BUT TO THE PROFESSIONAL LEVEL. OUR TEAM IS TRAINED IN BARISTA GREEN BEANS AS WELL AS SENSORY AND ROASTING; THEY FUTHER ADVANCED THEIR KNOWLEDGE OF THE INDUSTRY BY ATTENDING COFFEE EXHIBITIONS, PARTICIPATING IN COMPETITIONS AND EVENTS, AS WELL AS VISITING COFFEE FARMS AROUND THE WORLD IN SEARCH OF THE HIGHEST QUALITY EQUIPMENTS AND COFFEE BEANS TO OFFER THE MARKET.",
-      url: "https://www.brew92.com/",
+        "ASTC is a solution provider, passionate in transformation and committed to create an environment of success and trust with a mission to become the premier destination for ICT start-ups and entrepreneurs and engage people in learning that inspire them to be involved and take action.",
+      url: "https://www.astcdubai.com/",
     },
   },
   {
     id: 3,
-    companyName: "Crepe 'N Roll",
+    companyName: "ASTC",
     imageURI:
-      "https://s3.eu-west-3.amazonaws.com/www.gccfmt.com/test/IceCream1_Img.png",
+      "https://s3.eu-west-3.amazonaws.com/www.gccfmt.com/test/NowAdvert/Images/Dealing+Reels.png",
     logoURI:
-      "https://s3.eu-west-3.amazonaws.com/www.gccfmt.com/test/crepe_n_roll.jpg",
+      "https://s3.eu-west-3.amazonaws.com/www.gccfmt.com/test/NowAdvert/Images/ASTC.jpg",
     videoURI:
-      "https://s3.eu-west-3.amazonaws.com/www.gccfmt.com/test/IceCream1.mp4",
+      "https://s3.eu-west-3.amazonaws.com/www.gccfmt.com/test/NowAdvert/Videos/Dealing+Reels.mp4",
     ticketValue: "3500",
     share: {
-      title: "Crepe 'N Roll",
+      title: "Advanced Studies and Training Centre",
       message:
-        "We’re more than just a crêpe shop or crêperie… our cosy cafés offer freshly prepared crêpes made in front of you whatever you’re craving, at any time of the day. Click here to check out our big variety of food & drinks on the menu. Pancake lover? Why wait until pancake day when you can get pancakes with us all year round!",
-      url: "https://www.crepeaffaire.com/sa",
+        "ASTC is a solution provider, passionate in transformation and committed to create an environment of success and trust with a mission to become the premier destination for ICT start-ups and entrepreneurs and engage people in learning that inspire them to be involved and take action.",
+      url: "https://www.astcdubai.com/",
     },
   },
   {
     id: 4,
-    companyName: "The Ice Cream Company",
+    companyName: "ASTC",
     imageURI:
-      "https://s3.eu-west-3.amazonaws.com/www.gccfmt.com/test/IceCream2_Img.png",
+      "https://s3.eu-west-3.amazonaws.com/www.gccfmt.com/test/NowAdvert/Images/Derivates_Reel_Final.png",
     logoURI:
-      "https://s3.eu-west-3.amazonaws.com/www.gccfmt.com/test/ice_cream_company.jpg",
+      "https://s3.eu-west-3.amazonaws.com/www.gccfmt.com/test/NowAdvert/Images/ASTC.jpg",
     videoURI:
-      "https://s3.eu-west-3.amazonaws.com/www.gccfmt.com/test/IceCream2.mp4",
+      "https://s3.eu-west-3.amazonaws.com/www.gccfmt.com/test/NowAdvert/Videos/Derivates_Reel_Final.mp4",
     ticketValue: "4000",
     share: {
-      title: "The Ice Cream Factory",
+      title: "Advanced Studies and Training Centre",
       message:
-        "The Saudi Ice Cream Factory was established in Jeddah in 1980 and is considered among the first factories to manufacture ice cream. Over the years, it has been devoted to delivering an assortment of delightful ice cream flavors and drawing a smile on customer’s faces.",
-      url: "https://www.gulfood.com/exhibitors/the-saudi-ice-cream-factory",
+        "ASTC is a solution provider, passionate in transformation and committed to create an environment of success and trust with a mission to become the premier destination for ICT start-ups and entrepreneurs and engage people in learning that inspire them to be involved and take action.",
+      url: "https://www.astcdubai.com/",
     },
   },
   {
     id: 5,
-    companyName: "Coca-Cola SA",
+    companyName: "Now Deals",
     imageURI:
-      "https://s3.eu-west-3.amazonaws.com/www.gccfmt.com/test/Soda_Img.png",
+      "https://s3.eu-west-3.amazonaws.com/www.gccfmt.com/test/NowAdvert/Images/Ipad_Pro_Reel.png",
     logoURI:
-      "https://s3.eu-west-3.amazonaws.com/www.gccfmt.com/test/early_bird_mimosa.jpg",
-    videoURI: "https://s3.eu-west-3.amazonaws.com/www.gccfmt.com/test/Soda.mp4",
+      "https://s3.eu-west-3.amazonaws.com/www.gccfmt.com/test/NowAdvert/Images/NowDeals.png",
+    videoURI:
+      "https://s3.eu-west-3.amazonaws.com/www.gccfmt.com/test/NowAdvert/Videos/Ipad_Pro_Reel.mp4",
     ticketValue: "5500",
     share: {
-      title: "Coca-Cola SA",
+      title: "Now Deals",
       message:
-        "125 years and we are just getting started. The Coca‑Cola Company celebrates 125 years of brand Coca‑Cola. A Coca‑Cola Facebook page is established by two fans. The site has over 22 million fans worldwide as of January 2011 and continues to grow.",
-      url: "https://en.coca-colaarabia.com/",
+        "Exciting Deals, Amazing Prizes. Choose from our ongoing campaigns for a chance to win",
+      url: "https://nowdeals.ae/",
+    },
+  },
+  {
+    id: 6,
+    companyName: "Now Deals",
+    imageURI:
+      "https://s3.eu-west-3.amazonaws.com/www.gccfmt.com/test/NowAdvert/Images/NowDeals_FullProduct.png",
+    logoURI:
+      "https://s3.eu-west-3.amazonaws.com/www.gccfmt.com/test/NowAdvert/Images/NowDeals.png",
+    videoURI:
+      "https://s3.eu-west-3.amazonaws.com/www.gccfmt.com/test/NowAdvert/Videos/NowDeals_FullProduct.mp4",
+    ticketValue: "5500",
+    share: {
+      title: "Now Deals",
+      message:
+        "Exciting Deals, Amazing Prizes. Choose from our ongoing campaigns for a chance to win",
+      url: "https://nowdeals.ae/",
+    },
+  },
+  {
+    id: 7,
+    companyName: "Number Seven Boutique",
+    imageURI:
+      "https://s3.eu-west-3.amazonaws.com/www.gccfmt.com/test/NowAdvert/Images/NSB+Reel.png",
+    logoURI:
+      "https://s3.eu-west-3.amazonaws.com/www.gccfmt.com/test/NowAdvert/Images/NSB_Logo.png",
+    videoURI:
+      "https://s3.eu-west-3.amazonaws.com/www.gccfmt.com/test/NowAdvert/Videos/NSB+Reel.mp4",
+    ticketValue: "5500",
+    share: {
+      title: "Number Seven Boutique",
+      message:
+        "NSB is an internationally established fashion retailer and designer that proudly provides locally- based talent the opportunity and the platform to showcase their unique visions. We pride ourselves over our commitment to nourishing the creativity and energy of young designers, all while providing a convergent shopping experience for everyone. This includes a wide selection of abayas, accessories, perfumes, and much more.",
+      url: "https://www.instagram.com/nsb.ae/",
     },
   },
 ];
