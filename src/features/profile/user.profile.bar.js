@@ -11,7 +11,7 @@ export const UserProfileBar = ({ isShown, navigation }) => {
   const theme = UsedTheme();
 
   return (
-    <TouchableOpacity onPress={() => navigation.navigate("Profile Screen")}>
+    <TouchableOpacity onPress={() => navigation.navigate("ProfileNavigator")}>
       <UserProfileBarContainer isShown={isShown}>
         <UserProfileBarImageContainer>
           <Image

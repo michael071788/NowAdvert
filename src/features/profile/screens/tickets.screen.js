@@ -28,7 +28,7 @@ const Tickets = () => {
   ];
   return (
     <SafeAreaView style={{ flex: 1, padding: 20, backgroundColor: "black" }}>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         {data.map(({ ticketNumber, id, status, expiresIn }) => (
           <View
             key={id}

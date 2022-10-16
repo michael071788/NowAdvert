@@ -6,14 +6,14 @@ import { AdvertScreen } from "../../features/advert/screens/advert.screen";
 import { AdvertVideoScreen } from "../../features/advert/screens/advert.video.screen";
 
 import { appNavigatorScreenOptions } from "../theme/styles/app.navigator.style";
-import EditProfile from "../../features/profile/screens/edit.screen";
 import { ProfileScreen } from "../../features/profile/screens/profile.screen";
+import EditProfile from "../../features/profile/screens/edit.screen";
 import ChangePassword from "../../features/profile/screens/change.password.screen";
 import LinkedAccounts from "../../features/profile/screens/linked.accounts.screen";
+import Tickets from "../../features/profile/screens/tickets.screen";
 import SignUp from "../../features/registration/signup.screen";
 import Login from "../../features/registration/login.screen";
 import Verification from "../../features/registration/verification.screen";
-import Tickets from "../../features/profile/screens/tickets.screen";
 
 const AppStackNavigator = createStackNavigator();
 
@@ -34,14 +34,15 @@ export const AppNavigator = () => {
             component={AdvertVideoScreen}
           />
           <AppStackNavigator.Screen
-            name="Profile"
+            name="ProfileNavigator"
             component={ProfileNavigator}
           />
-          <AppStackNavigator.Screen
+          {/* <AppStackNavigator.Screen
             name="Profile Screen"
             component={ProfileScreen}
-          />
-          <AppStackNavigator.Screen
+          /> */}
+
+          {/* <AppStackNavigator.Screen
             name="Edit Profile"
             component={EditProfile}
           />
@@ -52,15 +53,12 @@ export const AppNavigator = () => {
           <AppStackNavigator.Screen
             name="Linked Accounts"
             component={LinkedAccounts}
-          />
-          <AppStackNavigator.Screen
-            name="Tickets"
-            component={Tickets}
-            screenOptions={{ headerShown: true }}
-          />
-          <AppStackNavigator.Screen name="Register" component={SignUp} />
+        />*/}
+          <AppStackNavigator.Screen name="Tickets" component={Tickets} />
+          {/* ----------------------- */}
+          {/* <AppStackNavigator.Screen name="Register" component={SignUp} />
           <AppStackNavigator.Screen name="Login" component={Login} />
-          <AppStackNavigator.Screen name="Verify" component={Verification} />
+          <AppStackNavigator.Screen name="Verify" component={Verification} /> */}
         </AppStackNavigator.Navigator>
       </SafeArea>
     </>

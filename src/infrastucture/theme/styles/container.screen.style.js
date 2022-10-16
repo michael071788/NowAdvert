@@ -9,4 +9,5 @@ export const CommonScreenView = styled(View)`
     paddingHorizontal: 5px;
     backgroundColor: ${props => props.theme ? props.theme.colors.BACKGROUND : "transparent"};
     paddingBottom: ${tabBarTotalHeight + 1}px;
+
 `;

@@ -5,6 +5,7 @@ import {
   SafeAreaView,
   TextInput,
   Image,
+  TouchableOpacity,
 } from "react-native";
 import { Button } from "react-native-paper";
 import UsedTheme from "../../../infrastucture/theme/use.theme";
@@ -18,141 +19,112 @@ import { tabBarTotalHeight } from "../../../infrastucture/theme/styles/app.navig
 const ChangePassword = () => {
   const theme = UsedTheme();
   return (
-    <CommonScreenView theme={theme} paddingBottom={tabBarTotalHeight + 10}>
-      <ScrollView vertical showsHorizontalScrollIndicator={false}>
-        {/* start of profile */}
-        <CommonView flex={1}>
-          <InnerContentView>
-            <View
+    // <CommonScreenView theme={theme}>
+    <ScrollView vertical showsHorizontalScrollIndicator={false}>
+      {/* start of profile */}
+
+      {/* start input field */}
+      <SafeAreaView
+        style={{ width: "100%", flex: 1, padding: 10, paddingHorizontal: 20 }}
+      >
+        <View>
+          <View style={{ marginVertical: 10 }}>
+            <Text
               style={{
-                flexDirection: "column",
-                alignItems: "center",
+                fontFamily: theme.typography.PRIMARY,
+                color: "#aaa",
               }}
             >
-              <Image
-                source={require("../../../../assets/avatar_profile_icon.png")}
-                style={{ height: 150, width: 150 }}
-              />
-              <Text
-                style={{
-                  fontFamily: theme.typography.PRIMARY,
-                  fontSize: 20,
-                  textTransform: "uppercase",
-                }}
-              >
-                calum scott
-              </Text>
-              <Text
-                style={{
-                  color: theme.colors.SECONDARY,
-                  fontFamily: theme.typography.PRIMARY,
-                  fontSize: 15,
-                  textTransform: "uppercase",
-                }}
-              >
-                active: 26 May 2022
-              </Text>
-            </View>
-          </InnerContentView>
-        </CommonView>
-        {/* end of profile */}
-
-        {/* start input field */}
-        <SafeAreaView
-          style={{ width: "100%", flex: 1, padding: 10, paddingHorizontal: 20 }}
-        >
-          <View>
-            <View style={{ marginVertical: 10 }}>
-              <Text
-                style={{
-                  fontFamily: theme.typography.PRIMARY,
-                  color: "#aaa",
-                }}
-              >
-                CURRENT PASSWORD
-              </Text>
-              <TextInput
-                secureTextEntry
-                style={{
-                  backgroundColor: "transparent",
-                  borderBottomWidth: 1,
-                  fontFamily: theme.typography.PRIMARY,
-                  fontSize: 30,
-                  paddingHorizontal: 0,
-                }}
-              />
-            </View>
-
-            <View style={{ marginVertical: 10 }}>
-              <Text
-                style={{
-                  color: "#aaa",
-                  fontFamily: theme.typography.PRIMARY,
-                }}
-              >
-                NEW PASSWORD
-              </Text>
-              <TextInput
-                secureTextEntry
-                style={{
-                  backgroundColor: "transparent",
-                  borderBottomWidth: 1,
-                  fontFamily: theme.typography.PRIMARY,
-                  fontSize: 30,
-                  paddingHorizontal: 0,
-                }}
-              />
-            </View>
-
-            <View style={{ marginVertical: 10 }}>
-              <Text
-                style={{
-                  color: "#aaa",
-                  fontFamily: theme.typography.PRIMARY,
-                }}
-              >
-                CONFIRM PASSWORD
-              </Text>
-              <TextInput
-                secureTextEntry
-                style={{
-                  backgroundColor: "transparent",
-                  borderBottomWidth: 1,
-                  fontFamily: theme.typography.PRIMARY,
-                  fontSize: 30,
-                  paddingHorizontal: 0,
-                }}
-              />
-            </View>
-          </View>
-          {/* end of input field  */}
-
-          {/* button */}
-          <View
-            style={{
-              marginTop: 10,
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Button
-              mode="contained"
-              buttonColor="#000"
+              CURRENT PASSWORD
+            </Text>
+            <TextInput
+              secureTextEntry
               style={{
-                width: "50%",
-                borderRadius: 20,
-                backgroundColor: "#333",
+                backgroundColor: "transparent",
+                borderBottomWidth: 1,
+                fontFamily: theme.typography.PRIMARY,
+                fontSize: 30,
+                paddingHorizontal: 0,
+              }}
+            />
+          </View>
+
+          <View style={{ marginVertical: 10 }}>
+            <Text
+              style={{
+                color: "#aaa",
                 fontFamily: theme.typography.PRIMARY,
               }}
             >
-              LOGIN
-            </Button>
+              NEW PASSWORD
+            </Text>
+            <TextInput
+              secureTextEntry
+              style={{
+                backgroundColor: "transparent",
+                borderBottomWidth: 1,
+                fontFamily: theme.typography.PRIMARY,
+                fontSize: 30,
+                paddingHorizontal: 0,
+              }}
+            />
           </View>
 
-          {/* end of button */}
-        </SafeAreaView>
-      </ScrollView>
-    </CommonScreenView>
+          <View style={{ marginVertical: 10 }}>
+            <Text
+              style={{
+                color: "#aaa",
+                fontFamily: theme.typography.PRIMARY,
+              }}
+            >
+              CONFIRM PASSWORD
+            </Text>
+            <TextInput
+              secureTextEntry
+              style={{
+                backgroundColor: "transparent",
+                borderBottomWidth: 1,
+                fontFamily: theme.typography.PRIMARY,
+                fontSize: 30,
+                paddingHorizontal: 0,
+              }}
+            />
+          </View>
+        </View>
+        {/* end of input field  */}
+
+        {/* button */}
+        <View
+          style={{
+            marginTop: 10,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <TouchableOpacity
+            style={{
+              paddingVertical: 10,
+              width: "50%",
+              borderRadius: 20,
+              backgroundColor: "#333",
+              alignItems: "center",
+            }}
+          >
+            <Text
+              style={{
+                fontFamily: theme.typography.PRIMARY,
+                color: "#fff",
+              }}
+            >
+              UPDATE
+            </Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* end of button */}
+      </SafeAreaView>
+    </ScrollView>
+    // </CommonScreenView>
   );
 };
 export default ChangePassword;

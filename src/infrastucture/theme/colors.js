@@ -1,4 +1,4 @@
-// Remember, any changes here while running the metro bundle the app will execute an error due to context provider.
+// Remember, any changes here while running the metro bundle the app will execute an error due to context .
 // Need to exit the Metro Bundle in terminal then re-run the application
 
 const defaultTheme = {
