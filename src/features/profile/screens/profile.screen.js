@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import {
-  Image,
+  // Image,
   ScrollView,
   Switch,
   Text,
@@ -9,14 +9,14 @@ import {
 } from "react-native";
 import { Divider, List } from "react-native-paper";
 import UsedTheme from "../../../infrastucture/theme/use.theme";
-import { tabBarTotalHeight } from "../../../infrastucture/theme/styles/app.navigator.style";
-import { CommonScreenView } from "../../../infrastucture/theme/styles/container.screen.style";
-import {
-  CommonView,
-  InnerContentView,
-} from "../../../infrastucture/theme/styles/user.profile.style";
+// import { tabBarTotalHeight } from "../../../infrastucture/theme/styles/app.navigator.style";
+// import { CommonScreenView } from "../../../infrastucture/theme/styles/container.screen.style";
+// import {
+//   CommonView,
+//   InnerContentView,
+// } from "../../../infrastucture/theme/styles/user.profile.style";
 
-import { ProfileNavigator } from "../../../infrastucture/navigation/profile.navigator";
+// import { ProfileNavigator } from "../../../infrastucture/navigation/profile.navigator";
 
 // const accountDataList = [
 //   {

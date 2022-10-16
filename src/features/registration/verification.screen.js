@@ -1,21 +1,21 @@
+import React, { useState } from "react";
 import {
   View,
   Text,
-  KeyboardAvoidingView,
-  StyleSheet,
+  // KeyboardAvoidingView,
+  // StyleSheet,
   TextInput,
   Dimensions,
   TouchableOpacity,
-  Keyboard,
-  SafeAreaView,
-  ScrollView,
+  // Keyboard,
+  // SafeAreaView,
+  // ScrollView,
 } from "react-native";
-import React, { useRef, useState } from "react";
 import { HeaderText } from "../../infrastucture/theme/styles/auth.components";
 import UsedTheme from "../../infrastucture/theme/use.theme";
 
 const inputs = Array(4).fill("");
-let newInputIndex = 0;
+// let newInputIndex = 0;
 
 // const isObjValid = (obj) => {
 //   return Object.values(obj).every((val) => val.trim());
@@ -25,8 +25,11 @@ const Verification = ({ route, navigation }) => {
   const theme = UsedTheme();
   // const { profile } = route.params;
   // const input = useRef();
-  const [OTP, setOTP] = useState({ 1: "", 2: "", 3: "", 4: "" });
-  const [nextInputIndex, setNextInputIndex] = useState(0);
+
+  //==========================
+  // const [OTP, setOTP] = useState({ 1: "", 2: "", 3: "", 4: "" });
+  // const [nextInputIndex, setNextInputIndex] = useState(0);
+  //==========================
 
   // const handleChangeText = (text, index) => {
   //   const newOTP = { ...OTP };

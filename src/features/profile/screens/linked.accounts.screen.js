@@ -1,19 +1,20 @@
+import React from "react";
 import {
   View,
   ScrollView,
   Text,
   SafeAreaView,
   TextInput,
-  Image,
+  // Image,
   TouchableOpacity,
 } from "react-native";
 import UsedTheme from "../../../infrastucture/theme/use.theme";
-import { CommonScreenView } from "../../../infrastucture/theme/styles/container.screen.style";
-import {
-  CommonView,
-  InnerContentView,
-} from "../../../infrastucture/theme/styles/user.profile.style";
-import { tabBarTotalHeight } from "../../../infrastucture/theme/styles/app.navigator.style";
+// import { CommonScreenView } from "../../../infrastucture/theme/styles/container.screen.style";
+// import {
+//   CommonView,
+//   InnerContentView,
+// } from "../../../infrastucture/theme/styles/user.profile.style";
+// import { tabBarTotalHeight } from "../../../infrastucture/theme/styles/app.navigator.style";
 
 const LinkedAccounts = () => {
   const theme = UsedTheme();

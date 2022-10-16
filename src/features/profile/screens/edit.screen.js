@@ -1,22 +1,26 @@
+import React from "react";
 import {
   View,
   ScrollView,
   Text,
   TextInput,
-  Image,
+  // Image,
   TouchableOpacity,
 } from "react-native";
 
 import UsedTheme from "../../../infrastucture/theme/use.theme";
-import {
-  CommonView,
-  InnerContentView,
-} from "../../../infrastucture/theme/styles/user.profile.style";
-import { CommonScreenView } from "../../../infrastucture/theme/styles/container.screen.style";
-import { tabBarTotalHeight } from "../../../infrastucture/theme/styles/app.navigator.style";
+// import {
+//   CommonView,
+//   InnerContentView,
+// } from "../../../infrastucture/theme/styles/user.profile.style";
+// import { CommonScreenView } from "../../../infrastucture/theme/styles/container.screen.style";
+// import { tabBarTotalHeight } from "../../../infrastucture/theme/styles/app.navigator.style";
+import UsedProfile from "../../../services/use.user.profile";
 
 const EditProfile = () => {
   const theme = UsedTheme();
+  const contextProfile = UsedProfile();
+  contextProfile.SetCurrentLocation("Edit Profile");
 
   return (
     // <CommonScreenView theme={theme}>
