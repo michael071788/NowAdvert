@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import UsedTheme from "../../../infrastucture/theme/use.theme";
 import UsedProfile from "../../../services/use.user.profile";
+import { useTranslation } from "react-i18next";
 
 // import { CommonScreenView } from "../../../infrastucture/theme/styles/container.screen.style";
 // import {
@@ -21,6 +22,7 @@ import UsedProfile from "../../../services/use.user.profile";
 const LinkedAccounts = () => {
   const theme = UsedTheme();
   const contextProfile = UsedProfile();
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     contextProfile.SetCurrentLocation("Linked Accounts");
@@ -46,7 +48,7 @@ const LinkedAccounts = () => {
                 textTransform: "uppercase",
               }}
             >
-              google
+              {t("google")}
             </Text>
             <TextInput
               style={{
@@ -68,7 +70,7 @@ const LinkedAccounts = () => {
                 textTransform: "uppercase",
               }}
             >
-              facebook
+              {t("facebook")}
             </Text>
             <TextInput
               style={{
@@ -90,7 +92,7 @@ const LinkedAccounts = () => {
                 textTransform: "uppercase",
               }}
             >
-              twitter
+              {t("twitter")}
             </Text>
             <TextInput
               style={{
@@ -112,7 +114,7 @@ const LinkedAccounts = () => {
                 textTransform: "uppercase",
               }}
             >
-              instagram
+              {t("instagram")}
             </Text>
             <TextInput
               style={{
@@ -152,7 +154,7 @@ const LinkedAccounts = () => {
                 color: "#fff",
               }}
             >
-              UPDATE
+              {t("UPDATE")}
             </Text>
           </TouchableOpacity>
         </View>

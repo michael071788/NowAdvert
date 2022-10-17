@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, Text, SafeAreaView, ScrollView } from "react-native";
 import { Divider } from "react-native-paper";
 import UsedTheme from "../../../infrastucture/theme/use.theme";
+import UsedProfile from "../../../services/use.user.profile";
 
 const Tickets = () => {
   const theme = UsedTheme();
+  const contextProfile = UsedProfile();
+
+  useEffect(() => {
+    contextProfile.SetCurrentLocation("Tickets");
+  }, [contextProfile]);
 
   const data = [
     {

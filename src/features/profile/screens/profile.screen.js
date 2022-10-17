@@ -9,6 +9,8 @@ import {
 } from "react-native";
 import { Divider, List } from "react-native-paper";
 import UsedTheme from "../../../infrastucture/theme/use.theme";
+import { useTranslation } from "react-i18next";
+
 // import { tabBarTotalHeight } from "../../../infrastucture/theme/styles/app.navigator.style";
 // import { CommonScreenView } from "../../../infrastucture/theme/styles/container.screen.style";
 // import {
@@ -42,6 +44,7 @@ import UsedProfile from "../../../services/use.user.profile";
 
 export const ProfileScreen = ({ navigation }) => {
   const theme = UsedTheme();
+  const { t } = useTranslation();
 
   // const [selectedId, setSelectedId] = useState(null);
 
@@ -85,7 +88,7 @@ export const ProfileScreen = ({ navigation }) => {
               textTransform: "uppercase",
             }}
           >
-            ACCOUNT
+            {t("ACCOUNT")}
           </Text>
           <Divider />
 
@@ -107,7 +110,7 @@ export const ProfileScreen = ({ navigation }) => {
                     textTransform: "uppercase",
                   }}
                 >
-                  EDIT PROFILE
+                  {t("EDIT PROFILE")}
                 </Text>
               </View>
               <View
@@ -141,7 +144,7 @@ export const ProfileScreen = ({ navigation }) => {
                     textTransform: "uppercase",
                   }}
                 >
-                  CHANGE PASSWORD
+                  {t("CHANGE PASSWORD")}
                 </Text>
               </View>
               <View
@@ -175,7 +178,7 @@ export const ProfileScreen = ({ navigation }) => {
                     textTransform: "uppercase",
                   }}
                 >
-                  LINKED ACCOUNTS
+                  {t("LINKED ACCOUNTS")}
                 </Text>
               </View>
               <View
@@ -216,7 +219,7 @@ export const ProfileScreen = ({ navigation }) => {
               textTransform: "uppercase",
             }}
           >
-            NOTIFICATIONS
+            {t("NOTIFICATIONS")}
           </Text>
           <Divider />
 
@@ -236,7 +239,7 @@ export const ProfileScreen = ({ navigation }) => {
                   textTransform: "uppercase",
                 }}
               >
-                ALLOW NOTIFICATIONS
+                {t("ALLOW NOTIFICATIONS")}
               </Text>
             </View>
             <View
@@ -282,7 +285,7 @@ export const ProfileScreen = ({ navigation }) => {
               textTransform: "uppercase",
             }}
           >
-            TICKETS
+            {t("TICKETS")}
           </Text>
           <Divider />
           <TouchableOpacity onPress={() => navigation.navigate("Tickets")}>
@@ -302,7 +305,7 @@ export const ProfileScreen = ({ navigation }) => {
                     textTransform: "uppercase",
                   }}
                 >
-                  VIEW MY TICKETS
+                  {t("VIEW MY TICKETS")}
                 </Text>
               </View>
               <View
@@ -343,10 +346,10 @@ export const ProfileScreen = ({ navigation }) => {
               textTransform: "uppercase",
             }}
           >
-            LANGUAGE
+            {t("LANGUAGE")}
           </Text>
           <Divider />
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate("Languages")}>
             <View style={{ flexDirection: "row" }}>
               <View
                 style={{

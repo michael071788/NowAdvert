@@ -17,10 +17,12 @@ import UsedTheme from "../../../infrastucture/theme/use.theme";
 // } from "../../../infrastucture/theme/styles/user.profile.style";
 // import { tabBarTotalHeight } from "../../../infrastucture/theme/styles/app.navigator.style";
 import UsedProfile from "../../../services/use.user.profile";
+import { useTranslation } from "react-i18next";
 
 const ChangePassword = () => {
   const theme = UsedTheme();
   const contextProfile = UsedProfile();
+  const { t } = useTranslation();
 
   useEffect(() => {
     contextProfile.SetCurrentLocation("Change Password");
@@ -43,7 +45,7 @@ const ChangePassword = () => {
                 color: "#aaa",
               }}
             >
-              CURRENT PASSWORD
+              {t("CURRENT PASSWORD")}
             </Text>
             <TextInput
               secureTextEntry
@@ -64,7 +66,7 @@ const ChangePassword = () => {
                 fontFamily: theme.typography.PRIMARY,
               }}
             >
-              NEW PASSWORD
+              {t(" NEW PASSWORD")}
             </Text>
             <TextInput
               secureTextEntry
@@ -85,7 +87,7 @@ const ChangePassword = () => {
                 fontFamily: theme.typography.PRIMARY,
               }}
             >
-              CONFIRM PASSWORD
+              {t(" CONFIRM PASSWORD")}
             </Text>
             <TextInput
               secureTextEntry
@@ -124,7 +126,7 @@ const ChangePassword = () => {
                 color: "#fff",
               }}
             >
-              UPDATE
+              {t("UPDATE")}
             </Text>
           </TouchableOpacity>
         </View>

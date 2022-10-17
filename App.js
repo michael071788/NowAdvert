@@ -15,6 +15,8 @@ import ThemeProvider from "./src/infrastucture/theme/theme.provider";
 import PrimaryAppProvider from "./src/services/primary.app.provider";
 import UserProfileProvider from "./src/services/user.profile.provider";
 
+import "./src/utils/i18n";
+
 export default function App() {
   const [oswaldLoaded] = useOswald({
     Oswald_500Medium,

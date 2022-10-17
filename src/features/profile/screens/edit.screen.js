@@ -16,10 +16,12 @@ import UsedTheme from "../../../infrastucture/theme/use.theme";
 // import { CommonScreenView } from "../../../infrastucture/theme/styles/container.screen.style";
 // import { tabBarTotalHeight } from "../../../infrastucture/theme/styles/app.navigator.style";
 import UsedProfile from "../../../services/use.user.profile";
+import { useTranslation } from "react-i18next";
 
 const EditProfile = () => {
   const theme = UsedTheme();
   const contextProfile = UsedProfile();
+  const { t } = useTranslation();
 
   useEffect(() => {
     contextProfile.SetCurrentLocation("Edit Profile");
@@ -33,7 +35,7 @@ const EditProfile = () => {
       <View style={{ flex: 1, margin: 10 }}>
         <View style={{ marginVertical: 10 }}>
           <Text style={{ fontFamily: theme.typography.PRIMARY, color: "#aaa" }}>
-            NAME
+            {t("NAME")}
           </Text>
           <TextInput
             style={{
@@ -48,7 +50,7 @@ const EditProfile = () => {
 
         <View style={{ marginVertical: 10 }}>
           <Text style={{ fontFamily: theme.typography.PRIMARY, color: "#aaa" }}>
-            EMAIL
+            {t("EMAIL")}
           </Text>
           <TextInput
             style={{
@@ -63,7 +65,7 @@ const EditProfile = () => {
 
         <View style={{ marginVertical: 10 }}>
           <Text style={{ fontFamily: theme.typography.PRIMARY, color: "#aaa" }}>
-            MOBILE NUMBER
+            {t(" MOBILE NUMBER")}
           </Text>
           <TextInput
             style={{
@@ -101,7 +103,7 @@ const EditProfile = () => {
               color: "#fff",
             }}
           >
-            UPDATE
+            {t("UPDATE")}
           </Text>
         </TouchableOpacity>
       </View>
