@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   View,
   ScrollView,
@@ -20,7 +20,10 @@ import UsedProfile from "../../../services/use.user.profile";
 const EditProfile = () => {
   const theme = UsedTheme();
   const contextProfile = UsedProfile();
-  contextProfile.SetCurrentLocation("Edit Profile");
+
+  useEffect(() => {
+    contextProfile.SetCurrentLocation("Edit Profile");
+  }, [contextProfile]);
 
   return (
     // <CommonScreenView theme={theme}>

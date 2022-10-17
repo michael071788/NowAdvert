@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   View,
   ScrollView,
@@ -9,6 +9,8 @@ import {
   TouchableOpacity,
 } from "react-native";
 import UsedTheme from "../../../infrastucture/theme/use.theme";
+import UsedProfile from "../../../services/use.user.profile";
+
 // import { CommonScreenView } from "../../../infrastucture/theme/styles/container.screen.style";
 // import {
 //   CommonView,
@@ -18,6 +20,12 @@ import UsedTheme from "../../../infrastucture/theme/use.theme";
 
 const LinkedAccounts = () => {
   const theme = UsedTheme();
+  const contextProfile = UsedProfile();
+
+  useEffect(() => {
+    contextProfile.SetCurrentLocation("Linked Accounts");
+  }, [contextProfile]);
+
   return (
     // <CommonScreenView theme={theme}>
     <ScrollView vertical showsHorizontalScrollIndicator={false}>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { createStackNavigator } from "@react-navigation/stack";
 import { ProfileScreen } from "../../features/profile/screens/profile.screen";
@@ -12,21 +12,41 @@ import {
   // ScrollView,
   // Switch,
   Text,
+  TouchableOpacity,
   // TouchableOpacity,
 } from "react-native";
 import UsedTheme from "../../infrastucture/theme/use.theme";
 import UsedProfile from "../../services/use.user.profile";
+import { List } from "react-native-paper";
 
 const ProfileStack = createStackNavigator();
 
-export const ProfileNavigator = () => {
+export const ProfileNavigator = ({ navigation }) => {
+  const [location, setLocation] = useState("");
+
   const theme = UsedTheme();
   const contextProfile = UsedProfile();
-  contextProfile.SetCurrentLocation("");
+  // contextProfile.SetCurrentLocation("");
+
+  useEffect(() => {
+    // contextProfile.SetCurrentLocation("ProfileScreen");
+    setLocation(contextProfile.currentLocation);
+  }, [contextProfile.currentLocation]);
+
   return (
     <View style={{ flex: 1 }}>
-      <View>
-        <Text>AAAAAAAA BBBB - {contextProfile.currentLocation}</Text>
+      <View style={{ padding: 10, flexDirection: "row", alignItems: "center" }}>
+        <TouchableOpacity
+          onPress={() => {
+            setLocation("Profile Screen");
+            navigation.navigate("ProfileScreen");
+          }}
+        >
+          <List.Icon icon="chevron-left" />
+        </TouchableOpacity>
+        <Text style={{ fontFamily: theme.typography.PRIMARY, fontSize: 20 }}>
+          {location}
+        </Text>
       </View>
       <View style={{ flex: 1 }}>
         <View style={{ flex: 1, paddingTop: 20 }}>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   // Image,
   ScrollView,
@@ -15,6 +15,7 @@ import UsedTheme from "../../../infrastucture/theme/use.theme";
 //   CommonView,
 //   InnerContentView,
 // } from "../../../infrastucture/theme/styles/user.profile.style";
+import UsedProfile from "../../../services/use.user.profile";
 
 // import { ProfileNavigator } from "../../../infrastucture/navigation/profile.navigator";
 
@@ -50,6 +51,12 @@ export const ProfileScreen = ({ navigation }) => {
 
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+
+  const contextProfile = UsedProfile();
+
+  useEffect(() => {
+    contextProfile.SetCurrentLocation("Profile Screen");
+  }, [contextProfile]);
 
   return (
     // <CommonScreenView theme={theme}>
