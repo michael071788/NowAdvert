@@ -18,11 +18,14 @@ import {
 import UsedTheme from "../../infrastucture/theme/use.theme";
 import UsedProfile from "../../services/use.user.profile";
 import { List } from "react-native-paper";
+import { useTranslation } from "react-i18next";
 
 const ProfileStack = createStackNavigator();
 
 export const ProfileNavigator = ({ navigation }) => {
   const [location, setLocation] = useState("");
+
+  const { t } = useTranslation();
 
   const theme = UsedTheme();
   const contextProfile = UsedProfile();
@@ -46,6 +49,7 @@ export const ProfileNavigator = ({ navigation }) => {
         </TouchableOpacity>
         <Text style={{ fontFamily: theme.typography.PRIMARY, fontSize: 20 }}>
           {location}
+          {/* {t(`${location}`)} */}
         </Text>
       </View>
       <View style={{ flex: 1 }}>

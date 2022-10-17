@@ -8,9 +8,14 @@ export const UsedUserProfileContext = () => {
 
 const UserProfileProvider = ({ children }) => {
   const [currentLocation, setCurrentLocation] = useState("");
+  const [currentLanguage, setCurrentLanguage] = useState("");
 
   const onSetCurrentLocation = (val) => {
     setCurrentLocation(val);
+  };
+
+  const onSetCurrentLanguage = (val) => {
+    setCurrentLanguage(val);
   };
 
   return (
@@ -18,6 +23,8 @@ const UserProfileProvider = ({ children }) => {
       value={{
         currentLocation,
         SetCurrentLocation: onSetCurrentLocation,
+        currentLanguage,
+        SetCurrentLanguage: onSetCurrentLanguage,
       }}
     >
       {children}

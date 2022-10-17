@@ -7,6 +7,7 @@ import {
   Image,
   ScrollView,
 } from "react-native";
+import UsedProfile from "../../../services/use.user.profile";
 
 import { useTranslation } from "react-i18next";
 
@@ -16,6 +17,7 @@ import PhFlag from "../../../../assets/ph.svg";
 
 const LanguageScreen = ({ navigation }) => {
   const { i18n } = useTranslation();
+  const contextProfile = UsedProfile();
 
   const languages = [
     {
@@ -56,10 +58,17 @@ const LanguageScreen = ({ navigation }) => {
               // .then(() => {
               //   I18nManager.forceRTL(item.code);
               // });
+              contextProfile.SetCurrentLanguage(item.code);
               navigation.goBack();
+
+              var selectedLanguage = languages.filter(
+                (x) => x.code == item.code
+              );
+              // console.log("_temp: ", selectedLanguage[0].language);
+              contextProfile.SetCurrentLanguage(selectedLanguage[0].language);
             }}
           >
-            <View style={{ flex: 1, height: 40 }}>{item.flag}</View>
+            <View style={{ flex: 1, height: 30 }}>{item.flag}</View>
             <Text style={{ flex: 4 }}>{item.language}</Text>
           </TouchableOpacity>
         ))}

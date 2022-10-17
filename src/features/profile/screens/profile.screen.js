@@ -166,7 +166,6 @@ export const ProfileScreen = ({ navigation }) => {
               <View
                 style={{
                   flex: 4,
-
                   alignItems: "flex-start",
                   justifyContent: "center",
                 }}
@@ -195,6 +194,7 @@ export const ProfileScreen = ({ navigation }) => {
         </View>
       </View>
       {/**END - ACCOUNT**/}
+
       {/**START - NOTIFICATION**/}
       <View
         style={{
@@ -285,7 +285,7 @@ export const ProfileScreen = ({ navigation }) => {
               textTransform: "uppercase",
             }}
           >
-            {t("TICKETS")}
+            {t("TICKETS").toLocaleUpperCase()}
           </Text>
           <Divider />
           <TouchableOpacity onPress={() => navigation.navigate("Tickets")}>
@@ -305,7 +305,7 @@ export const ProfileScreen = ({ navigation }) => {
                     textTransform: "uppercase",
                   }}
                 >
-                  {t("VIEW MY TICKETS")}
+                  {t("VIEW MY TICKETS").toLocaleUpperCase()}
                 </Text>
               </View>
               <View
@@ -366,7 +366,8 @@ export const ProfileScreen = ({ navigation }) => {
                     textTransform: "uppercase",
                   }}
                 >
-                  ENGLISH
+                  {contextProfile.currentLanguage}
+                  {/* ENGLISH */}
                 </Text>
               </View>
               <View
