@@ -4,6 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { ProfileNavigator } from "./profile.navigator";
 import { AdvertScreen } from "../../features/advert/screens/advert.screen";
 import { AdvertVideoScreen } from "../../features/advert/screens/advert.video.screen";
+import { TestScreen } from "../../features/home/screens/test.screen";
 
 import { appNavigatorScreenOptions } from "../theme/styles/app.navigator.style";
 
@@ -15,8 +16,9 @@ export const AppNavigator = () => {
       <SafeArea>
         <AppStackNavigator.Navigator
           screenOptions={appNavigatorScreenOptions}
-          initialRouteName="AdvertScreen"
+          initialRouteName="TestScreen"
         >
+          <AppStackNavigator.Screen name="TestScreen" component={TestScreen} />
           <AppStackNavigator.Screen
             name="AdvertScreen"
             component={AdvertScreen}
