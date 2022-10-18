@@ -152,6 +152,7 @@ const LinkedAccounts = () => {
               style={{
                 fontFamily: theme.typography.PRIMARY,
                 color: "#fff",
+                textTransform: "uppercase",
               }}
             >
               {t("UPDATE")}

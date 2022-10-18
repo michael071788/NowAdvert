@@ -6,15 +6,7 @@ import EditProfile from "../../features/profile/screens/edit.screen";
 import ChangePassword from "../../features/profile/screens/change.password.screen";
 import LinkedAccounts from "../../features/profile/screens/linked.accounts.screen";
 // import Tickets from "../../features/profile/screens/tickets.screen";
-import {
-  View,
-  Image,
-  // ScrollView,
-  // Switch,
-  Text,
-  TouchableOpacity,
-  // TouchableOpacity,
-} from "react-native";
+import { View, Image, Text, TouchableOpacity } from "react-native";
 import UsedTheme from "../../infrastucture/theme/use.theme";
 import UsedProfile from "../../services/use.user.profile";
 import { List } from "react-native-paper";
@@ -38,7 +30,7 @@ export const ProfileNavigator = ({ navigation }) => {
 
   return (
     <View style={{ flex: 1 }}>
-      <View style={{ padding: 10, flexDirection: "row", alignItems: "center" }}>
+      <View style={{ flexDirection: "row", alignItems: "center" }}>
         <TouchableOpacity
           onPress={() => {
             setLocation("Profile Screen");
@@ -47,9 +39,14 @@ export const ProfileNavigator = ({ navigation }) => {
         >
           <List.Icon icon="chevron-left" />
         </TouchableOpacity>
-        <Text style={{ fontFamily: theme.typography.PRIMARY, fontSize: 20 }}>
-          {location}
-          {/* {t(`${location}`)} */}
+        <Text
+          style={{
+            fontFamily: theme.typography.PRIMARY,
+            fontSize: 20,
+            textTransform: "uppercase",
+          }}
+        >
+          {t(location.toLocaleUpperCase())}
         </Text>
       </View>
       <View style={{ flex: 1 }}>

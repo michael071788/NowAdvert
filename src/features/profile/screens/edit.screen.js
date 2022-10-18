@@ -34,7 +34,13 @@ const EditProfile = () => {
 
       <View style={{ flex: 1, margin: 10 }}>
         <View style={{ marginVertical: 10 }}>
-          <Text style={{ fontFamily: theme.typography.PRIMARY, color: "#aaa" }}>
+          <Text
+            style={{
+              fontFamily: theme.typography.PRIMARY,
+              color: "#aaa",
+              textTransform: "uppercase",
+            }}
+          >
             {t("NAME")}
           </Text>
           <TextInput
@@ -49,7 +55,13 @@ const EditProfile = () => {
         </View>
 
         <View style={{ marginVertical: 10 }}>
-          <Text style={{ fontFamily: theme.typography.PRIMARY, color: "#aaa" }}>
+          <Text
+            style={{
+              fontFamily: theme.typography.PRIMARY,
+              color: "#aaa",
+              textTransform: "uppercase",
+            }}
+          >
             {t("EMAIL")}
           </Text>
           <TextInput
@@ -101,6 +113,7 @@ const EditProfile = () => {
             style={{
               fontFamily: theme.typography.PRIMARY,
               color: "#fff",
+              textTransform: "uppercase",
             }}
           >
             {t("UPDATE")}

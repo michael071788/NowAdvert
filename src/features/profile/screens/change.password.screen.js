@@ -43,6 +43,7 @@ const ChangePassword = () => {
               style={{
                 fontFamily: theme.typography.PRIMARY,
                 color: "#aaa",
+                textTransform: "uppercase",
               }}
             >
               {t("CURRENT PASSWORD")}
@@ -124,6 +125,7 @@ const ChangePassword = () => {
               style={{
                 fontFamily: theme.typography.PRIMARY,
                 color: "#fff",
+                textTransform: "uppercase",
               }}
             >
               {t("UPDATE")}

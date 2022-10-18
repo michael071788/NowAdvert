@@ -8,7 +8,7 @@ export const UsedUserProfileContext = () => {
 
 const UserProfileProvider = ({ children }) => {
   const [currentLocation, setCurrentLocation] = useState("");
-  const [currentLanguage, setCurrentLanguage] = useState("");
+  const [currentLanguage, setCurrentLanguage] = useState("ENGLISH");
 
   const onSetCurrentLocation = (val) => {
     setCurrentLocation(val);

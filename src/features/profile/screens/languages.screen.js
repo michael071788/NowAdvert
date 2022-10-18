@@ -12,7 +12,7 @@ import UsedProfile from "../../../services/use.user.profile";
 import { useTranslation } from "react-i18next";
 
 import ArabicFlag from "../../../../assets/ae.svg";
-import EnglishFlag from "../../../../assets/gb.svg";
+import EnglishFlag from "../../../../assets/us.svg";
 import PhFlag from "../../../../assets/ph.svg";
 
 const LanguageScreen = ({ navigation }) => {
@@ -24,19 +24,19 @@ const LanguageScreen = ({ navigation }) => {
       id: 1,
       language: "Arabic",
       code: "arab",
-      flag: <ArabicFlag />,
+      flag: <ArabicFlag width={50} height={30} />,
     },
     {
       id: 2,
       language: "English",
       code: "eng",
-      flag: <EnglishFlag />,
+      flag: <EnglishFlag width={50} height={30} />,
     },
     {
       id: 3,
       language: "Tagalog",
       code: "fil",
-      flag: <PhFlag />,
+      flag: <PhFlag width={50} height={30} />,
     },
   ];
   return (

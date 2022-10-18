@@ -1,15 +1,25 @@
-import React, { useEffect } from "react";
-import { View, Text, SafeAreaView, ScrollView } from "react-native";
-import { Divider } from "react-native-paper";
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  SafeAreaView,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
+import { Divider, List } from "react-native-paper";
 import UsedTheme from "../../../infrastucture/theme/use.theme";
 import UsedProfile from "../../../services/use.user.profile";
+import { useTranslation } from "react-i18next";
 
-const Tickets = () => {
+const Tickets = ({ navigation }) => {
+  const [location, setLocation] = useState("");
+
   const theme = UsedTheme();
   const contextProfile = UsedProfile();
+  const { t } = useTranslation();
 
   useEffect(() => {
-    contextProfile.SetCurrentLocation("Tickets");
+    contextProfile.SetCurrentLocation("Profile Screen");
   }, [contextProfile]);
 
   const data = [
@@ -33,8 +43,34 @@ const Tickets = () => {
     },
   ];
   return (
-    <SafeAreaView style={{ flex: 1, padding: 20, backgroundColor: "black" }}>
-      <ScrollView showsVerticalScrollIndicator={false}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "black" }}>
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => {
+            setLocation("Profile Screen");
+            navigation.navigate("ProfileScreen");
+          }}
+        >
+          <List.Icon icon="chevron-left" color="#fff" />
+        </TouchableOpacity>
+        <Text
+          style={{
+            fontFamily: theme.typography.PRIMARY,
+            fontSize: 20,
+            textTransform: "uppercase",
+            color: "#fff",
+          }}
+        >
+          {t("MY TICKETS")}
+        </Text>
+      </View>
+
+      <ScrollView showsVerticalScrollIndicator={false} style={{ padding: 20 }}>
         {data.map(({ ticketNumber, id, status, expiresIn }) => (
           <View
             key={id}
