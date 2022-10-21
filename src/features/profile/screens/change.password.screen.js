@@ -67,7 +67,7 @@ const ChangePassword = () => {
                 fontFamily: theme.typography.PRIMARY,
               }}
             >
-              {t(" NEW PASSWORD")}
+              {t("NEW PASSWORD")}
             </Text>
             <TextInput
               secureTextEntry
@@ -88,7 +88,7 @@ const ChangePassword = () => {
                 fontFamily: theme.typography.PRIMARY,
               }}
             >
-              {t(" CONFIRM PASSWORD")}
+              {t("CONFIRM PASSWORD")}
             </Text>
             <TextInput
               secureTextEntry

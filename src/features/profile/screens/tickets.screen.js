@@ -5,6 +5,7 @@ import {
   SafeAreaView,
   ScrollView,
   TouchableOpacity,
+  TextInput,
 } from "react-native";
 import { Divider, List } from "react-native-paper";
 import UsedTheme from "../../../infrastucture/theme/use.theme";
@@ -31,13 +32,13 @@ const Tickets = ({ navigation }) => {
     },
     {
       id: 2,
-      ticketNumber: "000-01234567-4817-01",
+      ticketNumber: "000-01234567-4817-02",
       status: "EXPIRING SOON",
       expiresIn: "02 November 2022",
     },
     {
       id: 3,
-      ticketNumber: "000-01234567-4817-01",
+      ticketNumber: "000-01234567-4817-03",
       status: "EXPIRED",
       expiresIn: "02 November 2022",
     },
@@ -52,7 +53,7 @@ const Tickets = ({ navigation }) => {
       >
         <TouchableOpacity
           onPress={() => {
-            setLocation("Profile Screen");
+            // setLocation("Profile Screen");
             navigation.navigate("ProfileScreen");
           }}
         >

@@ -40,23 +40,7 @@ export const AppNavigator = () => {
             name="ProfileNavigator"
             component={ProfileNavigator}
           />
-          {/* <AppStackNavigator.Screen
-            name="Profile Screen"
-            component={ProfileScreen}
-          /> */}
 
-          {/* <AppStackNavigator.Screen
-            name="Edit Profile"
-            component={EditProfile}
-          />
-          <AppStackNavigator.Screen
-            name="Change Password"
-            component={ChangePassword}
-          />
-          <AppStackNavigator.Screen
-            name="Linked Accounts"
-            component={LinkedAccounts}
-        />*/}
           <AppStackNavigator.Screen name="Tickets" component={Tickets} />
           <AppStackNavigator.Screen
             name="Languages"

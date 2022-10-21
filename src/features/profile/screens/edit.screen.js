@@ -77,7 +77,7 @@ const EditProfile = () => {
 
         <View style={{ marginVertical: 10 }}>
           <Text style={{ fontFamily: theme.typography.PRIMARY, color: "#aaa" }}>
-            {t(" MOBILE NUMBER")}
+            {t("MOBILE NUMBER")}
           </Text>
           <TextInput
             style={{

@@ -4,10 +4,13 @@ import {
   Text,
   TouchableOpacity,
   I18nManager,
-  Image,
+  SafeAreaView,
   ScrollView,
 } from "react-native";
 import UsedProfile from "../../../services/use.user.profile";
+import UsedTheme from "../../../infrastucture/theme/use.theme";
+import { CommonScreenView } from "../../../infrastucture/theme/styles/container.screen.style";
+import { Divider, List } from "react-native-paper";
 
 import { useTranslation } from "react-i18next";
 
@@ -16,6 +19,9 @@ import EnglishFlag from "../../../../assets/us.svg";
 import PhFlag from "../../../../assets/ph.svg";
 
 const LanguageScreen = ({ navigation }) => {
+  const theme = UsedTheme();
+
+  const { t } = useTranslation();
   const { i18n } = useTranslation();
   const contextProfile = UsedProfile();
 
@@ -40,7 +46,32 @@ const LanguageScreen = ({ navigation }) => {
     },
   ];
   return (
-    <View style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1 }}>
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => {
+            // setLocation("Profile Screen");
+            navigation.navigate("ProfileScreen");
+          }}
+        >
+          <List.Icon icon="chevron-left" />
+        </TouchableOpacity>
+        <Text
+          style={{
+            fontFamily: theme.typography.PRIMARY,
+            fontSize: 20,
+            textTransform: "uppercase",
+          }}
+        >
+          {t("CHOOSE LANGUAGE")}
+        </Text>
+      </View>
+      <Divider />
       <ScrollView>
         {languages.map((item) => (
           <TouchableOpacity
@@ -69,11 +100,13 @@ const LanguageScreen = ({ navigation }) => {
             }}
           >
             <View style={{ flex: 1, height: 30 }}>{item.flag}</View>
-            <Text style={{ flex: 4 }}>{item.language}</Text>
+            <Text style={{ flex: 4, fontFamily: theme.typography.PRIMARY }}>
+              {item.language}
+            </Text>
           </TouchableOpacity>
         ))}
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 

@@ -2,14 +2,9 @@ import React, { useState } from "react";
 import {
   View,
   Text,
-  // KeyboardAvoidingView,
-  // StyleSheet,
   TextInput,
   Dimensions,
   TouchableOpacity,
-  // Keyboard,
-  // SafeAreaView,
-  // ScrollView,
 } from "react-native";
 import { HeaderText } from "../../infrastucture/theme/styles/auth.components";
 import UsedTheme from "../../infrastucture/theme/use.theme";
@@ -26,10 +21,10 @@ const Verification = ({ route, navigation }) => {
   // const { profile } = route.params;
   // const input = useRef();
 
-  //==========================
+  // // ==========================
   // const [OTP, setOTP] = useState({ 1: "", 2: "", 3: "", 4: "" });
   // const [nextInputIndex, setNextInputIndex] = useState(0);
-  //==========================
+  // // ==========================
 
   // const handleChangeText = (text, index) => {
   //   const newOTP = { ...OTP };
@@ -78,7 +73,7 @@ const Verification = ({ route, navigation }) => {
           >
             <HeaderText
               title="ENTER OTP"
-              subtitle="WE'VE SENT YOU A CODE XXX XXXX 123"
+              subtitle="WE'VE SENT YOU A CODE TO XXX XXXX 123"
             />
           </View>
           <View
@@ -92,26 +87,23 @@ const Verification = ({ route, navigation }) => {
               <View
                 key={index.toString()}
                 style={{
-                  height: 60,
-                  width: 80,
-                  justifyContent: "center",
-                  alignItems: "center",
+                  borderRadius: 20,
                 }}
               >
                 <TextInput
-                  // value={OTP[index]}
-                  // onChangeText={(text) => handleChangeText(text, index)}
-                  placeholder="0"
+                  value={OTP[index]}
+                  onChangeText={(text) => handleChangeText(text, index)}
+                  // placeholder="0"
                   keyboardType="numeric"
                   maxLength={1}
                   style={{
-                    fontSize: 18,
-                    paddingVertical: 12,
-                    paddingHorizontal: 20,
-                    borderRadius: 15,
+                    borderRadius: 20,
                     backgroundColor: "#ddd",
-                    flexDirection: "row",
-                    justifyContent: "center",
+                    fontSize: 25,
+                    padding: 0,
+                    textAlign: "center",
+                    paddingHorizontal: 18,
+                    paddingVertical: 10,
                   }}
                   // ref={nextInputIndex === index ? input : null}
                 />

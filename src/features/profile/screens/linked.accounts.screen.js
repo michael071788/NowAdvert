@@ -12,7 +12,7 @@ import UsedTheme from "../../../infrastucture/theme/use.theme";
 import UsedProfile from "../../../services/use.user.profile";
 import { useTranslation } from "react-i18next";
 
-// import { CommonScreenView } from "../../../infrastucture/theme/styles/container.screen.style";
+import { CommonScreenView } from "../../../infrastucture/theme/styles/container.screen.style";
 // import {
 //   CommonView,
 //   InnerContentView,
@@ -48,7 +48,7 @@ const LinkedAccounts = () => {
                 textTransform: "uppercase",
               }}
             >
-              {t("google")}
+              {t("GOOGLE")}
             </Text>
             <TextInput
               style={{
@@ -70,7 +70,7 @@ const LinkedAccounts = () => {
                 textTransform: "uppercase",
               }}
             >
-              {t("facebook")}
+              {t("FACEBOOK")}
             </Text>
             <TextInput
               style={{
@@ -92,7 +92,7 @@ const LinkedAccounts = () => {
                 textTransform: "uppercase",
               }}
             >
-              {t("twitter")}
+              {t("TWITTER")}
             </Text>
             <TextInput
               style={{
@@ -114,7 +114,7 @@ const LinkedAccounts = () => {
                 textTransform: "uppercase",
               }}
             >
-              {t("instagram")}
+              {t("INSTAGRAM")}
             </Text>
             <TextInput
               style={{
