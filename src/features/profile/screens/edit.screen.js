@@ -4,7 +4,7 @@ import {
   ScrollView,
   Text,
   TextInput,
-  // Image,
+  SafeAreaView,
   TouchableOpacity,
 } from "react-native";
 
@@ -32,95 +32,103 @@ const EditProfile = () => {
     <ScrollView vertical showsHorizontalScrollIndicator={false}>
       {/* start input field */}
 
-      <View style={{ flex: 1, margin: 10 }}>
-        <View style={{ marginVertical: 10 }}>
-          <Text
-            style={{
-              fontFamily: theme.typography.PRIMARY,
-              color: "#aaa",
-              textTransform: "uppercase",
-            }}
-          >
-            {t("NAME")}
-          </Text>
-          <TextInput
-            style={{
-              fontFamily: theme.typography.PRIMARY,
-              borderBottomColor: "#aaa",
-              borderBottomWidth: 1,
-              paddingVertical: 2,
-              fontSize: 22,
-            }}
-          />
-        </View>
+      <SafeAreaView style={{ flex: 1, padding: 10, paddingHorizontal: 20 }}>
+        <View>
+          <View style={{ marginVertical: 10 }}>
+            <Text
+              style={{
+                fontFamily: theme.typography.PRIMARY,
+                color: "#aaa",
+                textTransform: "uppercase",
+              }}
+            >
+              {t("NAME")}
+            </Text>
+            <TextInput
+              style={{
+                fontFamily: theme.typography.PRIMARY,
+                borderBottomColor: "#aaa",
+                borderBottomWidth: 1,
+                paddingVertical: 2,
+                fontSize: 22,
+              }}
+            />
+          </View>
 
-        <View style={{ marginVertical: 10 }}>
-          <Text
-            style={{
-              fontFamily: theme.typography.PRIMARY,
-              color: "#aaa",
-              textTransform: "uppercase",
-            }}
-          >
-            {t("EMAIL")}
-          </Text>
-          <TextInput
-            style={{
-              fontFamily: theme.typography.PRIMARY,
-              borderBottomColor: "#aaa",
-              borderBottomWidth: 1,
-              paddingVertical: 2,
-              fontSize: 22,
-            }}
-          />
-        </View>
+          <View style={{ marginVertical: 10 }}>
+            <Text
+              style={{
+                fontFamily: theme.typography.PRIMARY,
+                color: "#aaa",
+                textTransform: "uppercase",
+              }}
+            >
+              {t("EMAIL")}
+            </Text>
+            <TextInput
+              style={{
+                fontFamily: theme.typography.PRIMARY,
+                borderBottomColor: "#aaa",
+                borderBottomWidth: 1,
+                paddingVertical: 2,
+                fontSize: 22,
+              }}
+            />
+          </View>
 
-        <View style={{ marginVertical: 10 }}>
-          <Text style={{ fontFamily: theme.typography.PRIMARY, color: "#aaa" }}>
-            {t("MOBILE NUMBER")}
-          </Text>
-          <TextInput
-            style={{
-              fontFamily: theme.typography.PRIMARY,
-              borderBottomColor: "#aaa",
-              borderBottomWidth: 1,
-              paddingVertical: 2,
-              fontSize: 22,
-            }}
-          />
+          <View style={{ marginVertical: 10 }}>
+            <Text
+              style={{
+                fontFamily: theme.typography.PRIMARY,
+                color: "#aaa",
+                textTransform: "uppercase",
+              }}
+            >
+              {t("MOBILE NUMBER")}
+            </Text>
+            <TextInput
+              style={{
+                fontFamily: theme.typography.PRIMARY,
+                borderBottomColor: "#aaa",
+                borderBottomWidth: 1,
+                paddingVertical: 2,
+                fontSize: 22,
+              }}
+            />
+          </View>
         </View>
-      </View>
-      {/* end input field */}
+        {/* end input field */}
 
-      {/* button */}
-      <View
-        style={{
-          marginTop: 20,
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <TouchableOpacity
+        {/* button */}
+        <View
           style={{
-            paddingVertical: 10,
-            width: "50%",
-            borderRadius: 20,
-            backgroundColor: "#333",
+            marginTop: 20,
+            justifyContent: "center",
             alignItems: "center",
           }}
         >
-          <Text
+          <TouchableOpacity
             style={{
-              fontFamily: theme.typography.PRIMARY,
-              color: "#fff",
-              textTransform: "uppercase",
+              paddingVertical: 10,
+              width: "50%",
+              borderRadius: 20,
+              backgroundColor: "#333",
+              alignItems: "center",
             }}
           >
-            {t("UPDATE")}
-          </Text>
-        </TouchableOpacity>
-      </View>
-      {/* end of button */}
+            <Text
+              style={{
+                fontFamily: theme.typography.PRIMARY,
+                color: "#fff",
+                textTransform: "uppercase",
+              }}
+            >
+              {t("UPDATE")}
+            </Text>
+          </TouchableOpacity>
+        </View>
+        {/* end of button */}
+      </SafeAreaView>
     </ScrollView>
     // </CommonScreenView>
   );

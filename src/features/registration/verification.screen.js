@@ -1,60 +1,56 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   View,
   Text,
   TextInput,
   Dimensions,
   TouchableOpacity,
+  Keyboard,
 } from "react-native";
 import { HeaderText } from "../../infrastucture/theme/styles/auth.components";
 import UsedTheme from "../../infrastucture/theme/use.theme";
 
 const inputs = Array(4).fill("");
-// let newInputIndex = 0;
+let newInputIndex = 0;
 
-// const isObjValid = (obj) => {
-//   return Object.values(obj).every((val) => val.trim());
-// };
+const isObjValid = (obj) => {
+  return Object.values(obj).every((val) => val.trim);
+};
 
 const Verification = ({ route, navigation }) => {
   const theme = UsedTheme();
-  // const { profile } = route.params;
-  // const input = useRef();
 
-  // // ==========================
-  // const [OTP, setOTP] = useState({ 1: "", 2: "", 3: "", 4: "" });
-  // const [nextInputIndex, setNextInputIndex] = useState(0);
-  // // ==========================
+  const input = useRef();
+  const [OTP, setOTP] = useState({ 0: "", 1: "", 2: "", 3: "" });
+  const [nextInputIndex, setNextInputIndex] = useState(0);
 
-  // const handleChangeText = (text, index) => {
-  //   const newOTP = { ...OTP };
-  //   newOTP[index] = text;
-  //   setOTP(newOTP);
+  const handleChangeText = (text, index) => {
+    const newOTP = { ...OTP };
+    newOTP[index] = text;
+    setOTP(newOTP);
 
-  //   lastInputIndex = inputs.length - 1;
-  //   if (!text)
-  //     newInputIndex = index === lastInputIndex ? lastInputIndex : index - 1;
-  //   else newInputIndex = index === lastInputIndex ? lastInputIndex : index + 1;
+    const lastInputIndex = inputs.length - 1;
+    if (!text) newInputIndex = index === 0 ? 0 : index - 1;
+    else newInputIndex = index === lastInputIndex ? lastInputIndex : index + 1;
+    setNextInputIndex(newInputIndex);
+  };
 
-  //   setNextInputIndex(newInputIndex);
-  // };
+  useEffect(() => {
+    input.current.focus();
+  }, [nextInputIndex]);
 
-  // useEffect(() => {
-  //   input.current.focus();
-  // }, [nextInputIndex]);
+  const submitOTP = () => {
+    Keyboard.dismiss();
 
-  // const submitOTP = async () => {
-  //   Keyboard.dismiss();
+    if (isObjValid(OTP)) {
+      let val = "";
 
-  //   if (isObjValid(OTP)) {
-  //     let val = "";
-
-  //     Object.values(OTP).forEach((v) => {
-  //       val += v;
-  //     });
-  //     // const rest = await verifyEmail(val, profile.id);
-  //   }
-  // };
+      Object.values(OTP).forEach((v) => {
+        val += v;
+      });
+      console.log(val);
+    }
+  };
   return (
     <View
       style={{
@@ -93,6 +89,7 @@ const Verification = ({ route, navigation }) => {
                 <TextInput
                   value={OTP[index]}
                   onChangeText={(text) => handleChangeText(text, index)}
+                  ref={nextInputIndex === index ? input : null}
                   // placeholder="0"
                   keyboardType="numeric"
                   maxLength={1}
@@ -105,13 +102,13 @@ const Verification = ({ route, navigation }) => {
                     paddingHorizontal: 18,
                     paddingVertical: 10,
                   }}
-                  // ref={nextInputIndex === index ? input : null}
                 />
               </View>
             ))}
           </View>
 
           <TouchableOpacity
+            onPress={submitOTP}
             style={{
               backgroundColor: "#333",
               borderRadius: 20,

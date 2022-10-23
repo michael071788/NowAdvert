@@ -14,9 +14,9 @@ import Tickets from "../../features/profile/screens/tickets.screen";
 import LanguageScreen from "../../features/profile/screens/languages.screen";
 import { Text, TouchableOpacity, View } from "react-native";
 import { List } from "react-native-paper";
-// import SignUp from "../../features/registration/signup.screen";
-// import Login from "../../features/registration/login.screen";
-// import Verification from "../../features/registration/verification.screen";
+import SignUp from "../../features/registration/signup.screen";
+import Login from "../../features/registration/login.screen";
+import Verification from "../../features/registration/verification.screen";
 
 const AppStackNavigator = createStackNavigator();
 
@@ -48,9 +48,9 @@ export const AppNavigator = () => {
           />
 
           {/* ----------------------- */}
-          {/* <AppStackNavigator.Screen name="Register" component={SignUp} />
+          <AppStackNavigator.Screen name="Register" component={SignUp} />
           <AppStackNavigator.Screen name="Login" component={Login} />
-          <AppStackNavigator.Screen name="Verify" component={Verification} /> */}
+          <AppStackNavigator.Screen name="Verify" component={Verification} />
         </AppStackNavigator.Navigator>
       </SafeArea>
     </>

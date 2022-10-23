@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Alert } from "react-native";
 
 import EditProfile from "../../features/profile/screens/edit.screen";
 import ChangePassword from "../../features/profile/screens/change.password.screen";
@@ -13,14 +13,13 @@ import { ProfileScreen } from "../../features/profile/screens/profile.screen";
 import { List, Avatar } from "react-native-paper";
 
 import { useTranslation } from "react-i18next";
-import { launchImageLibraryAsync, MediaTypeOptions } from "expo-image-picker";
-// import { launchImageLibraryAsync } from "expo-image-picker";
+import * as ImagePicker from "expo-image-picker";
 
 const ProfileStack = createStackNavigator();
 
 export const ProfileNavigator = ({ navigation }) => {
   const [location, setLocation] = useState("");
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState("");
 
   const { t } = useTranslation();
 
@@ -33,25 +32,24 @@ export const ProfileNavigator = ({ navigation }) => {
     setLocation(contextProfile.currentLocation);
   }, [contextProfile.currentLocation]);
 
-  const pickImage = async () => {
-    alert("Pressed");
+  const openImagePickerAsync = async () => {
     // let result = await ImagePicker.launchImageLibraryAsync({
-    //   mediaTypes: ImagePicker.MediaTypeOptions.Images,
+    //   mediaTypes: ImagePicker.MediaTypeOptions.All,
     //   allowsEditing: true,
-    //   aspect: [1, 1],
+    //   aspect: [4, 3],
     //   quality: 1,
     // });
-
     // console.log(result);
-
     // if (!result.cancelled) {
     //   setImage(result.uri);
     // }
   };
+
   return (
     <View style={{ flex: 1 }}>
       <View style={{ flexDirection: "row", alignItems: "center" }}>
         <TouchableOpacity
+          activeOpacity={1}
           onPress={() => {
             setLocation("Profile Screen");
             navigation.navigate("ProfileScreen");
@@ -98,7 +96,7 @@ export const ProfileNavigator = ({ navigation }) => {
                 style={{ backgroundColor: "#fff", elevation: 1 }}
               />
               <TouchableOpacity
-                onPress={pickImage}
+                onPress={openImagePickerAsync}
                 style={{
                   position: "absolute",
                   bottom: 10,

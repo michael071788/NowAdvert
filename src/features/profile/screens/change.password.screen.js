@@ -5,7 +5,6 @@ import {
   Text,
   SafeAreaView,
   TextInput,
-  // Image,
   TouchableOpacity,
 } from "react-native";
 // import { Button } from "react-native-paper";
@@ -34,9 +33,7 @@ const ChangePassword = () => {
       {/* start of profile */}
 
       {/* start input field */}
-      <SafeAreaView
-        style={{ width: "100%", flex: 1, padding: 10, paddingHorizontal: 20 }}
-      >
+      <SafeAreaView style={{ flex: 1, padding: 10, paddingHorizontal: 20 }}>
         <View>
           <View style={{ marginVertical: 10 }}>
             <Text
@@ -65,6 +62,7 @@ const ChangePassword = () => {
               style={{
                 color: "#aaa",
                 fontFamily: theme.typography.PRIMARY,
+                textTransform: "uppercase",
               }}
             >
               {t("NEW PASSWORD")}
@@ -86,6 +84,7 @@ const ChangePassword = () => {
               style={{
                 color: "#aaa",
                 fontFamily: theme.typography.PRIMARY,
+                textTransform: "uppercase",
               }}
             >
               {t("CONFIRM PASSWORD")}
