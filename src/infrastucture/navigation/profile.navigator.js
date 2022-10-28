@@ -13,13 +13,11 @@ import { ProfileScreen } from "../../features/profile/screens/profile.screen";
 import { List, Avatar } from "react-native-paper";
 
 import { useTranslation } from "react-i18next";
-import * as ImagePicker from "expo-image-picker";
 
 const ProfileStack = createStackNavigator();
 
 export const ProfileNavigator = ({ navigation }) => {
   const [location, setLocation] = useState("");
-  const [image, setImage] = useState("");
 
   const { t } = useTranslation();
 
@@ -32,19 +30,7 @@ export const ProfileNavigator = ({ navigation }) => {
     setLocation(contextProfile.currentLocation);
   }, [contextProfile.currentLocation]);
 
-  const openImagePickerAsync = async () => {
-    // let result = await ImagePicker.launchImageLibraryAsync({
-    //   mediaTypes: ImagePicker.MediaTypeOptions.All,
-    //   allowsEditing: true,
-    //   aspect: [4, 3],
-    //   quality: 1,
-    // });
-    // console.log(result);
-    // if (!result.cancelled) {
-    //   setImage(result.uri);
-    // }
-  };
-
+  const openImagePicker = () => {};
   return (
     <View style={{ flex: 1 }}>
       <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -87,16 +73,11 @@ export const ProfileNavigator = ({ navigation }) => {
             >
               <Avatar.Image
                 size={180}
-                // source={require("../../../assets/avatar_profile_icon.png")}
-                source={
-                  image
-                    ? { uri: image }
-                    : require("../../../assets/avatar_profile_icon.png")
-                }
+                source={require("../../../assets/avatar_profile_icon.png")}
                 style={{ backgroundColor: "#fff", elevation: 1 }}
               />
               <TouchableOpacity
-                onPress={openImagePickerAsync}
+                onPress={openImagePicker}
                 style={{
                   position: "absolute",
                   bottom: 10,

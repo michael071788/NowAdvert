@@ -15,9 +15,13 @@ import {
   Input,
 } from "../../infrastucture/theme/styles/auth.components";
 import { useForm, Controller } from "react-hook-form";
-import { StackActions } from "@react-navigation/native";
+
+// cannot POST user yet
+const BASE_URL = "https://protected-fjord-83078.herokuapp.com";
 
 const SignUp = ({ navigation }) => {
+  const [userInfo, setUserInfo] = useState("");
+
   const theme = UsedTheme();
   const {
     control,
@@ -37,9 +41,31 @@ const SignUp = ({ navigation }) => {
   });
   const onSubmit = (data) => {
     // register(data);
-    navigation.dispatch(StackActions.replace("Verify"));
-    reset();
+    // navigation.dispatch(StackActions.replace("Verify"));
+    // reset();
     // alert("Register Successfully!");
+
+    // initial functionality
+    fetch(`${BASE_URL}/api/signup`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        // console.log(data);
+        let userInfo = data;
+
+        if (data.message) {
+          alert(data.message);
+        } else if (data.message === "User created successfully") {
+          setUserInfo(data);
+          AsyncStorage.setItem("userInfo", userInfo);
+        }
+        console.log(userInfo);
+      });
   };
   return (
     <View

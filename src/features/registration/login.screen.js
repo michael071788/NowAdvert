@@ -7,7 +7,12 @@ import {
 } from "../../infrastucture/theme/styles/auth.components";
 import { useForm, Controller } from "react-hook-form";
 
+// cannot POST user yet
+const BASE_URL = "https://protected-fjord-83078.herokuapp.com";
+
 const Login = ({ navigation }) => {
+  const [userInfo, setUserInfo] = useState("");
+
   const theme = UsedTheme();
 
   const {
@@ -24,8 +29,27 @@ const Login = ({ navigation }) => {
   const onSubmit = (data) => {
     // register(data);
     //navigation.dispatch(StackActions.replace("Verify"));
-    reset();
-    // alert("Register Successfully!");
+    // reset();
+
+    fetch(`${BASE_URL}/api/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        let userInfo = data;
+
+        if (data.message) {
+          alert(data.message);
+        } else if (data.message === "User created successfully") {
+          setUserInfo(data);
+          AsyncStorage.setItem("userInfo", userInfo);
+        }
+        console.log(userInfo);
+      });
   };
   return (
     <SafeAreaView style={{ flex: 1, padding: 20 }}>
