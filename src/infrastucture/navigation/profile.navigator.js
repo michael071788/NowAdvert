@@ -13,6 +13,8 @@ import { ProfileScreen } from "../../features/profile/screens/profile.screen";
 import { List, Avatar } from "react-native-paper";
 
 import { useTranslation } from "react-i18next";
+import { launchCamera, launchImageLibrary } from "react-native-image-picker";
+// import * as ImagePicker from "react-native-image-picker";
 
 const ProfileStack = createStackNavigator();
 
@@ -27,10 +29,14 @@ export const ProfileNavigator = ({ navigation }) => {
 
   useEffect(() => {
     // contextProfile.SetCurrentLocation("ProfileScreen");
+
     setLocation(contextProfile.currentLocation);
   }, [contextProfile.currentLocation]);
 
-  const openImagePicker = () => {};
+  const openImagePicker = async () => {
+    alert("picked");
+  };
+
   return (
     <View style={{ flex: 1 }}>
       <View style={{ flexDirection: "row", alignItems: "center" }}>

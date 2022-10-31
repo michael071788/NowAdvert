@@ -26,7 +26,7 @@ export const AppNavigator = () => {
       <SafeArea>
         <AppStackNavigator.Navigator
           screenOptions={appNavigatorScreenOptions}
-          initialRouteName="AdvertScreen"
+          initialRouteName="Register"
         >
           <AppStackNavigator.Screen
             name="AdvertScreen"

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   ScrollView,
@@ -17,7 +17,8 @@ import {
 import { useForm, Controller } from "react-hook-form";
 
 // cannot POST user yet
-const BASE_URL = "https://protected-fjord-83078.herokuapp.com";
+// const BASE_URL = "https://protected-fjord-83078.herokuapp.com";
+const BASE_URL = "https://nowadvert-api.herokuapp.com";
 
 const SignUp = ({ navigation }) => {
   const [userInfo, setUserInfo] = useState("");
@@ -39,14 +40,15 @@ const SignUp = ({ navigation }) => {
       cpassword: "",
     },
   });
-  const onSubmit = (data) => {
+  const onSubmit = (userData) => {
     // register(data);
     // navigation.dispatch(StackActions.replace("Verify"));
     // reset();
     // alert("Register Successfully!");
 
     // initial functionality
-    fetch(`${BASE_URL}/api/signup`, {
+    // fetch(`${BASE_URL}/api/signup`, {
+    fetch(`${BASE_URL}/api/users`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -65,6 +67,9 @@ const SignUp = ({ navigation }) => {
           AsyncStorage.setItem("userInfo", userInfo);
         }
         console.log(userInfo);
+      })
+      .catch((error) => {
+        console.log(error);
       });
   };
   return (
