@@ -1,8 +1,7 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { TouchableOpacity, View, Text } from "react-native";
 import Share from "react-native-share";
 import UsedTheme from "../../../infrastucture/theme/use.theme";
-import { MOCK_ADVERT_LIST } from "../../../infrastucture/mockup/data.list";
 import {
   AdvertCarousel,
   AdvertCarouselContainer,
@@ -18,6 +17,7 @@ import {
   SlideView,
   ShareModalContainer,
 } from "../../../infrastucture/theme/styles/advert.screen.style";
+import { LoadingScreen } from "../../../infrastucture/theme/styles/advert.video.screen.style";
 import { ButtonContainer } from "../../../infrastucture/theme/styles/advert.screen.style";
 import { BlurView } from "expo-blur";
 import { UsedPrimaryAppContext } from "../../../services/primary.app.provider";
@@ -25,8 +25,13 @@ import { SvgIcon } from "../../../components/svg.icon";
 import { HeaderBarContainer } from "../../../infrastucture/theme/styles/app.header.style";
 import { UserProfileBar } from "../../profile/user.profile.bar";
 import { getErrorString } from "../../../services/common.function";
+import { AxiosInstance } from "../../../utils";
 
 export const AdvertScreen = ({ navigation }) => {
+  const mounted = useRef(false);
+  const [isPreloading, setIsPreloading] = useState(true);
+  const [advertListData, setAdvertListData] = useState([]);
+
   const theme = UsedTheme();
 
   const primaryContext = UsedPrimaryAppContext();
@@ -50,12 +55,12 @@ export const AdvertScreen = ({ navigation }) => {
       }
 
       const shareOptions = {
-        title: selectedItem.share.title,
-        message: selectedItem.share.message,
+        title: selectedItem.shareTitle,
+        message: selectedItem.shareMessage,
         backgroundImage: selectedItem.imageURI,
         icon: selectedItem.imageURI,
         social: _social,
-        url: selectedItem.share.url,
+        url: selectedItem.shareUrl,
       };
 
       try {
@@ -208,16 +213,62 @@ export const AdvertScreen = ({ navigation }) => {
     );
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      let _data = [];
+      await AxiosInstance.get("/api/advert/list")
+        .then((response) => {
+          _data = response.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+      return _data;
+    };
+
+    fetchData()
+      .then((data) => {
+        setAdvertListData(data);
+        setIsPreloading(false);
+      })
+      .catch(console.error);
+  }, []);
+
+  useEffect(() => {
+    console.log("advertListData:", advertListData);
+  }, [advertListData]);
+
+  // useEffect(async () => {
+  //   await AxiosInstance.get("/api/advert/list").then((response) => {
+  //     console.log(response.data);
+  //     // console.log(response.data[0]._id);
+  //   });
+  // }, []);
+
+  useEffect(() => {
+    mounted.current = true;
+
+    return () => {
+      mounted.current = false;
+    };
+  }, []);
+
   return (
     <>
       <MainScreenView theme={theme}>
-        <HeaderBarContainer>
-          <UserProfileBar isShown={true} />
-        </HeaderBarContainer>
-        <AdvertCarouselContainer>
-          <AdvertCarousel data={MOCK_ADVERT_LIST} renderItem={renderItem} />
-        </AdvertCarouselContainer>
+        {mounted && (
+          <>
+            <HeaderBarContainer>
+              <UserProfileBar isShown={true} />
+            </HeaderBarContainer>
+            <AdvertCarouselContainer>
+              <AdvertCarousel data={advertListData} renderItem={renderItem} />
+            </AdvertCarouselContainer>
+          </>
+        )}
+        {mounted && isPreloading && <LoadingScreen theme={theme} />}
       </MainScreenView>
+
       <ShareModalContainer
         visible={visibleShareModal}
         onDismiss={hideShareModal}
