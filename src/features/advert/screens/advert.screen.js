@@ -111,15 +111,6 @@ export const AdvertScreen = ({ navigation }) => {
                   borderRadius: 30,
                 }}
               >
-                <ButtonContainer name={"BOOKMARK"} />
-              </View>
-
-              <View
-                style={{
-                  overflow: "hidden",
-                  borderRadius: 30,
-                }}
-              >
                 <BlurView
                   intensity={40}
                   tint={"dark"}
@@ -233,17 +224,6 @@ export const AdvertScreen = ({ navigation }) => {
       })
       .catch(console.error);
   }, []);
-
-  useEffect(() => {
-    console.log("advertListData:", advertListData);
-  }, [advertListData]);
-
-  // useEffect(async () => {
-  //   await AxiosInstance.get("/api/advert/list").then((response) => {
-  //     console.log(response.data);
-  //     // console.log(response.data[0]._id);
-  //   });
-  // }, []);
 
   useEffect(() => {
     mounted.current = true;
