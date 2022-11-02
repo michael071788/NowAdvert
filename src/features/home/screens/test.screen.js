@@ -3,16 +3,34 @@ import { View, Text } from "react-native";
 import { Button } from "react-native-paper";
 import axios from "axios";
 const axiosInstance = axios.create({
-  baseURL: "https://protected-fjord-83078.herokuapp.com",
+  baseURL: "https://nowadvertapi.herokuapp.com",
 });
+
+const _myPostData = {
+  title: "This is title 9 version",
+  description: "this is description 9 version",
+};
 
 export const TestScreen = () => {
   const onPressButton = async () => {
     console.log("onPressButton");
-    axiosInstance.get("/routes/posts").then((response) => {
+    console.log("isLoading: true");
+    // =======================================================================
+    await axiosInstance.get("/api/advert/list").then((response) => {
       console.log(response.data);
-      console.log(response.data[0]._id);
+      // console.log(response.data[0]._id);
     });
+    // =======================================================================
+    await axiosInstance
+      .post("/routes/posts", _myPostData)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+    // =======================================================================
+    console.log("isLoading: false");
   };
 
   return (
