@@ -78,6 +78,7 @@ export const ButtonAdvertContainer = styled(View)`
 export const ButtonAdvertInnerContainer = styled(View)`
  flex: 1;
  justifyContext: space-around;
+ padding-top: 100%;
 `;
 
 /* prettier-ignore */
