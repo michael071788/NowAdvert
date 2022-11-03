@@ -7,6 +7,8 @@ import { AdvertVideoScreen } from "../../features/advert/screens/advert.video.sc
 import { TestScreen } from "../../features/home/screens/test.screen";
 
 import { appNavigatorScreenOptions } from "../theme/styles/app.navigator.style";
+import SignUp from "../../features/registration/signup.screen";
+import Login from "../../features/registration/login.screen";
 
 const AppStackNavigator = createStackNavigator();
 
@@ -16,7 +18,7 @@ export const AppNavigator = () => {
       <SafeArea>
         <AppStackNavigator.Navigator
           screenOptions={appNavigatorScreenOptions}
-          initialRouteName="AdvertScreen"
+          initialRouteName="Register"
         >
           <AppStackNavigator.Screen name="TestScreen" component={TestScreen} />
           <AppStackNavigator.Screen
@@ -31,6 +33,10 @@ export const AppNavigator = () => {
             name="Profile"
             component={ProfileNavigator}
           />
+          {/*  */}
+          <AppStackNavigator.Screen name="Register" component={SignUp} />
+          <AppStackNavigator.Screen name="Login" component={Login} />
+          {/*  */}
         </AppStackNavigator.Navigator>
       </SafeArea>
     </>
