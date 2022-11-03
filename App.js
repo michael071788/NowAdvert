@@ -16,6 +16,7 @@ import PrimaryAppProvider from "./src/services/primary.app.provider";
 import UserProfileProvider from "./src/services/user.profile.provider";
 
 import "./src/utils/i18n";
+import { AuthProvider } from "./src/services/user.auth.provider.js";
 
 export default function App() {
   const [oswaldLoaded] = useOswald({
@@ -31,7 +32,9 @@ export default function App() {
       <ThemeProvider>
         <PrimaryAppProvider>
           <UserProfileProvider>
+            {/* <AuthProvider> */}
             <Navigation />
+            {/* </AuthProvider> */}
           </UserProfileProvider>
         </PrimaryAppProvider>
       </ThemeProvider>

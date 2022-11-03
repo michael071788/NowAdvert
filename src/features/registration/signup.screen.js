@@ -62,7 +62,7 @@ const SignUp = ({ navigation }) => {
 
         if (data.message) {
           alert(data.message);
-        } else if (data.message === "User created successfully") {
+        } else if (data.status === 201) {
           setUserInfo(data);
           AsyncStorage.setItem("userInfo", userInfo);
         }
