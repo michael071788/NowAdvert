@@ -10,13 +10,9 @@ import { appNavigatorScreenOptions } from "../theme/styles/app.navigator.style";
 import SignUp from "../../features/registration/signup.screen";
 import Login from "../../features/registration/login.screen";
 
-import UserInfo from "../../services/use.userInfo";
-
 const AppStackNavigator = createStackNavigator();
 
 export const AppNavigator = () => {
-  const contextAuth = UserInfo();
-
   return (
     <>
       <SafeArea>
