@@ -10,18 +10,29 @@ import { appNavigatorScreenOptions } from "../theme/styles/app.navigator.style";
 import SignUp from "../../features/registration/signup.screen";
 import Login from "../../features/registration/login.screen";
 
+import UserInfo from "../../services/use.userInfo";
+
 const AppStackNavigator = createStackNavigator();
 
 export const AppNavigator = () => {
+  const contextAuth = UserInfo();
+
   return (
     <>
       <SafeArea>
         <AppStackNavigator.Navigator
           screenOptions={appNavigatorScreenOptions}
-          initialRouteName="Register"
+          initialRouteName="Login"
         >
+          {/* {contextAuth.userInfo.token ? ( */}
           <AppStackNavigator.Screen name="TestScreen" component={TestScreen} />
-          <AppStackNavigator.Screen
+          {/* ) : ( */}
+          {/* <> */}
+          <AppStackNavigator.Screen name="Register" component={SignUp} />
+          <AppStackNavigator.Screen name="Login" component={Login} />
+          {/* </> */}
+          {/* )} */}
+          {/* <AppStackNavigator.Screen
             name="AdvertScreen"
             component={AdvertScreen}
           />
@@ -32,10 +43,11 @@ export const AppNavigator = () => {
           <AppStackNavigator.Screen
             name="Profile"
             component={ProfileNavigator}
-          />
+          /> */}
           {/*  */}
-          <AppStackNavigator.Screen name="Register" component={SignUp} />
-          <AppStackNavigator.Screen name="Login" component={Login} />
+
+          {/* <AppStackNavigator.Screen name="Test" component={testScreen} /> */}
+
           {/*  */}
         </AppStackNavigator.Navigator>
       </SafeArea>

@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { View, ScrollView, Text, TouchableOpacity } from "react-native";
+import {
+  // AsyncStorage,
+  View,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+} from "react-native";
 import UsedTheme from "../../infrastucture/theme/use.theme";
 import {
   HeaderText,
@@ -7,9 +13,10 @@ import {
 } from "../../infrastucture/theme/styles/auth.components";
 import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
+// import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const axiosInstance = axios.create({
-  baseURL: "https://nowadvertapi.herokuapp.com",
+  baseURL: "https://nowadvert-api.herokuapp.com",
 });
 // const BASE_URL = "https://nowadvert-api.herokuapp.com";
 
@@ -40,13 +47,13 @@ const SignUp = ({ navigation }) => {
     try {
       await axiosInstance.post("/api/users/signup", userData).then((result) => {
         if (result.data.message) {
-          console.log(result.data.message);
           alert(result.data.message);
+          console.log(result.data.message);
         } else if (result.status === 201) {
           const userData = result.config.data;
           alert("Success");
-          AsyncStorage.setItem("userInfo", JSON.stringify(userData));
-          // navigation.navigate("Login");
+          // AsyncStorage.setItem("userInfo", JSON.stringify(userData));
+          navigation.navigate("Login");
         }
       });
     } catch (error) {
