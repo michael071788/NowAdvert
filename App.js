@@ -13,6 +13,7 @@ import { Navigation } from "./src/infrastucture/navigation";
 
 import ThemeProvider from "./src/infrastucture/theme/theme.provider";
 import PrimaryAppProvider from "./src/services/primary.app.provider";
+import UserInfoProvider from "./src/services/user.auth.provider.js";
 
 export default function App() {
   const [oswaldLoaded] = useOswald({
@@ -27,7 +28,9 @@ export default function App() {
     <>
       <ThemeProvider>
         <PrimaryAppProvider>
-          <Navigation />
+          <UserInfoProvider>
+            <Navigation />
+          </UserInfoProvider>
         </PrimaryAppProvider>
       </ThemeProvider>
     </>

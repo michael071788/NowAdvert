@@ -5,6 +5,7 @@ import {
   SafeAreaView,
   TouchableOpacity,
   ScrollView,
+  // AsyncStorage,
 } from "react-native";
 import UsedTheme from "../../infrastucture/theme/use.theme";
 import {
@@ -13,8 +14,9 @@ import {
 } from "../../infrastucture/theme/styles/auth.components";
 import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
+import UserInfo from "../../services/use.userInfo";
+// import AsyncStorage from "@react-native-async-storage/async-storage";
 
-// cannot POST user yet
 // const BASE_URL = "https://protected-fjord-83078.herokuapp.com";
 // const BASE_URL = "https://nowadvert-api.herokuapp.com";
 
@@ -23,9 +25,11 @@ const axiosInstance = axios.create({
 });
 
 const Login = ({ navigation }) => {
-  const [userInfo, setUserInfo] = useState("");
-
+  // const [dataUser, setDataUser] = useState({});
+  const [errorMesssage, setErrorMessage] = useState(null);
   const theme = UsedTheme();
+
+  const contextUser = UserInfo();
 
   const {
     control,
@@ -43,45 +47,25 @@ const Login = ({ navigation }) => {
     console.log(userData);
 
     try {
-      const result = await axiosInstance
-        .post("/api/login", userData)
-        .then((result) => {
-          if (result.data.message) {
-            console.log(result.data.message);
-            alert(result.data.message);
-          } else if (result.status === 200) {
-            const userData = result.config.data;
-            alert("Success");
-            AsyncStorage.setItem("userInfo", JSON.stringify(userData));
-            // navigation.navigate("Login");
-          }
-        });
+      await axiosInstance.post("/api/login", userData).then((result) => {
+        if (result.status === 200) {
+          console.log(result.data.message);
+          const userData = result.config.data;
+          // AsyncStorage.setItem("userInfo", JSON.stringify(userData));
+          console.log("success");
+          contextUser.SetCurrentUserInfo(userData);
+          console.log("data context user: ", contextUser.userInfo);
+          // navigation.navigate("Login");
+        } else if (result.status === 400) {
+          console.log(result.data.message);
+        } else if (result.status === 401) {
+          console.log(result.data.message);
+        }
+      });
     } catch (error) {
-      console.log(error.response.data);
+      setErrorMessage(error.message);
+      console.log(errorMesssage);
     }
-
-    // fetch(`${BASE_URL}/api/login`, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(userData),
-    // })
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     let userInfo = data;
-
-    //     if (data.message) {
-    //       alert(data.message);
-    //     } else if (data.message === "User Login successfully") {
-    //       setUserInfo(data);
-    //       AsyncStorage.setItem("userInfo", userInfo);
-    //     }
-    //     console.log(userInfo);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error.response.data);
-    //   });
   };
   return (
     <View
