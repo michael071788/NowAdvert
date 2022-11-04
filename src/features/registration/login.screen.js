@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -8,13 +8,14 @@ import {
   // AsyncStorage,
 } from "react-native";
 import UsedTheme from "../../infrastucture/theme/use.theme";
+import { UsedUserAuthInfoContext } from "../../services/user.auth.provider";
 import {
   HeaderText,
   Input,
 } from "../../infrastucture/theme/styles/auth.components";
 import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
-import UserInfo from "../../services/use.userInfo";
+//import UsedUserInfo from "../../services/use.userInfo";
 // import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // const BASE_URL = "https://protected-fjord-83078.herokuapp.com";
@@ -28,8 +29,7 @@ const Login = ({ navigation }) => {
   // const [dataUser, setDataUser] = useState({});
   const [errorMesssage, setErrorMessage] = useState(null);
   const theme = UsedTheme();
-
-  const contextUser = UserInfo();
+  const userAuthInfoContext = UsedUserAuthInfoContext();
 
   const {
     control,
@@ -38,8 +38,8 @@ const Login = ({ navigation }) => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      email: "",
-      password: "",
+      email: "UserInfo@test.com",
+      password: "P@ssword123",
     },
   });
   const onSubmit = async (userData) => {
@@ -50,11 +50,12 @@ const Login = ({ navigation }) => {
       await axiosInstance.post("/api/login", userData).then((result) => {
         if (result.status === 200) {
           console.log(result.data.message);
-          const userData = result.config.data;
+          const _userData = result.config.data;
+          const _resultData = result.data;
           // AsyncStorage.setItem("userInfo", JSON.stringify(userData));
           console.log("success");
-          contextUser.SetCurrentUserInfo(userData);
-          console.log("data context user: ", contextUser.userInfo);
+          console.log("_resultData: ", _resultData);
+          userAuthInfoContext.SetCurrentUserInfo(_userData);
           // navigation.navigate("Login");
         } else if (result.status === 400) {
           console.log(result.data.message);
@@ -67,6 +68,14 @@ const Login = ({ navigation }) => {
       console.log(errorMesssage);
     }
   };
+
+  useEffect(() => {
+    console.log(
+      "userAuthInfoContext.userInfo useEffect: ",
+      userAuthInfoContext.userInfo
+    );
+  }, [userAuthInfoContext]);
+
   return (
     <View
       style={{

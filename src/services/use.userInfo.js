@@ -1,8 +1,8 @@
 import { useContext } from "react";
 import { UsedUserAuthInfoContext } from "./user.auth.provider";
 
-const UserInfo = () => {
+const UsedUserInfo = () => {
   return useContext(UsedUserAuthInfoContext);
 };
 
-export default UserInfo;
+export default UsedUserInfo;

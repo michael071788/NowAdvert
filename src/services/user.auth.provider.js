@@ -1,9 +1,9 @@
 import React, { useContext, useState } from "react";
 
-export const UserAuthInfo = React.createContext();
+export const UserAuthInfoContext = React.createContext();
 
 export const UsedUserAuthInfoContext = () => {
-  return useContext(UserAuthInfo);
+  return useContext(UserAuthInfoContext);
 };
 
 const UserInfoProvider = ({ children }) => {
@@ -14,14 +14,14 @@ const UserInfoProvider = ({ children }) => {
   };
 
   return (
-    <UserAuthInfo.Provider
+    <UserAuthInfoContext.Provider
       value={{
         userInfo,
         SetCurrentUserInfo: onSetUserInfo,
       }}
     >
       {children}
-    </UserAuthInfo.Provider>
+    </UserAuthInfoContext.Provider>
   );
 };
 
