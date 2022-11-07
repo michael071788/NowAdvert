@@ -1,3 +1,4 @@
+import React from "react";
 import { View, ScrollView, Text, SafeAreaView, TextInput } from "react-native";
 import { Button } from "react-native-paper";
 import UsedTheme from "../../../infrastucture/theme/use.theme";

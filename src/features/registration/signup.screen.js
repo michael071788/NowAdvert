@@ -1,3 +1,4 @@
+import React from "react";
 import {
   View,
   ScrollView,
@@ -8,6 +9,7 @@ import {
 } from "react-native";
 import UsedTheme from "../../../infrastucture/theme/use.theme";
 import { CommonScreenView } from "../../../infrastucture/theme/styles/container.screen.style";
+import { tabBarTotalHeight } from "../../infrastucture/theme/styles/app.navigator.style";
 
 const SignUp = ({ navigation }) => {
   const theme = UsedTheme();
