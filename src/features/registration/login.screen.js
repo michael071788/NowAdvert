@@ -15,7 +15,6 @@ import {
 } from "../../infrastucture/theme/styles/auth.components";
 import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
-//import UsedUserInfo from "../../services/use.userInfo";
 // import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // const BASE_URL = "https://protected-fjord-83078.herokuapp.com";
@@ -26,7 +25,7 @@ const axiosInstance = axios.create({
 });
 
 const Login = ({ navigation }) => {
-  // const [dataUser, setDataUser] = useState({});
+  const [userInfo, setUserInfo] = useState();
   const [errorMesssage, setErrorMessage] = useState(null);
   const theme = UsedTheme();
   const userAuthInfoContext = UsedUserAuthInfoContext();
@@ -38,10 +37,11 @@ const Login = ({ navigation }) => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      email: "UserInfo@test.com",
-      password: "P@ssword123",
+      email: "",
+      password: "",
     },
   });
+
   const onSubmit = async (userData) => {
     console.log("Pressed");
     console.log(userData);
@@ -50,13 +50,17 @@ const Login = ({ navigation }) => {
       await axiosInstance.post("/api/login", userData).then((result) => {
         if (result.status === 200) {
           console.log(result.data.message);
-          const _userData = result.config.data;
+
           const _resultData = result.data;
-          // AsyncStorage.setItem("userInfo", JSON.stringify(userData));
-          console.log("success");
+          const _userData = userAuthInfoContext.SetCurrentUserInfo(result.data);
+
+          console.log(_userData);
+
+          // const _resultData = result.data.user.token;
+          // setUserInfo(_userData);
+          // AsyncStorage.setItem("userInfo", _userData);
           console.log("_resultData: ", _resultData);
-          userAuthInfoContext.SetCurrentUserInfo(_userData);
-          // navigation.navigate("Login");
+          // navigation.navigate("TestScreen");
         } else if (result.status === 400) {
           console.log(result.data.message);
         } else if (result.status === 401) {
@@ -68,7 +72,6 @@ const Login = ({ navigation }) => {
       console.log(errorMesssage);
     }
   };
-
   useEffect(() => {
     console.log(
       "userAuthInfoContext.userInfo useEffect: ",

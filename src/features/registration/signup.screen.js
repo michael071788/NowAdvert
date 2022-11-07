@@ -13,7 +13,6 @@ import {
 } from "../../infrastucture/theme/styles/auth.components";
 import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
-// import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const axiosInstance = axios.create({
   baseURL: "https://nowadvert-api.herokuapp.com",
@@ -21,7 +20,7 @@ const axiosInstance = axios.create({
 // const BASE_URL = "https://nowadvert-api.herokuapp.com";
 
 const SignUp = ({ navigation }) => {
-  const [userInfo, setUserInfo] = useState({});
+  const [userInfo, setUserInfo] = useState(null);
 
   const theme = UsedTheme();
   const {
@@ -46,14 +45,13 @@ const SignUp = ({ navigation }) => {
 
     try {
       await axiosInstance.post("/api/users/signup", userData).then((result) => {
-        if (result.data.message) {
-          alert(result.data.message);
+        if (result.status === 201) {
           console.log(result.data.message);
-        } else if (result.status === 201) {
-          const userData = result.config.data;
-          alert("Success");
-          // AsyncStorage.setItem("userInfo", JSON.stringify(userData));
           navigation.navigate("Login");
+        } else if (result.status === 400) {
+          console.log(result.data.message);
+        } else if (result.status === 500) {
+          console.log(result.data.message);
         }
       });
     } catch (error) {
