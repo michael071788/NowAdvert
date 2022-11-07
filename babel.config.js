@@ -10,6 +10,14 @@ module.exports = function (api) {
         },
       ],
       "react-native-reanimated/plugin", // PUT IT HERE
+      [
+        "module:react-native-dotenv",
+        {
+          envName: "APP_ENV",
+          moduleName: "@env",
+          path: ".env",
+        },
+      ],
     ],
   };
 };
