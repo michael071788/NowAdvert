@@ -7,8 +7,8 @@ import { AdvertVideoScreen } from "../../features/advert/screens/advert.video.sc
 import { TestScreen } from "../../features/home/screens/test.screen";
 
 import { appNavigatorScreenOptions } from "../theme/styles/app.navigator.style";
-import SignUp from "../../features/registration/signup.screen";
-import Login from "../../features/registration/login.screen";
+import SignUpScreen from "../../features/registration/signup.screen";
+import LoginScreen from "../../features/registration/login.screen";
 import { UsedUserAuthInfoContext } from "../../services/user.auth.provider";
 
 const AppStackNavigator = createStackNavigator();
@@ -22,7 +22,7 @@ export const AppNavigator = () => {
       <SafeArea>
         <AppStackNavigator.Navigator
           screenOptions={appNavigatorScreenOptions}
-          initialRouteName="Login"
+          initialRouteName="LoginScreen"
         >
           {userAuthInfoContext.userInfo.token ? (
             <>
@@ -41,10 +41,13 @@ export const AppNavigator = () => {
             </>
           ) : (
             <>
-              <AppStackNavigator.Screen name="LoginScreen" component={Login} />
               <AppStackNavigator.Screen
-                name="SignupScreen"
-                component={SignUp}
+                name="LoginScreen"
+                component={LoginScreen}
+              />
+              <AppStackNavigator.Screen
+                name="SignUpScreen"
+                component={SignUpScreen}
               />
             </>
           )}
