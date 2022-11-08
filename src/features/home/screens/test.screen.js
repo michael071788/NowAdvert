@@ -44,10 +44,23 @@ export const TestScreen = () => {
   };
   useEffect(() => {
     setInfo(userAuthInfoContext.userInfo.user);
+    // _retrieveData(info);
     // AsyncStorage.getItem(userAuthInfoContext.userInfo);
     // getData();
   }, [userAuthInfoContext]);
 
+  // const _retrieveData = async (data) => {
+  //   try {
+  //     const value = await AsyncStorage.getItem(data);
+  //     if (value !== null) {
+  //       // We have data!!
+  //       console.log(value);
+  //     }
+  //   } catch (error) {
+  //     // Error retrieving data
+  //     console.log(error);
+  //   }
+  // };
   return (
     <View style={{ display: "flex", flex: 1 }}>
       <View style={{ flex: 1 }}>

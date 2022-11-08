@@ -16,13 +16,6 @@ const AppStackNavigator = createStackNavigator();
 export const AppNavigator = () => {
   const userAuthInfoContext = UsedUserAuthInfoContext();
 
-  // useEffect(() => {
-  //   console.log(
-  //     "userAuthInfoContext.userInfo useEffect: ",
-  //     userAuthInfoContext.userInfo
-  //   );
-  // }, [userAuthInfoContext]);
-
   return (
     <>
       <SafeArea>
@@ -30,21 +23,7 @@ export const AppNavigator = () => {
           screenOptions={appNavigatorScreenOptions}
           initialRouteName="Login"
         >
-          {userAuthInfoContext.userInfo.token ? (
-            <AppStackNavigator.Screen
-              name="TestScreen"
-              component={TestScreen}
-            />
-          ) : (
-            <>
-              <AppStackNavigator.Screen name="Register" component={SignUp} />
-              <AppStackNavigator.Screen name="Login" component={Login} />
-            </>
-          )}
-
-          {/* </> */}
-          {/* )} */}
-          {/* <AppStackNavigator.Screen
+          <AppStackNavigator.Screen
             name="AdvertScreen"
             component={AdvertScreen}
           />
@@ -55,12 +34,7 @@ export const AppNavigator = () => {
           <AppStackNavigator.Screen
             name="Profile"
             component={ProfileNavigator}
-          /> */}
-          {/*  */}
-
-          {/* <AppStackNavigator.Screen name="Test" component={testScreen} /> */}
-
-          {/*  */}
+          />
         </AppStackNavigator.Navigator>
       </SafeArea>
     </>
