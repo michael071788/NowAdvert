@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   // AsyncStorage,
   View,
@@ -19,15 +19,15 @@ const axiosInstance = axios.create({
 });
 
 const SignUp = ({ navigation }) => {
-  const [userInfo, setUserInfo] = useState(null);
+  //const [userInfo, setUserInfo] = useState(null);
 
   const theme = UsedTheme();
   const {
     control,
     handleSubmit,
-    reset,
-    watch,
-    getValues,
+    // reset,
+    // watch,
+    // getValues,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -228,7 +228,7 @@ const SignUp = ({ navigation }) => {
                       fontFamily: theme.typography.PRIMARY,
                     }}
                     onPress={() =>
-                      alert("You agreed to our terms and condition")
+                      console.log("You agreed to our terms and condition")
                     }
                   >
                     {" "}
@@ -243,7 +243,9 @@ const SignUp = ({ navigation }) => {
                       fontFamily: theme.typography.PRIMARY,
                       color: "#000",
                     }}
-                    onPress={() => alert("You agreed to our privacy policy")}
+                    onPress={() =>
+                      console.log("You agreed to our privacy policy")
+                    }
                   >
                     PRIVACY POLICY
                   </Text>

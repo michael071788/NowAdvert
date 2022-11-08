@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 import UsedTheme from "../../infrastucture/theme/use.theme";
 import { UsedUserAuthInfoContext } from "../../services/user.auth.provider";
@@ -8,17 +8,14 @@ import {
 } from "../../infrastucture/theme/styles/auth.components";
 import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
-// import AsyncStorage from "@react-native-async-storage/async-storage";
-
-// const BASE_URL = "https://protected-fjord-83078.herokuapp.com";
 
 const axiosInstance = axios.create({
   baseURL: "https://nowadvert-api.herokuapp.com",
 });
 
 const Login = ({ navigation }) => {
-  const [userInfo, setUserInfo] = useState();
-  const [errorMesssage, setErrorMessage] = useState(null);
+  // const [userInfo, setUserInfo] = useState();
+  //const [errorMesssage, setErrorMessage] = useState(null);
 
   const theme = UsedTheme();
   const userAuthInfoContext = UsedUserAuthInfoContext();
@@ -26,7 +23,7 @@ const Login = ({ navigation }) => {
   const {
     control,
     handleSubmit,
-    reset,
+    //reset,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -40,8 +37,8 @@ const Login = ({ navigation }) => {
       await axiosInstance.post("/api/login", userData).then((result) => {
         if (result.status === 200) {
           userAuthInfoContext.SetCurrentUserInfo(result.data);
-          const userToken = result.data.user.token;
-          setUserInfo(userToken);
+          // const userToken = result.data.user.token;
+          // setUserInfo(userToken);
         } else if (result.status === 400) {
           console.log(result.data.message);
         } else if (result.status === 401) {
@@ -49,7 +46,7 @@ const Login = ({ navigation }) => {
         }
       });
     } catch (error) {
-      setErrorMessage(error.message);
+      // setErrorMessage(error.message);
       console.log(error.messsage);
     }
   };
