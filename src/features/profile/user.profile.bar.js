@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Image, View } from "react-native";
 import UsedTheme from "../../infrastucture/theme/use.theme";
 import {

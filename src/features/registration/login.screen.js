@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  SafeAreaView,
-  TouchableOpacity,
-  ScrollView,
-  // AsyncStorage,
-} from "react-native";
+import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 import UsedTheme from "../../infrastucture/theme/use.theme";
 import { UsedUserAuthInfoContext } from "../../services/user.auth.provider";
 import {
@@ -18,7 +11,6 @@ import axios from "axios";
 // import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // const BASE_URL = "https://protected-fjord-83078.herokuapp.com";
-// const BASE_URL = "https://nowadvert-api.herokuapp.com";
 
 const axiosInstance = axios.create({
   baseURL: "https://nowadvert-api.herokuapp.com",
@@ -27,6 +19,7 @@ const axiosInstance = axios.create({
 const Login = ({ navigation }) => {
   const [userInfo, setUserInfo] = useState();
   const [errorMesssage, setErrorMessage] = useState(null);
+
   const theme = UsedTheme();
   const userAuthInfoContext = UsedUserAuthInfoContext();
 
@@ -37,8 +30,8 @@ const Login = ({ navigation }) => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      email: "",
-      password: "",
+      email: "UserInfo@test.com",
+      password: "P@ssword123",
     },
   });
 
@@ -51,14 +44,15 @@ const Login = ({ navigation }) => {
         if (result.status === 200) {
           console.log(result.data.message);
 
-          const _resultData = result.data;
+          // const _resultData = result.data;
           const _userData = userAuthInfoContext.SetCurrentUserInfo(result.data);
 
           console.log(_userData);
 
-          // const _resultData = result.data.user.token;
-          // setUserInfo(_userData);
-          // AsyncStorage.setItem("userInfo", _userData);
+          const userToken = result.data.user.token;
+          setUserInfo(userToken);
+          // AsyncStorage.setItem("userInfo", userToken);
+          // _storeData(userToken);
           console.log("_resultData: ", _resultData);
           // navigation.navigate("TestScreen");
         } else if (result.status === 400) {
@@ -79,6 +73,14 @@ const Login = ({ navigation }) => {
     );
   }, [userAuthInfoContext]);
 
+  // const _storeData = async (data) => {
+  //   try {
+  //     await AsyncStorage.setItem("userInfo", data);
+  //   } catch (error) {
+  //     // Error saving data
+  //     console.log(error);
+  //   }
+  // };
   return (
     <View
       style={{
@@ -103,6 +105,7 @@ const Login = ({ navigation }) => {
             }}
           >
             {/* header text */}
+
             <HeaderText
               title="Login"
               subtitle="WATCH ADS TO WIN EXCITING PRIZES"
