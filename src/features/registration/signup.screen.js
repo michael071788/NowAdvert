@@ -236,12 +236,10 @@ const SignUp = ({ navigation }) => {
                       alert("You agreed to our terms and condition")
                     }
                   >
-                    {" "}
                     terms and conditions
                   </Text>
                   <Text style={{ fontFamily: theme.typography.PRIMARY }}>
-                    {" "}
-                    and{" "}
+                    and
                   </Text>
                   <Text
                     style={{
@@ -309,7 +307,9 @@ const SignUp = ({ navigation }) => {
               >
                 already a user?
               </Text>
-              <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("LoginScreen")}
+              >
                 <Text style={{ fontFamily: theme.typography.PRIMARY }}>
                   SIGN IN
                 </Text>

@@ -291,7 +291,9 @@ const Login = ({ navigation }) => {
             >
               NEW USER?
             </Text>
-            <TouchableOpacity onPress={() => navigation.navigate("Register")}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("SignupScreen")}
+            >
               <Text style={{ fontFamily: theme.typography.PRIMARY }}>
                 SIGN UP
               </Text>
