@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { SafeArea } from "../../components/safe.area.component";
 import { createStackNavigator } from "@react-navigation/stack";
 import { ProfileNavigator } from "./profile.navigator";
 import { AdvertScreen } from "../../features/advert/screens/advert.screen";
 import { AdvertVideoScreen } from "../../features/advert/screens/advert.video.screen";
-import { TestScreen } from "../../features/home/screens/test.screen";
+// import { TestScreen } from "../../features/home/screens/test.screen";
 
 import { appNavigatorScreenOptions } from "../theme/styles/app.navigator.style";
 import SignUpScreen from "../../features/registration/signup.screen";
