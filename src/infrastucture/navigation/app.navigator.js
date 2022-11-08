@@ -35,6 +35,8 @@ export const AppNavigator = () => {
             name="Profile"
             component={ProfileNavigator}
           />
+          <AppStackNavigator.Screen name="Login" component={Login} />
+          <AppStackNavigator.Screen name="Signup" component={SignUp} />
         </AppStackNavigator.Navigator>
       </SafeArea>
     </>
