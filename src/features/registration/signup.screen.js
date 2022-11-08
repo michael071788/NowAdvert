@@ -17,7 +17,6 @@ import axios from "axios";
 const axiosInstance = axios.create({
   baseURL: "https://nowadvert-api.herokuapp.com",
 });
-// const BASE_URL = "https://nowadvert-api.herokuapp.com";
 
 const SignUp = ({ navigation }) => {
   const [userInfo, setUserInfo] = useState(null);
@@ -40,13 +39,9 @@ const SignUp = ({ navigation }) => {
     },
   });
   const onSubmit = async (userData) => {
-    console.log("Pressed");
-    console.log(userData);
-
     try {
       await axiosInstance.post("/api/users/signup", userData).then((result) => {
         if (result.status === 201) {
-          console.log(result.data.message);
           navigation.navigate("LoginScreen");
         } else if (result.status === 400) {
           console.log(result.data.message);
