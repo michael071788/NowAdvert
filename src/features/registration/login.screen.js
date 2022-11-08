@@ -30,8 +30,8 @@ const Login = ({ navigation }) => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      email: "UserInfo@test.com",
-      password: "P@ssword123",
+      email: "",
+      password: "",
     },
   });
 
@@ -62,7 +62,7 @@ const Login = ({ navigation }) => {
       });
     } catch (error) {
       setErrorMessage(error.message);
-      console.log(errorMesssage);
+      console.log(error.Messsage);
     }
   };
   useEffect(() => {
@@ -292,7 +292,7 @@ const Login = ({ navigation }) => {
               NEW USER?
             </Text>
             <TouchableOpacity
-              onPress={() => navigation.navigate("SignupScreen")}
+              onPress={() => navigation.navigate("SignUpScreen")}
             >
               <Text style={{ fontFamily: theme.typography.PRIMARY }}>
                 SIGN UP
