@@ -47,7 +47,7 @@ const SignUp = ({ navigation }) => {
       await axiosInstance.post("/api/users/signup", userData).then((result) => {
         if (result.status === 201) {
           console.log(result.data.message);
-          navigation.navigate("Login");
+          navigation.navigate("LoginScreen");
         } else if (result.status === 400) {
           console.log(result.data.message);
         } else if (result.status === 500) {
@@ -236,10 +236,12 @@ const SignUp = ({ navigation }) => {
                       alert("You agreed to our terms and condition")
                     }
                   >
+                    {" "}
                     terms and conditions
                   </Text>
                   <Text style={{ fontFamily: theme.typography.PRIMARY }}>
-                    and
+                    {" "}
+                    and{" "}
                   </Text>
                   <Text
                     style={{
