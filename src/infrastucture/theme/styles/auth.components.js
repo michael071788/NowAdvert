@@ -16,9 +16,11 @@ export const Input = (props) => {
           paddingVertical: 5,
           fontSize: 16,
           backgroundColor: "#ccc",
+          // textTransform: "lowercase",
         }}
         value={props.value}
         onChangeText={props.onChangeText}
+        autoCapitalize="none"
         {...props}
       />
     </View>

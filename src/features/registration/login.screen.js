@@ -36,24 +36,12 @@ const Login = ({ navigation }) => {
   });
 
   const onSubmit = async (userData) => {
-    console.log("Pressed");
-    console.log(userData);
-
     try {
       await axiosInstance.post("/api/login", userData).then((result) => {
         if (result.status === 200) {
-          console.log(result.data.message);
-
-          // const _resultData = result.data;
-          const _userData = userAuthInfoContext.SetCurrentUserInfo(result.data);
-
-          console.log(_userData);
-
+          userAuthInfoContext.SetCurrentUserInfo(result.data);
           const userToken = result.data.user.token;
           setUserInfo(userToken);
-          // AsyncStorage.setItem("userInfo", userToken);
-          // _storeData(userToken);
-          console.log("_resultData: ", _resultData);
         } else if (result.status === 400) {
           console.log(result.data.message);
         } else if (result.status === 401) {
@@ -62,24 +50,13 @@ const Login = ({ navigation }) => {
       });
     } catch (error) {
       setErrorMessage(error.message);
-      console.log(error.Messsage);
+      console.log(error.messsage);
     }
   };
   useEffect(() => {
-    console.log(
-      "userAuthInfoContext.userInfo useEffect: ",
-      userAuthInfoContext.userInfo
-    );
+    userAuthInfoContext.userInfo;
   }, [userAuthInfoContext]);
 
-  // const _storeData = async (data) => {
-  //   try {
-  //     await AsyncStorage.setItem("userInfo", data);
-  //   } catch (error) {
-  //     // Error saving data
-  //     console.log(error);
-  //   }
-  // };
   return (
     <View
       style={{
