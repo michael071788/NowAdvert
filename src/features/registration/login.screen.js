@@ -54,7 +54,6 @@ const Login = ({ navigation }) => {
           // AsyncStorage.setItem("userInfo", userToken);
           // _storeData(userToken);
           console.log("_resultData: ", _resultData);
-          // navigation.navigate("TestScreen");
         } else if (result.status === 400) {
           console.log(result.data.message);
         } else if (result.status === 401) {

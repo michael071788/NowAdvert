@@ -14,6 +14,7 @@ import { UsedUserAuthInfoContext } from "../../services/user.auth.provider";
 const AppStackNavigator = createStackNavigator();
 
 export const AppNavigator = () => {
+  // const [token, setToken] = useState("");
   const userAuthInfoContext = UsedUserAuthInfoContext();
 
   return (
@@ -23,20 +24,30 @@ export const AppNavigator = () => {
           screenOptions={appNavigatorScreenOptions}
           initialRouteName="Login"
         >
-          <AppStackNavigator.Screen
-            name="AdvertScreen"
-            component={AdvertScreen}
-          />
-          <AppStackNavigator.Screen
-            name="AdvertVideoScreen"
-            component={AdvertVideoScreen}
-          />
-          <AppStackNavigator.Screen
-            name="Profile"
-            component={ProfileNavigator}
-          />
-          <AppStackNavigator.Screen name="Login" component={Login} />
-          <AppStackNavigator.Screen name="Signup" component={SignUp} />
+          {userAuthInfoContext.userInfo.token ? (
+            <>
+              <AppStackNavigator.Screen
+                name="AdvertScreen"
+                component={AdvertScreen}
+              />
+              <AppStackNavigator.Screen
+                name="AdvertVideoScreen"
+                component={AdvertVideoScreen}
+              />
+              <AppStackNavigator.Screen
+                name="Profile"
+                component={ProfileNavigator}
+              />
+            </>
+          ) : (
+            <>
+              <AppStackNavigator.Screen name="LoginScreen" component={Login} />
+              <AppStackNavigator.Screen
+                name="SignupScreen"
+                component={SignUp}
+              />
+            </>
+          )}
         </AppStackNavigator.Navigator>
       </SafeArea>
     </>
