@@ -5,7 +5,6 @@ import {
   ScrollView,
   Text,
   TouchableOpacity,
-  Button,
 } from "react-native";
 import UsedTheme from "../../infrastucture/theme/use.theme";
 import {
@@ -14,23 +13,12 @@ import {
 } from "../../infrastucture/theme/styles/auth.components";
 import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
-import AlertNotification from "../../utils/alert";
-
-import {
-  ALERT_TYPE,
-  Dialog,
-  AlertNotificationRoot,
-  Toast,
-} from "react-native-alert-notification";
 
 const axiosInstance = axios.create({
   baseURL: "https://nowadvert-api.herokuapp.com",
 });
 
 const SignUp = ({ navigation }) => {
-  const [error, setError] = useState("");
-  //const [userInfo, setUserInfo] = useState(null);
-
   const theme = UsedTheme();
   const {
     control,
@@ -60,7 +48,6 @@ const SignUp = ({ navigation }) => {
         }
       });
     } catch (error) {
-      // AlertNotification(error.response.data);
       console.log(error.response.data);
     }
   };
