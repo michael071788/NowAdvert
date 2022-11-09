@@ -1,184 +1,168 @@
+import React, { useEffect } from "react";
 import {
   View,
   ScrollView,
   Text,
   SafeAreaView,
   TextInput,
-  Image,
+  // Image,
+  TouchableOpacity,
 } from "react-native";
-import { Button } from "react-native-paper";
 import UsedTheme from "../../../infrastucture/theme/use.theme";
+import UsedProfile from "../../../services/use.user.profile";
+import { useTranslation } from "react-i18next";
+
 import { CommonScreenView } from "../../../infrastucture/theme/styles/container.screen.style";
-import {
-  CommonView,
-  InnerContentView,
-} from "../../../infrastucture/theme/styles/user.profile.style";
-import { tabBarTotalHeight } from "../../../infrastucture/theme/styles/app.navigator.style";
+// import {
+//   CommonView,
+//   InnerContentView,
+// } from "../../../infrastucture/theme/styles/user.profile.style";
+// import { tabBarTotalHeight } from "../../../infrastucture/theme/styles/app.navigator.style";
 
 const LinkedAccounts = () => {
   const theme = UsedTheme();
+  const contextProfile = UsedProfile();
+  const { t, i18n } = useTranslation();
+
+  useEffect(() => {
+    contextProfile.SetCurrentLocation("Linked Accounts");
+  }, [contextProfile]);
+
   return (
-    <CommonScreenView theme={theme} paddingBottom={tabBarTotalHeight + 10}>
-      <ScrollView vertical showsHorizontalScrollIndicator={false}>
-        {/* start of profile */}
-        <CommonView flex={1}>
-          <InnerContentView>
-            <View
+    // <CommonScreenView theme={theme}>
+    <ScrollView vertical showsHorizontalScrollIndicator={false}>
+      {/* start input field */}
+      <SafeAreaView
+        style={{
+          flex: 1,
+          paddingHorizontal: 20,
+          paddingVertical: 10,
+        }}
+      >
+        <View>
+          <View style={{ marginVertical: 10 }}>
+            <Text
               style={{
-                flexDirection: "column",
-                alignItems: "center",
+                fontFamily: theme.typography.PRIMARY,
+                color: "#aaa",
+                textTransform: "uppercase",
               }}
             >
-              <Image
-                source={require("../../../../assets/avatar_profile_icon.png")}
-                style={{ height: 180, width: 180 }}
-              />
-              <Text
-                style={{
-                  fontFamily: theme.typography.PRIMARY,
-                  fontSize: 20,
-                  textTransform: "uppercase",
-                }}
-              >
-                calum scott
-              </Text>
-              <Text
-                style={{
-                  color: theme.colors.SECONDARY,
-                  fontFamily: theme.typography.PRIMARY,
-                  fontSize: 15,
-                  textTransform: "uppercase",
-                }}
-              >
-                active: 26 May 2022
-              </Text>
-            </View>
-          </InnerContentView>
-        </CommonView>
-        {/* end of profile */}
-
-        {/* start input field */}
-        <SafeAreaView
-          style={{ width: "100%", flex: 1, padding: 10, paddingHorizontal: 20 }}
-        >
-          <View>
-            <View style={{ width: "100%", marginVertical: 10 }}>
-              <Text
-                style={{
-                  fontFamily: theme.typography.PRIMARY,
-                  color: "#aaa",
-                  textTransform: "uppercase",
-                }}
-              >
-                google
-              </Text>
-              <TextInput
-                style={{
-                  fontFamily: theme.typography.PRIMARY,
-                  borderBottomColor: "#aaa",
-                  borderBottomWidth: 1,
-                  paddingVertical: 2,
-                  fontSize: 22,
-                  fontWeight: "bold",
-                }}
-              />
-            </View>
-
-            <View style={{ width: "100%", marginVertical: 10 }}>
-              <Text
-                style={{
-                  fontFamily: theme.typography.PRIMARY,
-                  color: "#aaa",
-                  textTransform: "uppercase",
-                }}
-              >
-                facebook
-              </Text>
-              <TextInput
-                style={{
-                  fontFamily: theme.typography.PRIMARY,
-                  borderBottomColor: "#aaa",
-                  borderBottomWidth: 1,
-                  paddingVertical: 2,
-                  fontSize: 22,
-                  fontWeight: "bold",
-                }}
-              />
-            </View>
-
-            <View style={{ width: "100%", marginVertical: 10 }}>
-              <Text
-                style={{
-                  fontFamily: theme.typography.PRIMARY,
-                  color: "#aaa",
-                  textTransform: "uppercase",
-                }}
-              >
-                twitter
-              </Text>
-              <TextInput
-                style={{
-                  fontFamily: theme.typography.PRIMARY,
-                  borderBottomColor: "#aaa",
-                  borderBottomWidth: 1,
-                  paddingVertical: 2,
-                  fontSize: 22,
-                  fontWeight: "bold",
-                }}
-              />
-            </View>
-
-            <View style={{ width: "100%", marginVertical: 10 }}>
-              <Text
-                style={{
-                  fontFamily: theme.typography.PRIMARY,
-                  color: "#aaa",
-                  textTransform: "uppercase",
-                }}
-              >
-                instagram
-              </Text>
-              <TextInput
-                style={{
-                  fontFamily: theme.typography.PRIMARY,
-                  borderBottomColor: "#aaa",
-                  borderBottomWidth: 1,
-                  paddingVertical: 2,
-                  fontSize: 22,
-                  fontWeight: "bold",
-                }}
-              />
-            </View>
+              {t("GOOGLE")}
+            </Text>
+            <TextInput
+              style={{
+                fontFamily: theme.typography.PRIMARY,
+                borderBottomColor: "#aaa",
+                borderBottomWidth: 1,
+                paddingVertical: 2,
+                fontSize: 22,
+                fontWeight: "bold",
+              }}
+            />
           </View>
-          {/* end of input field  */}
 
-          {/* button */}
+          <View style={{ marginVertical: 10 }}>
+            <Text
+              style={{
+                fontFamily: theme.typography.PRIMARY,
+                color: "#aaa",
+                textTransform: "uppercase",
+              }}
+            >
+              {t("FACEBOOK")}
+            </Text>
+            <TextInput
+              style={{
+                fontFamily: theme.typography.PRIMARY,
+                borderBottomColor: "#aaa",
+                borderBottomWidth: 1,
+                paddingVertical: 2,
+                fontSize: 22,
+                fontWeight: "bold",
+              }}
+            />
+          </View>
 
-          <View
+          <View style={{ marginVertical: 10 }}>
+            <Text
+              style={{
+                fontFamily: theme.typography.PRIMARY,
+                color: "#aaa",
+                textTransform: "uppercase",
+              }}
+            >
+              {t("TWITTER")}
+            </Text>
+            <TextInput
+              style={{
+                fontFamily: theme.typography.PRIMARY,
+                borderBottomColor: "#aaa",
+                borderBottomWidth: 1,
+                paddingVertical: 2,
+                fontSize: 22,
+                fontWeight: "bold",
+              }}
+            />
+          </View>
+
+          <View style={{ marginVertical: 10 }}>
+            <Text
+              style={{
+                fontFamily: theme.typography.PRIMARY,
+                color: "#aaa",
+                textTransform: "uppercase",
+              }}
+            >
+              {t("INSTAGRAM")}
+            </Text>
+            <TextInput
+              style={{
+                fontFamily: theme.typography.PRIMARY,
+                borderBottomColor: "#aaa",
+                borderBottomWidth: 1,
+                paddingVertical: 2,
+                fontSize: 22,
+                fontWeight: "bold",
+              }}
+            />
+          </View>
+        </View>
+        {/* end of input field  */}
+
+        {/* button */}
+
+        <View
+          style={{
+            marginTop: 20,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <TouchableOpacity
             style={{
-              marginTop: 20,
-              justifyContent: "center",
+              paddingVertical: 10,
+              width: "50%",
+              borderRadius: 20,
+              backgroundColor: "#333",
               alignItems: "center",
             }}
           >
-            <Button
-              mode="contained"
-              onPress={() => alert("pressed")}
-              buttonColor="#000"
+            <Text
               style={{
-                width: "50%",
-                borderRadius: 20,
-                backgroundColor: "#333",
                 fontFamily: theme.typography.PRIMARY,
+                color: "#fff",
+                textTransform: "uppercase",
               }}
             >
-              UPDATE
-            </Button>
-          </View>
-        </SafeAreaView>
-        {/* end of button */}
-      </ScrollView>
-    </CommonScreenView>
+              {t("UPDATE")}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
+      {/* end of button */}
+    </ScrollView>
+    // </CommonScreenView>
   );
 };
 export default LinkedAccounts;

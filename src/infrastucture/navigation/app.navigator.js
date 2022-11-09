@@ -9,6 +9,10 @@ import { AdvertVideoScreen } from "../../features/advert/screens/advert.video.sc
 import { appNavigatorScreenOptions } from "../theme/styles/app.navigator.style";
 import SignUpScreen from "../../features/registration/signup.screen";
 import LoginScreen from "../../features/registration/login.screen";
+import Tickets from "../../features/profile/screens/tickets.screen";
+import LanguageScreen from "../../features/profile/screens/languages.screen";
+import VerificationScreen from "../../features/registration/verification.screen";
+
 import { UsedUserAuthInfoContext } from "../../services/user.auth.provider";
 
 const AppStackNavigator = createStackNavigator();
@@ -38,6 +42,14 @@ export const AppNavigator = () => {
                 name="Profile"
                 component={ProfileNavigator}
               />
+              <AppStackNavigator.Screen
+                name="TicketsScreen"
+                component={Tickets}
+              />
+              <AppStackNavigator.Screen
+                name="LanguagesScreen"
+                component={LanguageScreen}
+              />
             </>
           ) : (
             <>
@@ -48,6 +60,10 @@ export const AppNavigator = () => {
               <AppStackNavigator.Screen
                 name="SignUpScreen"
                 component={SignUpScreen}
+              />
+              <AppStackNavigator.Screen
+                name="VerificationScreen"
+                component={VerificationScreen}
               />
             </>
           )}

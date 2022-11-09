@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { View, Text, TouchableOpacity, ScrollView } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, Text, TouchableOpacity, ScrollView, Button } from "react-native";
 import UsedTheme from "../../infrastucture/theme/use.theme";
 import { UsedUserAuthInfoContext } from "../../services/user.auth.provider";
 import {
@@ -8,6 +8,7 @@ import {
 } from "../../infrastucture/theme/styles/auth.components";
 import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
+import AlertNotification from "../../utils/alert";
 
 const axiosInstance = axios.create({
   baseURL: "https://nowadvert-api.herokuapp.com",
@@ -15,7 +16,9 @@ const axiosInstance = axios.create({
 
 const Login = ({ navigation }) => {
   // const [userInfo, setUserInfo] = useState();
-  //const [errorMesssage, setErrorMessage] = useState(null);
+  const [message, setMessage] = useState(null);
+  const [result, setResult] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const theme = UsedTheme();
   const userAuthInfoContext = UsedUserAuthInfoContext();
@@ -35,19 +38,20 @@ const Login = ({ navigation }) => {
   const onSubmit = async (userData) => {
     try {
       await axiosInstance.post("/api/login", userData).then((result) => {
+        console.log(result);
         if (result.status === 200) {
           userAuthInfoContext.SetCurrentUserInfo(result.data);
           // const userToken = result.data.user.token;
           // setUserInfo(userToken);
-        } else if (result.status === 400) {
-          console.log(result.data.message);
-        } else if (result.status === 401) {
-          console.log(result.data.message);
         }
       });
     } catch (error) {
       // setErrorMessage(error.message);
-      console.log(error.messsage);
+      // console.log(error.response);
+      console.log(error.response.data.message);
+      // setResult(true);
+      // setMessage(error.response.data.message);
+      // AlertNotification();
     }
   };
   useEffect(() => {
@@ -61,12 +65,29 @@ const Login = ({ navigation }) => {
         paddingHorizontal: 10,
       }}
     >
+      {/* <View style={{ flex: 1 }}>
+        {result ? (
+          <View
+            style={{
+              backgroundColor: "red",
+              paddingHorizontal: 10,
+              alignItems: "center",
+              paddingVertical: 10,
+              borderRadius: 10,
+            }}
+          >
+            <Text style={{ color: "#fff" }}>{message}</Text>
+          </View>
+        ) : (
+          <Text></Text>
+        )}
+      </View> */}
       <ScrollView scrollEnabled={false} showsVerticalScrollIndicator={false}>
         <View
           style={{
             flex: 5,
             // alignItems: "center",
-            paddingVertical: 80,
+            paddingVertical: 70,
           }}
         >
           <View
@@ -74,7 +95,7 @@ const Login = ({ navigation }) => {
               flex: 1,
               justifyContent: "flex-end",
               alignItems: "baseline",
-              marginBottom: 5,
+              // marginBottom: 5,
             }}
           >
             {/* header text */}

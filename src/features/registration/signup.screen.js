@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   // AsyncStorage,
   View,
   ScrollView,
   Text,
   TouchableOpacity,
+  Button,
 } from "react-native";
 import UsedTheme from "../../infrastucture/theme/use.theme";
 import {
@@ -13,12 +14,21 @@ import {
 } from "../../infrastucture/theme/styles/auth.components";
 import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
+import AlertNotification from "../../utils/alert";
+
+import {
+  ALERT_TYPE,
+  Dialog,
+  AlertNotificationRoot,
+  Toast,
+} from "react-native-alert-notification";
 
 const axiosInstance = axios.create({
   baseURL: "https://nowadvert-api.herokuapp.com",
 });
 
 const SignUp = ({ navigation }) => {
+  const [error, setError] = useState("");
   //const [userInfo, setUserInfo] = useState(null);
 
   const theme = UsedTheme();
@@ -42,14 +52,15 @@ const SignUp = ({ navigation }) => {
     try {
       await axiosInstance.post("/api/users/signup", userData).then((result) => {
         if (result.status === 201) {
-          navigation.navigate("LoginScreen");
+          navigation.navigate("VerificationScreen");
         } else if (result.status === 400) {
-          console.log(result.data.message);
+          console.log("Error: ", result.data.message);
         } else if (result.status === 500) {
           console.log(result.data.message);
         }
       });
     } catch (error) {
+      // AlertNotification(error.response.data);
       console.log(error.response.data);
     }
   };
@@ -113,7 +124,6 @@ const SignUp = ({ navigation }) => {
                   </>
                 ) : null}
               </View>
-
               {/* name input */}
               <Controller
                 name="name"
@@ -134,7 +144,6 @@ const SignUp = ({ navigation }) => {
                   <Text style={{ color: "red" }}>This is required.</Text>
                 )}
               </View>
-
               {/* phone input */}
               <Controller
                 name="phone"
@@ -156,7 +165,6 @@ const SignUp = ({ navigation }) => {
                   <Text style={{ color: "red" }}>This is required.</Text>
                 )}
               </View>
-
               {/* password input */}
               <Controller
                 name="password"
@@ -178,7 +186,6 @@ const SignUp = ({ navigation }) => {
                   <Text style={{ color: "red" }}>This is required.</Text>
                 )}
               </View>
-
               {/* confirm password input */}
               {/* <Controller
                 name="cpassword"
@@ -204,7 +211,6 @@ const SignUp = ({ navigation }) => {
                   <Text style={{ color: "red" }}>Password not match</Text>
                 ) : null}
               </View> */}
-
               {/* link */}
               <View
                 style={{

@@ -239,7 +239,7 @@ export const AdvertScreen = ({ navigation }) => {
         {mounted && (
           <>
             <HeaderBarContainer>
-              <UserProfileBar isShown={true} />
+              <UserProfileBar isShown={true} navigation={navigation} />
             </HeaderBarContainer>
             <AdvertCarouselContainer>
               <AdvertCarousel data={advertListData} renderItem={renderItem} />

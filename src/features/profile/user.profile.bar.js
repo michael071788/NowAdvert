@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Image, View } from "react-native";
+import { Image, TouchableOpacity, View } from "react-native";
 import UsedTheme from "../../infrastucture/theme/use.theme";
 import {
   UserProfileBarContainer,
@@ -7,11 +7,11 @@ import {
   UserFullName,
 } from "../../infrastucture/theme/styles/user.profile.style";
 
-export const UserProfileBar = ({ isShown }) => {
+export const UserProfileBar = ({ isShown, navigation }) => {
   const theme = UsedTheme();
 
   return (
-    <>
+    <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
       <UserProfileBarContainer isShown={isShown}>
         <UserProfileBarImageContainer>
           <Image
@@ -23,6 +23,6 @@ export const UserProfileBar = ({ isShown }) => {
           <UserFullName theme={theme}>calum scott</UserFullName>
         </View>
       </UserProfileBarContainer>
-    </>
+    </TouchableOpacity>
   );
 };
