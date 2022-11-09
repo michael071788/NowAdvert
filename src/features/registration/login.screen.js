@@ -30,15 +30,14 @@ const Login = ({ navigation }) => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      email: "",
-      password: "",
+      email: "mackdaniel06@gmail.com",
+      password: "P@ssword123",
     },
   });
 
   const onSubmit = async (userData) => {
     try {
       await axiosInstance.post("/api/login", userData).then((result) => {
-        console.log(result);
         if (result.status === 200) {
           userAuthInfoContext.SetCurrentUserInfo(result.data);
           // const userToken = result.data.user.token;
