@@ -8,7 +8,6 @@ import {
 } from "../../infrastucture/theme/styles/auth.components";
 import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
-import AlertNotification from "../../utils/alert";
 
 const axiosInstance = axios.create({
   baseURL: "https://nowadvert-api.herokuapp.com",
@@ -16,9 +15,6 @@ const axiosInstance = axios.create({
 
 const Login = ({ navigation }) => {
   // const [userInfo, setUserInfo] = useState();
-  const [message, setMessage] = useState(null);
-  const [result, setResult] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
 
   const theme = UsedTheme();
   const userAuthInfoContext = UsedUserAuthInfoContext();
@@ -50,7 +46,6 @@ const Login = ({ navigation }) => {
       console.log(error.response.data.message);
       // setResult(true);
       // setMessage(error.response.data.message);
-      // AlertNotification();
     }
   };
   useEffect(() => {
@@ -64,23 +59,6 @@ const Login = ({ navigation }) => {
         paddingHorizontal: 10,
       }}
     >
-      {/* <View style={{ flex: 1 }}>
-        {result ? (
-          <View
-            style={{
-              backgroundColor: "red",
-              paddingHorizontal: 10,
-              alignItems: "center",
-              paddingVertical: 10,
-              borderRadius: 10,
-            }}
-          >
-            <Text style={{ color: "#fff" }}>{message}</Text>
-          </View>
-        ) : (
-          <Text></Text>
-        )}
-      </View> */}
       <ScrollView scrollEnabled={false} showsVerticalScrollIndicator={false}>
         <View
           style={{

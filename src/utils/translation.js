@@ -32,6 +32,7 @@ const resources = {
       "MY TICKETS": "تذاكري",
       "VIEW MY TICKETS": "عرض التذاكر الخاصة بي",
       LANGUAGE: "لغة",
+      LOGOUT: "تسجيل خروج",
     },
   },
   fil: {
@@ -60,6 +61,7 @@ const resources = {
       "MY TICKETS": "ang aking mga tiket",
       "VIEW MY TICKETS": "tingnan ang aking mga tiket",
       LANGUAGE: "wika",
+      LOGOUT: "LOGOUT",
     },
   },
 };
