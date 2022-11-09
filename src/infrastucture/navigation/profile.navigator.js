@@ -44,7 +44,7 @@ export const ProfileNavigator = ({ navigation }) => {
           activeOpacity={1}
           onPress={() => {
             setLocation("Profile Screen");
-            navigation.navigate("ProfileScreen");
+            navigation.navigate("AdvertScreen");
           }}
         >
           {/* <List.Icon icon="chevron-left" /> */}
