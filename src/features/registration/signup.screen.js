@@ -13,12 +13,30 @@ import {
 } from "../../infrastucture/theme/styles/auth.components";
 import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
+import { Modal, Button } from "react-native-paper";
+import { SvgIcon } from "../../components/svg.icon";
 
 const axiosInstance = axios.create({
   baseURL: "https://nowadvert-api.herokuapp.com",
 });
 
 const SignUp = ({ navigation }) => {
+  const [result, setResult] = useState(false);
+  const [message, setMessage] = useState("");
+
+  const [visible, setVisible] = useState(false);
+
+  const showModal = () => setVisible(true);
+  const hideModal = () => setVisible(false);
+  const containerStyle = {
+    backgroundColor: "white",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingVertical: 15,
+    borderRadius: 20,
+  };
+
   const theme = UsedTheme();
   const {
     control,
@@ -40,141 +58,146 @@ const SignUp = ({ navigation }) => {
     try {
       await axiosInstance.post("/api/users/signup", userData).then((result) => {
         if (result.status === 201) {
-          navigation.navigate("VerificationScreen");
-        } else if (result.status === 400) {
-          console.log("Error: ", result.data.message);
-        } else if (result.status === 500) {
-          console.log(result.data.message);
+          showModal();
+          setResult(true);
+          setMessage(result.data.message);
+          setTimeout(() => {
+            navigation.navigate("VerificationScreen");
+          }, 2000);
         }
       });
     } catch (error) {
-      console.log(error.response.data);
+      showModal();
+      setResult(false);
+      setMessage(error.response.data.message);
+      console.log(error.response.data.message);
     }
   };
   return (
-    <View
-      style={{
-        flex: 1,
-        paddingHorizontal: 11,
-      }}
-    >
-      <ScrollView scrollEnabled={false} showsVerticalScrollIndicator={false}>
-        <View
-          style={{
-            flex: 5,
-            alignItems: "center",
-            paddingVertical: 50,
-          }}
-        >
+    <>
+      <View
+        style={{
+          flex: 1,
+          paddingHorizontal: 11,
+        }}
+      >
+        <ScrollView scrollEnabled={false} showsVerticalScrollIndicator={false}>
           <View
             style={{
-              flex: 1,
-              justifyContent: "flex-end",
-              alignItems: "baseline",
-              marginBottom: 5,
+              flex: 5,
+              alignItems: "center",
+              paddingVertical: 50,
             }}
           >
-            <HeaderText title="Sign up" subtitle="Create your account now" />
-            <View style={{ flex: 3 }}>
-              {/* email input */}
-              <Controller
-                name="email"
-                control={control}
-                rules={{
-                  required: "This is required",
-                  pattern: {
-                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                    message: "Email is invalid",
-                  },
-                }}
-                render={({ field: { onChange, value } }) => (
-                  <Input
-                    placeholder="EMAIL ADDRESS"
-                    onChangeText={onChange}
-                    value={value}
-                  />
-                )}
-              />
-              <View style={{ height: 18, fontSize: 15 }}>
-                {errors.email ? (
-                  <>
-                    {errors.email.type === "required" && (
-                      <Text style={{ color: "red" }}>
-                        {errors.email.message}
-                      </Text>
-                    )}
-                    {errors.email.type === "pattern" && (
-                      <Text style={{ color: "red" }}>
-                        {errors.email.message}
-                      </Text>
-                    )}
-                  </>
-                ) : null}
-              </View>
-              {/* name input */}
-              <Controller
-                name="name"
-                control={control}
-                rules={{
-                  required: "This is required",
-                }}
-                render={({ field: { onChange, value } }) => (
-                  <Input
-                    placeholder="First & Last Name"
-                    onChangeText={onChange}
-                    value={value}
-                  />
-                )}
-              />
-              <View style={{ height: 18, fontSize: 15 }}>
-                {errors.name && (
-                  <Text style={{ color: "red" }}>This is required.</Text>
-                )}
-              </View>
-              {/* phone input */}
-              <Controller
-                name="phone"
-                control={control}
-                rules={{
-                  required: "This is required",
-                }}
-                render={({ field: { onChange, value } }) => (
-                  <Input
-                    keyboardType="numeric"
-                    placeholder="Mobile Number"
-                    onChangeText={onChange}
-                    value={value}
-                  />
-                )}
-              />
-              <View style={{ height: 18, fontSize: 15 }}>
-                {errors.phone && (
-                  <Text style={{ color: "red" }}>This is required.</Text>
-                )}
-              </View>
-              {/* password input */}
-              <Controller
-                name="password"
-                control={control}
-                rules={{
-                  required: "This is required",
-                }}
-                render={({ field: { onChange, value } }) => (
-                  <Input
-                    placeholder="Password"
-                    onChangeText={onChange}
-                    value={value}
-                    secureTextEntry={true}
-                  />
-                )}
-              />
-              <View style={{ height: 18, fontSize: 15 }}>
-                {errors.password && (
-                  <Text style={{ color: "red" }}>This is required.</Text>
-                )}
-              </View>
-              {/* confirm password input */}
-              {/* <Controller
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "flex-end",
+                alignItems: "baseline",
+                marginBottom: 5,
+              }}
+            >
+              <HeaderText title="Sign up" subtitle="Create your account now" />
+              <View style={{ flex: 3 }}>
+                {/* email input */}
+                <Controller
+                  name="email"
+                  control={control}
+                  rules={{
+                    required: "This is required",
+                    pattern: {
+                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                      message: "Email is invalid",
+                    },
+                  }}
+                  render={({ field: { onChange, value } }) => (
+                    <Input
+                      placeholder="EMAIL ADDRESS"
+                      onChangeText={onChange}
+                      value={value}
+                    />
+                  )}
+                />
+                <View style={{ height: 18, fontSize: 15 }}>
+                  {errors.email ? (
+                    <>
+                      {errors.email.type === "required" && (
+                        <Text style={{ color: "red" }}>
+                          {errors.email.message}
+                        </Text>
+                      )}
+                      {errors.email.type === "pattern" && (
+                        <Text style={{ color: "red" }}>
+                          {errors.email.message}
+                        </Text>
+                      )}
+                    </>
+                  ) : null}
+                </View>
+                {/* name input */}
+                <Controller
+                  name="name"
+                  control={control}
+                  rules={{
+                    required: "This is required",
+                  }}
+                  render={({ field: { onChange, value } }) => (
+                    <Input
+                      placeholder="First & Last Name"
+                      onChangeText={onChange}
+                      value={value}
+                    />
+                  )}
+                />
+                <View style={{ height: 18, fontSize: 15 }}>
+                  {errors.name && (
+                    <Text style={{ color: "red" }}>This is required.</Text>
+                  )}
+                </View>
+                {/* phone input */}
+                <Controller
+                  name="phone"
+                  control={control}
+                  rules={{
+                    required: "This is required",
+                  }}
+                  render={({ field: { onChange, value } }) => (
+                    <Input
+                      keyboardType="numeric"
+                      placeholder="Mobile Number"
+                      onChangeText={onChange}
+                      value={value}
+                    />
+                  )}
+                />
+                <View style={{ height: 18, fontSize: 15 }}>
+                  {errors.phone && (
+                    <Text style={{ color: "red" }}>This is required.</Text>
+                  )}
+                </View>
+                {/* password input */}
+                <Controller
+                  name="password"
+                  control={control}
+                  rules={{
+                    required: "This is required",
+                  }}
+                  render={({ field: { onChange, value } }) => (
+                    <Input
+                      placeholder="Password"
+                      onChangeText={onChange}
+                      value={value}
+                      secureTextEntry={true}
+                    />
+                  )}
+                />
+                <View style={{ height: 18, fontSize: 15 }}>
+                  {errors.password && (
+                    <Text style={{ color: "red" }}>This is required.</Text>
+                  )}
+                </View>
+                {/* confirm password input */}
+                {/* <Controller
                 name="cpassword"
                 control={control}
                 rules={{
@@ -198,119 +221,157 @@ const SignUp = ({ navigation }) => {
                   <Text style={{ color: "red" }}>Password not match</Text>
                 ) : null}
               </View> */}
-              {/* link */}
+                {/* link */}
+                <View
+                  style={{
+                    flex: 1,
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontFamily: theme.typography.PRIMARY,
+                      textTransform: "uppercase",
+                      marginVertical: 10,
+                      color: "#aaa",
+                    }}
+                  >
+                    by signing up, you aggree to our
+                    <Text
+                      style={{
+                        marginHorizontal: 5,
+                        color: "#000",
+                        fontFamily: theme.typography.PRIMARY,
+                      }}
+                      onPress={() =>
+                        console.log("You agreed to our terms and condition")
+                      }
+                    >
+                      {" "}
+                      terms and conditions
+                    </Text>
+                    <Text style={{ fontFamily: theme.typography.PRIMARY }}>
+                      {" "}
+                      and{" "}
+                    </Text>
+                    <Text
+                      style={{
+                        fontFamily: theme.typography.PRIMARY,
+                        color: "#000",
+                      }}
+                      onPress={() =>
+                        console.log("You agreed to our privacy policy")
+                      }
+                    >
+                      PRIVACY POLICY
+                    </Text>
+                  </Text>
+                  <View>
+                    <TouchableOpacity
+                      style={{
+                        backgroundColor: "#333",
+                        borderRadius: 20,
+                        paddingVertical: 10,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        // marginVertical: 10,
+                      }}
+                      onPress={handleSubmit(onSubmit)}
+                    >
+                      <Text
+                        style={{
+                          color: "#fff",
+                          fontFamily: theme.typography.PRIMARY,
+                        }}
+                      >
+                        SIGN UP
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+          <View
+            style={{
+              flex: 1,
+              // justifyContent: "flex-end",
+            }}
+          >
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "flex-end",
+              }}
+            >
               <View
                 style={{
-                  flex: 1,
-                  justifyContent: "space-between",
+                  height: 40,
+                  flexDirection: "row",
+                  alignItems: "flex-start",
+                  justifyContent: "center",
                 }}
               >
                 <Text
                   style={{
                     fontFamily: theme.typography.PRIMARY,
-                    textTransform: "uppercase",
-                    marginVertical: 10,
                     color: "#aaa",
+                    textTransform: "uppercase",
+                    marginRight: 5,
                   }}
                 >
-                  by signing up, you aggree to our
-                  <Text
-                    style={{
-                      marginHorizontal: 5,
-                      color: "#000",
-                      fontFamily: theme.typography.PRIMARY,
-                    }}
-                    onPress={() =>
-                      console.log("You agreed to our terms and condition")
-                    }
-                  >
-                    {" "}
-                    terms and conditions
-                  </Text>
-                  <Text style={{ fontFamily: theme.typography.PRIMARY }}>
-                    {" "}
-                    and{" "}
-                  </Text>
-                  <Text
-                    style={{
-                      fontFamily: theme.typography.PRIMARY,
-                      color: "#000",
-                    }}
-                    onPress={() =>
-                      console.log("You agreed to our privacy policy")
-                    }
-                  >
-                    PRIVACY POLICY
-                  </Text>
+                  already a user?
                 </Text>
-                <View>
-                  <TouchableOpacity
-                    style={{
-                      backgroundColor: "#333",
-                      borderRadius: 20,
-                      paddingVertical: 10,
-                      justifyContent: "center",
-                      alignItems: "center",
-                      // marginVertical: 10,
-                    }}
-                    onPress={handleSubmit(onSubmit)}
-                  >
-                    <Text
-                      style={{
-                        color: "#fff",
-                        fontFamily: theme.typography.PRIMARY,
-                      }}
-                    >
-                      SIGN UP
-                    </Text>
-                  </TouchableOpacity>
-                </View>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("LoginScreen")}
+                >
+                  <Text style={{ fontFamily: theme.typography.PRIMARY }}>
+                    SIGN IN
+                  </Text>
+                </TouchableOpacity>
               </View>
             </View>
           </View>
-        </View>
-        <View
-          style={{
-            flex: 1,
-            // justifyContent: "flex-end",
-          }}
-        >
-          <View
+        </ScrollView>
+      </View>
+      {/* start of modal */}
+      <Modal
+        visible={visible}
+        onDismiss={hideModal}
+        contentContainerStyle={containerStyle}
+        style={{ paddingHorizontal: 20 }}
+      >
+        <View style={{ flex: 1, alignItems: "center" }}>
+          <SvgIcon
+            name={result ? "CIRCLECHECKMARK" : "CIRCLEXMARK"}
+            width={40}
+            height={40}
+            iconcolor={result ? "green" : "red"}
+          />
+          <Text
             style={{
-              flex: 1,
-              justifyContent: "flex-end",
+              color: result ? "green" : "red",
+              fontFamily: theme.typography.PRIMARY,
+              fontSize: 20,
             }}
           >
-            <View
-              style={{
-                height: 40,
-                flexDirection: "row",
-                alignItems: "flex-start",
-                justifyContent: "center",
-              }}
-            >
-              <Text
-                style={{
-                  fontFamily: theme.typography.PRIMARY,
-                  color: "#aaa",
-                  textTransform: "uppercase",
-                  marginRight: 5,
-                }}
-              >
-                already a user?
-              </Text>
-              <TouchableOpacity
-                onPress={() => navigation.navigate("LoginScreen")}
-              >
-                <Text style={{ fontFamily: theme.typography.PRIMARY }}>
-                  SIGN IN
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
+            {result ? "Success" : "Error"}
+          </Text>
+          <Text
+            style={{
+              fontFamily: theme.typography.PRIMARY,
+              marginTop: 4,
+              marginBottom: 10,
+              fontSize: 20,
+            }}
+          >
+            {message.charAt(0).toUpperCase() + message.slice(1).toLowerCase()}
+          </Text>
         </View>
-      </ScrollView>
-    </View>
+      </Modal>
+
+      {/* end of modal */}
+    </>
   );
 };
 
