@@ -1,38 +1,73 @@
 import React from "react";
 import { SafeArea } from "../../components/safe.area.component";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { AdvertNavigator } from "./advert.navigator";
+import { createStackNavigator } from "@react-navigation/stack";
 import { ProfileNavigator } from "./profile.navigator";
+import { AdvertScreen } from "../../features/advert/screens/advert.screen";
+import { AdvertVideoScreen } from "../../features/advert/screens/advert.video.screen";
+// import { TestScreen } from "../../features/home/screens/test.screen";
 
 import { appNavigatorScreenOptions } from "../theme/styles/app.navigator.style";
-import { HeaderBarContainer } from "../theme/styles/app.header.style";
-import { UserProfileBar } from "../../features/profile/user.profile.bar";
-import { UsedPrimaryAppContext } from "../../services/primary.app.provider";
-const Tab = createBottomTabNavigator();
+import SignUpScreen from "../../features/registration/signup.screen";
+import LoginScreen from "../../features/registration/login.screen";
+import Tickets from "../../features/profile/screens/tickets.screen";
+import LanguageScreen from "../../features/profile/screens/languages.screen";
+import VerificationScreen from "../../features/registration/verification.screen";
+
+import { UsedUserAuthInfoContext } from "../../services/user.auth.provider";
+
+const AppStackNavigator = createStackNavigator();
 
 export const AppNavigator = () => {
-  const primaryContext = UsedPrimaryAppContext();
-  const isUserProfileShown = primaryContext.isShowUserProfileBar;
+  // const [token, setToken] = useState("");
+  const userAuthInfoContext = UsedUserAuthInfoContext();
 
   return (
     <>
       <SafeArea>
-        <HeaderBarContainer
-          style={{
-            padding: isUserProfileShown ? 15 : 0,
-            justifyContent: isUserProfileShown ? "flex-end" : "flex-start",
-          }}
-        >
-          <UserProfileBar isShown={isUserProfileShown} />
-        </HeaderBarContainer>
-
-        <Tab.Navigator
+        <AppStackNavigator.Navigator
           screenOptions={appNavigatorScreenOptions}
-          initialRouteName="Advert"
+          initialRouteName="LoginScreen"
         >
-          <Tab.Screen name="Advert" component={AdvertNavigator} />
-          <Tab.Screen name="Profile" component={ProfileNavigator} />
-        </Tab.Navigator>
+          {userAuthInfoContext.userInfo.token ? (
+            <>
+              <AppStackNavigator.Screen
+                name="AdvertScreen"
+                component={AdvertScreen}
+              />
+              <AppStackNavigator.Screen
+                name="AdvertVideoScreen"
+                component={AdvertVideoScreen}
+              />
+              <AppStackNavigator.Screen
+                name="Profile"
+                component={ProfileNavigator}
+              />
+              <AppStackNavigator.Screen
+                name="TicketsScreen"
+                component={Tickets}
+              />
+              <AppStackNavigator.Screen
+                name="LanguagesScreen"
+                component={LanguageScreen}
+              />
+            </>
+          ) : (
+            <>
+              <AppStackNavigator.Screen
+                name="LoginScreen"
+                component={LoginScreen}
+              />
+              <AppStackNavigator.Screen
+                name="SignUpScreen"
+                component={SignUpScreen}
+              />
+              <AppStackNavigator.Screen
+                name="VerificationScreen"
+                component={VerificationScreen}
+              />
+            </>
+          )}
+        </AppStackNavigator.Navigator>
       </SafeArea>
     </>
   );

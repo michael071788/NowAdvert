@@ -1,7 +1,10 @@
 import React from "react";
 import styled from "styled-components/native";
 import { ActivityIndicator, View } from "react-native";
-import { ButtonContainer } from "../styles/advert.screen.style";
+import {
+  ButtonContainer,
+  PlayButtonContainerStyle,
+} from "../styles/advert.screen.style";
 
 /* prettier-ignore */
 export const MainScreenView = styled(View)`
@@ -116,13 +119,14 @@ width: 45%;
 height: 40%;
 `;
 
-export const BackButtonContainer = () => {
+export const BackButtonContainer = ({ onpress }) => {
   return (
     <View style={{ margin: 10 }}>
       <ButtonContainer
         name={"CARETLEFT"}
         size={30}
         bgcolor={"rgba(105, 105, 105, 0.37)"}
+        onpress={onpress}
       />
     </View>
   );
@@ -130,7 +134,7 @@ export const BackButtonContainer = () => {
 
 export const PlayButtonContainer = ({ name, iconcolor }) => {
   return (
-    <ButtonContainer
+    <PlayButtonContainerStyle
       name={name}
       size={80}
       bgcolor={"rgba(0, 0, 0, 0.25)"}

@@ -13,6 +13,10 @@ import { Navigation } from "./src/infrastucture/navigation";
 
 import ThemeProvider from "./src/infrastucture/theme/theme.provider";
 import PrimaryAppProvider from "./src/services/primary.app.provider";
+import UserInfoProvider from "./src/services/user.auth.provider";
+import UserProfileProvider from "./src/services/user.profile.provider.js";
+
+import "./src/utils/i18n";
 
 export default function App() {
   const [oswaldLoaded] = useOswald({
@@ -27,7 +31,11 @@ export default function App() {
     <>
       <ThemeProvider>
         <PrimaryAppProvider>
-          <Navigation />
+          <UserProfileProvider>
+            <UserInfoProvider>
+              <Navigation />
+            </UserInfoProvider>
+          </UserProfileProvider>
         </PrimaryAppProvider>
       </ThemeProvider>
     </>

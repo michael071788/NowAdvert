@@ -3,36 +3,42 @@ import {
   View,
   ScrollView,
   Text,
-  TextInput,
   SafeAreaView,
+  TextInput,
+  // Image,
   TouchableOpacity,
 } from "react-native";
-
 import UsedTheme from "../../../infrastucture/theme/use.theme";
+import UsedProfile from "../../../services/use.user.profile";
+import { useTranslation } from "react-i18next";
+
+import { CommonScreenView } from "../../../infrastucture/theme/styles/container.screen.style";
 // import {
 //   CommonView,
 //   InnerContentView,
 // } from "../../../infrastucture/theme/styles/user.profile.style";
-// import { CommonScreenView } from "../../../infrastucture/theme/styles/container.screen.style";
 // import { tabBarTotalHeight } from "../../../infrastucture/theme/styles/app.navigator.style";
-import UsedProfile from "../../../services/use.user.profile";
-import { useTranslation } from "react-i18next";
 
-const EditProfile = () => {
+const LinkedAccounts = () => {
   const theme = UsedTheme();
   const contextProfile = UsedProfile();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
-    contextProfile.SetCurrentLocation("Edit Profile");
+    contextProfile.SetCurrentLocation("Linked Accounts");
   }, [contextProfile]);
 
   return (
     // <CommonScreenView theme={theme}>
     <ScrollView vertical showsHorizontalScrollIndicator={false}>
       {/* start input field */}
-
-      <SafeAreaView style={{ flex: 1, padding: 10, paddingHorizontal: 20 }}>
+      <SafeAreaView
+        style={{
+          flex: 1,
+          paddingHorizontal: 20,
+          paddingVertical: 10,
+        }}
+      >
         <View>
           <View style={{ marginVertical: 10 }}>
             <Text
@@ -42,7 +48,7 @@ const EditProfile = () => {
                 textTransform: "uppercase",
               }}
             >
-              {t("NAME")}
+              {t("GOOGLE")}
             </Text>
             <TextInput
               style={{
@@ -51,6 +57,7 @@ const EditProfile = () => {
                 borderBottomWidth: 1,
                 paddingVertical: 2,
                 fontSize: 22,
+                fontWeight: "bold",
               }}
             />
           </View>
@@ -63,7 +70,7 @@ const EditProfile = () => {
                 textTransform: "uppercase",
               }}
             >
-              {t("EMAIL")}
+              {t("FACEBOOK")}
             </Text>
             <TextInput
               style={{
@@ -72,6 +79,7 @@ const EditProfile = () => {
                 borderBottomWidth: 1,
                 paddingVertical: 2,
                 fontSize: 22,
+                fontWeight: "bold",
               }}
             />
           </View>
@@ -84,7 +92,7 @@ const EditProfile = () => {
                 textTransform: "uppercase",
               }}
             >
-              {t("MOBILE NUMBER")}
+              {t("TWITTER")}
             </Text>
             <TextInput
               style={{
@@ -93,13 +101,37 @@ const EditProfile = () => {
                 borderBottomWidth: 1,
                 paddingVertical: 2,
                 fontSize: 22,
+                fontWeight: "bold",
+              }}
+            />
+          </View>
+
+          <View style={{ marginVertical: 10 }}>
+            <Text
+              style={{
+                fontFamily: theme.typography.PRIMARY,
+                color: "#aaa",
+                textTransform: "uppercase",
+              }}
+            >
+              {t("INSTAGRAM")}
+            </Text>
+            <TextInput
+              style={{
+                fontFamily: theme.typography.PRIMARY,
+                borderBottomColor: "#aaa",
+                borderBottomWidth: 1,
+                paddingVertical: 2,
+                fontSize: 22,
+                fontWeight: "bold",
               }}
             />
           </View>
         </View>
-        {/* end input field */}
+        {/* end of input field  */}
 
         {/* button */}
+
         <View
           style={{
             marginTop: 20,
@@ -127,10 +159,10 @@ const EditProfile = () => {
             </Text>
           </TouchableOpacity>
         </View>
-        {/* end of button */}
       </SafeAreaView>
+      {/* end of button */}
     </ScrollView>
     // </CommonScreenView>
   );
 };
-export default EditProfile;
+export default LinkedAccounts;

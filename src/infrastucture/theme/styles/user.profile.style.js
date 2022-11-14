@@ -5,6 +5,7 @@ import { Text, View } from "react-native";
 export const UserProfileBarContainer = styled(View)`
   flex-direction: row;
   display: ${props => props.isShown ? "flex" : "none" };
+
 `;
 
 export const UserProfileBarImageContainer = styled(View)`

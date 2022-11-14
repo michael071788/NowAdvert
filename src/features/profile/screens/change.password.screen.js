@@ -3,35 +3,36 @@ import {
   View,
   ScrollView,
   Text,
-  TextInput,
   SafeAreaView,
+  TextInput,
   TouchableOpacity,
 } from "react-native";
-
+// import { Button } from "react-native-paper";
 import UsedTheme from "../../../infrastucture/theme/use.theme";
+// import { CommonScreenView } from "../../../infrastucture/theme/styles/container.screen.style";
 // import {
 //   CommonView,
 //   InnerContentView,
 // } from "../../../infrastucture/theme/styles/user.profile.style";
-// import { CommonScreenView } from "../../../infrastucture/theme/styles/container.screen.style";
 // import { tabBarTotalHeight } from "../../../infrastucture/theme/styles/app.navigator.style";
 import UsedProfile from "../../../services/use.user.profile";
 import { useTranslation } from "react-i18next";
 
-const EditProfile = () => {
+const ChangePassword = () => {
   const theme = UsedTheme();
   const contextProfile = UsedProfile();
   const { t } = useTranslation();
 
   useEffect(() => {
-    contextProfile.SetCurrentLocation("Edit Profile");
+    contextProfile.SetCurrentLocation("Change Password");
   }, [contextProfile]);
 
   return (
     // <CommonScreenView theme={theme}>
     <ScrollView vertical showsHorizontalScrollIndicator={false}>
-      {/* start input field */}
+      {/* start of profile */}
 
+      {/* start input field */}
       <SafeAreaView style={{ flex: 1, padding: 10, paddingHorizontal: 20 }}>
         <View>
           <View style={{ marginVertical: 10 }}>
@@ -42,15 +43,16 @@ const EditProfile = () => {
                 textTransform: "uppercase",
               }}
             >
-              {t("NAME")}
+              {t("CURRENT PASSWORD")}
             </Text>
             <TextInput
+              secureTextEntry
               style={{
-                fontFamily: theme.typography.PRIMARY,
-                borderBottomColor: "#aaa",
+                backgroundColor: "transparent",
                 borderBottomWidth: 1,
-                paddingVertical: 2,
-                fontSize: 22,
+                fontFamily: theme.typography.PRIMARY,
+                fontSize: 30,
+                paddingHorizontal: 0,
               }}
             />
           </View>
@@ -58,20 +60,21 @@ const EditProfile = () => {
           <View style={{ marginVertical: 10 }}>
             <Text
               style={{
-                fontFamily: theme.typography.PRIMARY,
                 color: "#aaa",
+                fontFamily: theme.typography.PRIMARY,
                 textTransform: "uppercase",
               }}
             >
-              {t("EMAIL")}
+              {t("NEW PASSWORD")}
             </Text>
             <TextInput
+              secureTextEntry
               style={{
-                fontFamily: theme.typography.PRIMARY,
-                borderBottomColor: "#aaa",
+                backgroundColor: "transparent",
                 borderBottomWidth: 1,
-                paddingVertical: 2,
-                fontSize: 22,
+                fontFamily: theme.typography.PRIMARY,
+                fontSize: 30,
+                paddingHorizontal: 0,
               }}
             />
           </View>
@@ -79,30 +82,31 @@ const EditProfile = () => {
           <View style={{ marginVertical: 10 }}>
             <Text
               style={{
-                fontFamily: theme.typography.PRIMARY,
                 color: "#aaa",
+                fontFamily: theme.typography.PRIMARY,
                 textTransform: "uppercase",
               }}
             >
-              {t("MOBILE NUMBER")}
+              {t("CONFIRM PASSWORD")}
             </Text>
             <TextInput
+              secureTextEntry
               style={{
-                fontFamily: theme.typography.PRIMARY,
-                borderBottomColor: "#aaa",
+                backgroundColor: "transparent",
                 borderBottomWidth: 1,
-                paddingVertical: 2,
-                fontSize: 22,
+                fontFamily: theme.typography.PRIMARY,
+                fontSize: 30,
+                paddingHorizontal: 0,
               }}
             />
           </View>
         </View>
-        {/* end input field */}
+        {/* end of input field  */}
 
         {/* button */}
         <View
           style={{
-            marginTop: 20,
+            marginTop: 10,
             justifyContent: "center",
             alignItems: "center",
           }}
@@ -127,10 +131,11 @@ const EditProfile = () => {
             </Text>
           </TouchableOpacity>
         </View>
+
         {/* end of button */}
       </SafeAreaView>
     </ScrollView>
     // </CommonScreenView>
   );
 };
-export default EditProfile;
+export default ChangePassword;
