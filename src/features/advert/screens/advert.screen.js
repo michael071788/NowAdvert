@@ -32,8 +32,6 @@ export const AdvertScreen = ({ navigation }) => {
   const [isPreloading, setIsPreloading] = useState(true);
   const [advertListData, setAdvertListData] = useState([]);
 
-  const [count, setCount] = useState(0);
-
   const theme = UsedTheme();
 
   const primaryContext = UsedPrimaryAppContext();
@@ -122,16 +120,7 @@ export const AdvertScreen = ({ navigation }) => {
                     borderRadius: 30,
                   }}
                 >
-                  <ButtonContainer
-                    name={"HEART"}
-                    // label={"1.5k"}
-                    label={count}
-                    onpress={() => {
-                      console.log(item._id);
-
-                      // setCount(count + 1);
-                    }}
-                  />
+                  <ButtonContainer name={"HEART"} label={"1.5k"} />
 
                   <ButtonContainer name={"EYE"} label={"300"} />
                   <ButtonContainer
