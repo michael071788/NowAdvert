@@ -42,8 +42,8 @@ const Login = ({ navigation }) => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      email: "mackdaniel06@gmail.com",
-      password: "P@ssword123",
+      email: "",
+      password: "",
     },
   });
 
