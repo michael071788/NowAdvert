@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -19,6 +19,8 @@ import EnglishFlag from "../../../../assets/us.svg";
 import PhFlag from "../../../../assets/ph.svg";
 
 const LanguageScreen = ({ navigation }) => {
+  const [language, setLanguage] = useState("");
+
   const theme = UsedTheme();
 
   const { t, i18n } = useTranslation();
@@ -44,12 +46,19 @@ const LanguageScreen = ({ navigation }) => {
       flag: <PhFlag width={50} height={30} />,
     },
   ];
+
+  useEffect(() => {
+    setLanguage(contextProfile.currentLanguage);
+  }, [contextProfile]);
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View
         style={{
+          paddingHorizontal: 10,
           flexDirection: "row",
           alignItems: "center",
+          justifyContent: language === "Arabic" ? "flex-end" : "flex-start",
         }}
       >
         <TouchableOpacity
@@ -58,13 +67,17 @@ const LanguageScreen = ({ navigation }) => {
             navigation.navigate("ProfileScreen");
           }}
         >
-          <List.Icon icon="chevron-left" />
+          <List.Icon
+            icon={language === "Arabic" ? "chevron-right" : "chevron-left"}
+          />
         </TouchableOpacity>
         <Text
           style={{
             fontFamily: theme.typography.PRIMARY,
             fontSize: 20,
             textTransform: "uppercase",
+            // alignSelf: language === "Arabic" ? "center" : "flex-start",
+            // justifyContent: language === "Arabic" ? "flex-end" : "flex-start",
           }}
         >
           {t("CHOOSE LANGUAGE")}
@@ -84,10 +97,9 @@ const LanguageScreen = ({ navigation }) => {
               borderBottomWidth: 1,
             }}
             onPress={() => {
-              i18n.changeLanguage(item.code);
-              // .then(() => {
-              //   I18nManager.forceRTL(item.code);
-              // });
+              i18n.changeLanguage(item.code).then(() => {
+                I18nManager.forceRTL(item.code === "eng");
+              });
               contextProfile.SetCurrentLanguage(item.code);
               navigation.goBack();
 

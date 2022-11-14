@@ -14,6 +14,7 @@ import { useTranslation } from "react-i18next";
 
 const Tickets = ({ navigation }) => {
   const [location, setLocation] = useState("");
+  const [language, setLanguage] = useState("");
 
   const theme = UsedTheme();
   const contextProfile = UsedProfile();
@@ -21,6 +22,7 @@ const Tickets = ({ navigation }) => {
 
   useEffect(() => {
     contextProfile.SetCurrentLocation("Profile Screen");
+    setLanguage(contextProfile.currentLanguage);
   }, [contextProfile]);
 
   const data = [
@@ -43,12 +45,15 @@ const Tickets = ({ navigation }) => {
       expiresIn: "02 November 2022",
     },
   ];
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "black" }}>
       <View
         style={{
+          paddingHorizontal: 10,
           flexDirection: "row",
           alignItems: "center",
+          justifyContent: language === "Arabic" ? "flex-end" : "flex-start",
         }}
       >
         <TouchableOpacity
@@ -57,7 +62,10 @@ const Tickets = ({ navigation }) => {
             navigation.navigate("ProfileScreen");
           }}
         >
-          <List.Icon icon="chevron-left" color="#fff" />
+          <List.Icon
+            icon={language === "Arabic" ? "chevron-right" : "chevron-left"}
+            color="#fff"
+          />
         </TouchableOpacity>
         <Text
           style={{

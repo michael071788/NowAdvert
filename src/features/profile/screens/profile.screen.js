@@ -45,6 +45,8 @@ import UsedProfile from "../../../services/use.user.profile";
 // );
 
 export const ProfileScreen = ({ navigation }) => {
+  const [language, setLanguage] = useState("");
+
   const theme = UsedTheme();
   const { t } = useTranslation();
 
@@ -62,6 +64,7 @@ export const ProfileScreen = ({ navigation }) => {
 
   useEffect(() => {
     contextProfile.SetCurrentLocation("Profile Screen");
+    setLanguage(contextProfile.currentLanguage);
   }, [contextProfile]);
 
   const logoutUser = () => {
@@ -101,12 +104,16 @@ export const ProfileScreen = ({ navigation }) => {
 
           {/* Edit Profile */}
           <TouchableOpacity onPress={() => navigation.navigate("Edit Profile")}>
-            <View style={{ flexDirection: "row" }}>
+            {/* <View style={{ flexDirection: "row" }}> */}
+            <View
+              style={{
+                flexDirection: language === "Arabic" ? "row-reverse" : "row",
+              }}
+            >
               <View
                 style={{
                   flex: 4,
-
-                  alignItems: "flex-start",
+                  alignItems: language === "Arabic" ? "flex-end" : "flex-start",
                   justifyContent: "center",
                 }}
               >
@@ -127,7 +134,12 @@ export const ProfileScreen = ({ navigation }) => {
                   alignContent: "center",
                 }}
               >
-                <List.Icon icon="chevron-right" />
+                {/* <List.Icon icon="chevron-right" /> */}
+                <List.Icon
+                  icon={
+                    language === "Arabic" ? "chevron-left" : "chevron-right"
+                  }
+                />
               </View>
             </View>
           </TouchableOpacity>
@@ -135,12 +147,15 @@ export const ProfileScreen = ({ navigation }) => {
           <TouchableOpacity
             onPress={() => navigation.navigate("Change Password")}
           >
-            <View style={{ flexDirection: "row" }}>
+            <View
+              style={{
+                flexDirection: language === "Arabic" ? "row-reverse" : "row",
+              }}
+            >
               <View
                 style={{
                   flex: 4,
-
-                  alignItems: "flex-start",
+                  alignItems: language === "Arabic" ? "flex-end" : "flex-start",
                   justifyContent: "center",
                 }}
               >
@@ -161,7 +176,11 @@ export const ProfileScreen = ({ navigation }) => {
                   alignContent: "center",
                 }}
               >
-                <List.Icon icon="chevron-right" />
+                <List.Icon
+                  icon={
+                    language === "Arabic" ? "chevron-left" : "chevron-right"
+                  }
+                />
               </View>
             </View>
           </TouchableOpacity>
@@ -169,11 +188,15 @@ export const ProfileScreen = ({ navigation }) => {
           <TouchableOpacity
             onPress={() => navigation.navigate("Linked Accounts")}
           >
-            <View style={{ flexDirection: "row" }}>
+            <View
+              style={{
+                flexDirection: language === "Arabic" ? "row-reverse" : "row",
+              }}
+            >
               <View
                 style={{
                   flex: 4,
-                  alignItems: "flex-start",
+                  alignItems: language === "Arabic" ? "flex-end" : "flex-start",
                   justifyContent: "center",
                 }}
               >
@@ -194,7 +217,11 @@ export const ProfileScreen = ({ navigation }) => {
                   alignContent: "center",
                 }}
               >
-                <List.Icon icon="chevron-right" />
+                <List.Icon
+                  icon={
+                    language === "Arabic" ? "chevron-left" : "chevron-right"
+                  }
+                />
               </View>
             </View>
           </TouchableOpacity>
@@ -230,12 +257,15 @@ export const ProfileScreen = ({ navigation }) => {
           </Text>
           <Divider />
 
-          <View style={{ flexDirection: "row" }}>
+          <View
+            style={{
+              flexDirection: language === "Arabic" ? "row-reverse" : "row",
+            }}
+          >
             <View
               style={{
                 flex: 4,
-
-                alignItems: "flex-start",
+                alignItems: language === "Arabic" ? "flex-end" : "flex-start",
                 justifyContent: "center",
               }}
             >
@@ -298,12 +328,15 @@ export const ProfileScreen = ({ navigation }) => {
           <TouchableOpacity
             onPress={() => navigation.navigate("TicketsScreen")}
           >
-            <View style={{ flexDirection: "row" }}>
+            <View
+              style={{
+                flexDirection: language === "Arabic" ? "row-reverse" : "row",
+              }}
+            >
               <View
                 style={{
                   flex: 4,
-
-                  alignItems: "flex-start",
+                  alignItems: language === "Arabic" ? "flex-end" : "flex-start",
                   justifyContent: "center",
                 }}
               >
@@ -324,7 +357,11 @@ export const ProfileScreen = ({ navigation }) => {
                   alignContent: "center",
                 }}
               >
-                <List.Icon icon="chevron-right" />
+                <List.Icon
+                  icon={
+                    language === "Arabic" ? "chevron-left" : "chevron-right"
+                  }
+                />
               </View>
             </View>
           </TouchableOpacity>
@@ -361,12 +398,15 @@ export const ProfileScreen = ({ navigation }) => {
           <TouchableOpacity
             onPress={() => navigation.navigate("LanguagesScreen")}
           >
-            <View style={{ flexDirection: "row" }}>
+            <View
+              style={{
+                flexDirection: language === "Arabic" ? "row-reverse" : "row",
+              }}
+            >
               <View
                 style={{
                   flex: 4,
-
-                  alignItems: "flex-start",
+                  alignItems: language === "Arabic" ? "flex-end" : "flex-start",
                   justifyContent: "center",
                 }}
               >
@@ -388,7 +428,11 @@ export const ProfileScreen = ({ navigation }) => {
                   alignContent: "center",
                 }}
               >
-                <List.Icon icon="chevron-right" />
+                <List.Icon
+                  icon={
+                    language === "Arabic" ? "chevron-left" : "chevron-right"
+                  }
+                />
               </View>
             </View>
           </TouchableOpacity>
@@ -432,7 +476,7 @@ export const ProfileScreen = ({ navigation }) => {
           // onPress={() => navigation.navigate("LoginScreen")}
           onPress={() => logoutUser()}
         >
-          Logout
+          {t("LOGOUT")}
         </Button>
       </View>
     </ScrollView>
