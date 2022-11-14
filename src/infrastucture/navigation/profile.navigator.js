@@ -19,6 +19,8 @@ const ProfileStack = createStackNavigator();
 
 export const ProfileNavigator = ({ navigation }) => {
   const [location, setLocation] = useState("");
+  const [language, setLanguage] = useState("");
+
   const [image, setImage] = useState(null);
 
   const { t } = useTranslation();
@@ -30,7 +32,8 @@ export const ProfileNavigator = ({ navigation }) => {
   useEffect(() => {
     // contextProfile.SetCurrentLocation("ProfileScreen");
     setLocation(contextProfile.currentLocation);
-  }, [contextProfile.currentLocation]);
+    setLanguage(contextProfile.currentLanguage);
+  }, [contextProfile]);
 
   const openImagePicker = async () => {
     alert("picked");
@@ -39,17 +42,30 @@ export const ProfileNavigator = ({ navigation }) => {
 
   return (
     <View style={{ flex: 1 }}>
-      <View style={{ flexDirection: "row", alignItems: "center" }}>
+      <View
+        style={{
+          flexDirection: language === "Arabic" ? "row-reverse" : "row",
+          alignItems: "center",
+        }}
+      >
         <TouchableOpacity
           activeOpacity={1}
           onPress={() => {
             setLocation("Profile Screen");
-            navigation.navigate("AdvertScreen");
+            location === "Profile Screen"
+              ? navigation.navigate("AdvertScreen")
+              : navigation.navigate("ProfileScreen");
           }}
         >
           {/* <List.Icon icon="chevron-left" /> */}
           <List.Icon
-            icon={location === "Profile Screen" ? "home" : "chevron-left"}
+            icon={
+              location === "Profile Screen"
+                ? "home"
+                : language === "Arabic"
+                ? "chevron-right"
+                : "chevron-left"
+            }
           />
         </TouchableOpacity>
         <Text

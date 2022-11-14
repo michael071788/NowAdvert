@@ -33,6 +33,7 @@ const resources = {
       "VIEW MY TICKETS": "عرض التذاكر الخاصة بي",
       LANGUAGE: "لغة",
       LOGOUT: "تسجيل خروج",
+      "CHOOSE LANGUAGE": "اختر اللغة",
     },
   },
   fil: {
