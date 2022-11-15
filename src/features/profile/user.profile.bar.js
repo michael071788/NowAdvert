@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Image, TouchableOpacity, View } from "react-native";
 import UsedTheme from "../../infrastucture/theme/use.theme";
 import {
@@ -23,7 +23,6 @@ export const UserProfileBar = ({ isShown, navigation }) => {
           />
         </UserProfileBarImageContainer>
         <View style={{ justifyContent: "center", alignItems: "center" }}>
-          {/* <UserFullName theme={theme}>calum scott</UserFullName> */}
           <UserFullName theme={theme}>
             {userAuthInfoContext.userInfo.user.name}
           </UserFullName>

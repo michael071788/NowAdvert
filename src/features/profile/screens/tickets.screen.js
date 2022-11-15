@@ -5,7 +5,6 @@ import {
   SafeAreaView,
   ScrollView,
   TouchableOpacity,
-  TextInput,
 } from "react-native";
 import { Divider, List } from "react-native-paper";
 import UsedTheme from "../../../infrastucture/theme/use.theme";
@@ -13,7 +12,6 @@ import UsedProfile from "../../../services/use.user.profile";
 import { useTranslation } from "react-i18next";
 
 const Tickets = ({ navigation }) => {
-  const [location, setLocation] = useState("");
   const [language, setLanguage] = useState("");
 
   const theme = UsedTheme();

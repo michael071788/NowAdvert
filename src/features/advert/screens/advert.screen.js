@@ -30,6 +30,7 @@ import { useTranslation } from "react-i18next";
 import UsedProfile from "../../../services/use.user.profile";
 
 export const AdvertScreen = ({ navigation }) => {
+  // eslint-disable-next-line no-unused-vars
   const [language, setLanguage] = useState("");
 
   const mounted = useRef(false);
