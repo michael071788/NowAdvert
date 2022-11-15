@@ -3,7 +3,6 @@ import {
   View,
   Text,
   TextInput,
-  Dimensions,
   TouchableOpacity,
   Keyboard,
 } from "react-native";
@@ -12,8 +11,6 @@ import UsedTheme from "../../infrastucture/theme/use.theme";
 
 const inputs = Array(4).fill("");
 let newInputIndex = 0;
-// const random = Math.floor(1000 + Math.random() * 9000);
-// console.log(random);
 
 const isObjValid = (obj) => {
   return Object.values(obj).every((val) => val.trim);
@@ -86,7 +83,6 @@ const Verification = ({ route, navigation }) => {
                   value={OTP[index]}
                   onChangeText={(text) => handleChangeText(text, index)}
                   ref={nextInputIndex === index ? input : null}
-                  // placeholder="0"
                   keyboardType="numeric"
                   maxLength={1}
                   style={{
@@ -111,9 +107,7 @@ const Verification = ({ route, navigation }) => {
               paddingVertical: 10,
               justifyContent: "center",
               alignItems: "center",
-              // marginVertical: 10,
             }}
-            // onPress={handleSubmit(onSubmit)}
           >
             <Text
               style={{
@@ -170,7 +164,7 @@ const Verification = ({ route, navigation }) => {
   );
 };
 
-const { width } = Dimensions.get("window");
-const inputWidth = Math.round(width / 6);
+// const { width } = Dimensions.get("window");
+// const inputWidth = Math.round(width / 6);
 
 export default Verification;

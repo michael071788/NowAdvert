@@ -22,6 +22,7 @@ export const ProfileNavigator = ({ navigation }) => {
   const [location, setLocation] = useState("");
   const [language, setLanguage] = useState("");
 
+  // eslint-disable-next-line no-unused-vars
   const [image, setImage] = useState(null);
 
   const { t } = useTranslation();
@@ -39,7 +40,6 @@ export const ProfileNavigator = ({ navigation }) => {
   }, [contextProfile]);
 
   const openImagePicker = async () => {
-    alert("picked");
     console.log("picked");
   };
 
@@ -154,7 +154,7 @@ export const ProfileNavigator = ({ navigation }) => {
       </View>
       <View style={{ flex: 1, backgroundColor: "yellow" }}>
         <ProfileStack.Navigator
-          screenOptions={({ route, navigation }) => ({
+          screenOptions={({ route }) => ({
             headerShown: false,
           })}
         >

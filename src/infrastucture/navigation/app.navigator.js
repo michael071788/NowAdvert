@@ -4,8 +4,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { ProfileNavigator } from "./profile.navigator";
 import { AdvertScreen } from "../../features/advert/screens/advert.screen";
 import { AdvertVideoScreen } from "../../features/advert/screens/advert.video.screen";
-import { TestScreen } from "../../features/home/screens/test.screen";
-import TestScreenMock from "../../features/profile/screens/testScreen";
+// import { TestScreen } from "../../features/home/screens/test.screen";
+// import TestScreenMock from "../../features/profile/screens/testScreen";
 
 import { appNavigatorScreenOptions } from "../theme/styles/app.navigator.style";
 import SignUpScreen from "../../features/registration/signup.screen";
@@ -19,7 +19,6 @@ import { UsedUserAuthInfoContext } from "../../services/user.auth.provider";
 const AppStackNavigator = createStackNavigator();
 
 export const AppNavigator = () => {
-  // const [token, setToken] = useState("");
   const userAuthInfoContext = UsedUserAuthInfoContext();
 
   return (

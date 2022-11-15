@@ -5,31 +5,22 @@ import {
   Text,
   SafeAreaView,
   TextInput,
-  // Image,
   TouchableOpacity,
 } from "react-native";
 import UsedTheme from "../../../infrastucture/theme/use.theme";
 import UsedProfile from "../../../services/use.user.profile";
 import { useTranslation } from "react-i18next";
 
-import { CommonScreenView } from "../../../infrastucture/theme/styles/container.screen.style";
-// import {
-//   CommonView,
-//   InnerContentView,
-// } from "../../../infrastucture/theme/styles/user.profile.style";
-// import { tabBarTotalHeight } from "../../../infrastucture/theme/styles/app.navigator.style";
-
 const LinkedAccounts = () => {
   const theme = UsedTheme();
   const contextProfile = UsedProfile();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   useEffect(() => {
     contextProfile.SetCurrentLocation("Linked Accounts");
   }, [contextProfile]);
 
   return (
-    // <CommonScreenView theme={theme}>
     <ScrollView vertical showsHorizontalScrollIndicator={false}>
       {/* start input field */}
       <SafeAreaView
@@ -162,7 +153,6 @@ const LinkedAccounts = () => {
       </SafeAreaView>
       {/* end of button */}
     </ScrollView>
-    // </CommonScreenView>
   );
 };
 export default LinkedAccounts;
