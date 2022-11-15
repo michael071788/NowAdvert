@@ -28,11 +28,18 @@ import UsedTheme from "../../../infrastucture/theme/use.theme";
 import { Modal } from "react-native-paper";
 import { ButtonContainer } from "../../../infrastucture/theme/styles/advert.screen.style";
 import { Divider } from "react-native-paper";
+import { useTranslation } from "react-i18next";
+import UsedProfile from "../../../services/use.user.profile";
 
 export const AdvertVideoScreen = ({ route, navigation }) => {
+  const [language, setLanguage] = useState("");
+
   const mounted = useRef(false);
+  const { t } = useTranslation();
 
   const primaryContext = UsedPrimaryAppContext();
+  const contextProfile = UsedProfile();
+
   const theme = UsedTheme();
 
   const { videoURI } = route.params;
@@ -81,6 +88,10 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
       }
     }
   }, [status, isReadyForDisplay]);
+
+  useEffect(() => {
+    setLanguage(contextProfile.currentLanguage);
+  }, [contextProfile]);
 
   return (
     <MainScreenView>
@@ -158,7 +169,8 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
                   color: theme.colors.ACTIVE,
                 }}
               >
-                HOORAY! YOU JUST WON
+                {/* HOORAY! YOU JUST WON */}
+                {t("HOORAY! YOU JUST WON")}
               </Text>
             </ModalContainer2>
             <ModalContainer3 style={{ flex: 20 }}>
@@ -185,7 +197,7 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
                         color: theme.colors.PRIMARY,
                       }}
                     >
-                      TICKET NUMBER
+                      {t("TICKET NUMBER")}
                     </Text>
                   </View>
 
@@ -211,7 +223,7 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
                           color: theme.colors.PRIMARY,
                         }}
                       >
-                        ACTIVE
+                        {t("ACTIVE")}
                       </Text>
                     </TicketStatusContainer>
                   </FlexCenterContainer>

@@ -26,18 +26,29 @@ import { HeaderBarContainer } from "../../../infrastucture/theme/styles/app.head
 import { UserProfileBar } from "../../profile/user.profile.bar";
 import { getErrorString } from "../../../services/common.function";
 import { AxiosInstance } from "../../../utils";
+import { useTranslation } from "react-i18next";
+import UsedProfile from "../../../services/use.user.profile";
 
 export const AdvertScreen = ({ navigation }) => {
+  const [language, setLanguage] = useState("");
+
   const mounted = useRef(false);
   const [isPreloading, setIsPreloading] = useState(true);
   const [advertListData, setAdvertListData] = useState([]);
 
+  const { t } = useTranslation();
+
   const theme = UsedTheme();
 
   const primaryContext = UsedPrimaryAppContext();
+  const contextProfile = UsedProfile();
 
   const [selectedItem, setSelectedItem] = useState();
   const [logoURI, setLogoURI] = useState("");
+
+  useEffect(() => {
+    setLanguage(contextProfile.currentLanguage);
+  }, [contextProfile]);
 
   const shareToSocial = useCallback(
     async (social) => {
@@ -165,7 +176,7 @@ export const AdvertScreen = ({ navigation }) => {
                   color: theme.colors.PRIMARY,
                 }}
               >
-                WATCH & WIN
+                {t("WATCH & WIN")}
               </Text>
             </View>
           </BottomLeftContainer>
@@ -177,7 +188,7 @@ export const AdvertScreen = ({ navigation }) => {
                 color: theme.colors.PRIMARY,
               }}
             >
-              You'll Receive
+              {t("You'll Receive")}
             </Text>
             <View style={{ flexDirection: "row", marginTop: -7 }}>
               <View

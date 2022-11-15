@@ -111,7 +111,7 @@ const Tickets = ({ navigation }) => {
               <Text
                 style={{ fontSize: 16, fontFamily: theme.typography.PRIMARY }}
               >
-                TICKET NUMBER
+                {t("TICKET NUMBER")}
               </Text>
               <Text
                 style={{ fontSize: 10, fontFamily: theme.typography.PRIMARY }}
@@ -136,14 +136,14 @@ const Tickets = ({ navigation }) => {
                 }}
               >
                 <Text style={{ fontFamily: theme.typography.PRIMARY }}>
-                  {status}
+                  {t(status)}
                 </Text>
               </View>
               <View style={{ alignItems: "center" }}>
                 <Text
                   style={{ fontSize: 10, fontFamily: theme.typography.PRIMARY }}
                 >
-                  EXPIRES ON
+                  {t("EXPIRES ON")}
                 </Text>
                 <Text
                   style={{
