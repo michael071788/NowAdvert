@@ -7,13 +7,9 @@ import {
   Input,
 } from "../../infrastucture/theme/styles/auth.components";
 import { useForm, Controller } from "react-hook-form";
-import axios from "axios";
 import { Modal } from "react-native-paper";
 import { SvgIcon } from "../../components/svg.icon";
-
-const axiosInstance = axios.create({
-  baseURL: "https://nowadvert-api.herokuapp.com",
-});
+import { AxiosInstance } from "../../utils";
 
 const Login = ({ navigation }) => {
   const [result, setResult] = useState(false);
@@ -38,26 +34,24 @@ const Login = ({ navigation }) => {
   const {
     control,
     handleSubmit,
-    //reset,
     formState: { errors },
   } = useForm({
     defaultValues: {
-      email: "",
-      password: "",
+      email: "michael071788@gmail.com",
+      password: "P@ssword123",
     },
   });
 
   const onSubmit = async (userData) => {
     try {
-      await axiosInstance.post("/api/login", userData).then((result) => {
-        if (result.status === 200) {
+      await AxiosInstance.post("/api/login", userData).then((response) => {
+        if (response.status === 200) {
           showModal();
           setResult(true);
-          setMessage(result.data.message);
+          setMessage(response.data.message);
           setTimeout(() => {
-            userAuthInfoContext.SetCurrentUserInfo(result.data);
+            userAuthInfoContext.SetCurrentUserInfo(response.data);
           }, 2000);
-          // userAuthInfoContext.SetCurrentUserInfo(result.data);
         }
       });
     } catch (error) {
@@ -223,7 +217,6 @@ const Login = ({ navigation }) => {
                     alignItems: "center",
                     marginBottom: 10,
                   }}
-                  //   onPress={handleSubmit(onSubmit)}
                 >
                   <Text
                     style={{
@@ -244,7 +237,6 @@ const Login = ({ navigation }) => {
                     justifyContent: "center",
                     alignItems: "center",
                   }}
-                  //   onPress={handleSubmit(onSubmit)}
                 >
                   <Text
                     style={{
@@ -263,7 +255,6 @@ const Login = ({ navigation }) => {
           <View
             style={{
               flex: 1,
-              // justifyContent: "flex-end",
             }}
           >
             <View
