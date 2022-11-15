@@ -10,5 +10,6 @@ export function WinPix(percentage) {
 }
 
 export const AxiosInstance = axios.create({
-  baseURL: "https://nowadvertapi.herokuapp.com",
+  baseURL:
+    "http://nowadvertapiapp-env.eba-pbhdcwat.eu-west-3.elasticbeanstalk.com",
 });

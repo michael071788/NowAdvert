@@ -1,24 +1,14 @@
 import React, { useState } from "react";
-import {
-  // AsyncStorage,
-  View,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-} from "react-native";
+import { View, ScrollView, Text, TouchableOpacity } from "react-native";
 import UsedTheme from "../../infrastucture/theme/use.theme";
 import {
   HeaderText,
   Input,
 } from "../../infrastucture/theme/styles/auth.components";
 import { useForm, Controller } from "react-hook-form";
-import axios from "axios";
-import { Modal, Button } from "react-native-paper";
+import { Modal } from "react-native-paper";
 import { SvgIcon } from "../../components/svg.icon";
-
-const axiosInstance = axios.create({
-  baseURL: "https://nowadvert-api.herokuapp.com",
-});
+import { AxiosInstance } from "../../utils";
 
 const SignUp = ({ navigation }) => {
   const [result, setResult] = useState(false);
@@ -41,9 +31,6 @@ const SignUp = ({ navigation }) => {
   const {
     control,
     handleSubmit,
-    // reset,
-    // watch,
-    // getValues,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -51,21 +38,22 @@ const SignUp = ({ navigation }) => {
       name: "",
       phone: "",
       password: "",
-      // cpassword: "",
     },
   });
   const onSubmit = async (userData) => {
     try {
-      await axiosInstance.post("/api/users/signup", userData).then((result) => {
-        if (result.status === 201) {
-          showModal();
-          setResult(true);
-          setMessage(result.data.message);
-          setTimeout(() => {
-            navigation.navigate("VerificationScreen");
-          }, 2000);
+      await AxiosInstance.post("/api/users/signup", userData).then(
+        (response) => {
+          if (response.status === 201) {
+            showModal();
+            setResult(true);
+            setMessage(response.data.message);
+            setTimeout(() => {
+              navigation.navigate("VerificationScreen");
+            }, 2000);
+          }
         }
-      });
+      );
     } catch (error) {
       showModal();
       setResult(false);
@@ -196,32 +184,6 @@ const SignUp = ({ navigation }) => {
                     <Text style={{ color: "red" }}>This is required.</Text>
                   )}
                 </View>
-                {/* confirm password input */}
-                {/* <Controller
-                name="cpassword"
-                control={control}
-                rules={{
-                  required: "This is required",
-                }}
-                render={({ field: { onChange, value } }) => (
-                  <Input
-                    placeholder="Confirm Password"
-                    onChangeText={onChange}
-                    secureTextEntry={true}
-                    value={value}
-                  />
-                )}
-              />
-              <View style={{ height: 18, fontSize: 15 }}>
-                {errors.cpassword && (
-                  <Text style={{ color: "red" }}>This is required.</Text>
-                )}
-                {watch("cpassword") !== watch("password") &&
-                getValues("cpassword") ? (
-                  <Text style={{ color: "red" }}>Password not match</Text>
-                ) : null}
-              </View> */}
-                {/* link */}
                 <View
                   style={{
                     flex: 1,
