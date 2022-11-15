@@ -13,6 +13,7 @@ import { ProfileScreen } from "../../features/profile/screens/profile.screen";
 import { List, Avatar } from "react-native-paper";
 
 import { useTranslation } from "react-i18next";
+import { UsedUserAuthInfoContext } from "../../services/user.auth.provider";
 // import * as ImagePicker from "expo-image-picker";
 
 const ProfileStack = createStackNavigator();
@@ -27,6 +28,8 @@ export const ProfileNavigator = ({ navigation }) => {
 
   const theme = UsedTheme();
   const contextProfile = UsedProfile();
+  const userAuthInfoContext = UsedUserAuthInfoContext();
+
   // contextProfile.SetCurrentLocation("");
 
   useEffect(() => {
@@ -133,7 +136,8 @@ export const ProfileNavigator = ({ navigation }) => {
                 textTransform: "uppercase",
               }}
             >
-              calum scott
+              {/* calum scott */}
+              {userAuthInfoContext.userInfo.user.name}
             </Text>
             <Text
               style={{
