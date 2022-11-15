@@ -56,9 +56,9 @@ const LanguageScreen = ({ navigation }) => {
       <View
         style={{
           paddingHorizontal: 10,
-          flexDirection: "row",
+          flexDirection: language === "Arabic" ? "row-reverse" : "row",
           alignItems: "center",
-          justifyContent: language === "Arabic" ? "flex-end" : "flex-start",
+          justifyContent: "flex-start",
         }}
       >
         <TouchableOpacity
