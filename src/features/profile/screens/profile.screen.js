@@ -68,7 +68,19 @@ export const ProfileScreen = ({ navigation }) => {
   }, [contextProfile]);
 
   const logoutUser = () => {
-    userAuthInfoContext.SetCurrentUserInfo("");
+    userAuthInfoContext.SetCurrentUserInfo({
+      message: "",
+      status: 0,
+      token: "",
+      user: {
+        __v: 0,
+        _id: "",
+        email: "",
+        name: "",
+        password: "",
+        phone: "",
+      },
+    });
     // navigation.navigate("LoginScreen")
   };
   return (

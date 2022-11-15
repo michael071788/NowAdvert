@@ -9,7 +9,6 @@ import {
 } from "react-native";
 import UsedProfile from "../../../services/use.user.profile";
 import UsedTheme from "../../../infrastucture/theme/use.theme";
-import { CommonScreenView } from "../../../infrastucture/theme/styles/container.screen.style";
 import { Divider, List } from "react-native-paper";
 
 import { useTranslation } from "react-i18next";
@@ -98,13 +97,13 @@ const LanguageScreen = ({ navigation }) => {
             }}
             onPress={() => {
               i18n.changeLanguage(item.code).then(() => {
-                I18nManager.forceRTL(item.code === "eng");
+                I18nManager.forceRTL(item.code === "arab");
               });
               contextProfile.SetCurrentLanguage(item.code);
               navigation.goBack();
 
               var selectedLanguage = languages.filter(
-                (x) => x.code == item.code
+                (x) => x.code === item.code
               );
 
               contextProfile.SetCurrentLanguage(selectedLanguage[0].language);

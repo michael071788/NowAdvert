@@ -1,18 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { View, Text } from "react-native";
 import { Button } from "react-native-paper";
-import axios from "axios";
 import { UsedUserAuthInfoContext } from "../../../services/user.auth.provider";
 // import AsyncStorage from "@react-native-async-storage/async-storage";
+// import { AxiosInstance } from "../../../utils";
 
-const axiosInstance = axios.create({
-  baseURL: "https://nowadvertapi.herokuapp.com",
-});
-
-const _myPostData = {
-  title: "This is title 9 version",
-  description: "this is description 9 version",
-};
+// const _myPostData = {
+//   title: "This is title 9 version",
+//   description: "this is description 9 version",
+// };
 
 export const TestScreen = () => {
   const [info, setInfo] = useState("");
@@ -24,7 +20,8 @@ export const TestScreen = () => {
     console.log("isLoading: true");
 
     // console.log(userAuthInfoContext.userInfo.user.name);
-    setInfo(userAuthInfoContext.userInfo.user.name);
+    // setInfo(userAuthInfoContext.userInfo.user.name);
+
     // =======================================================================
     // await axiosInstance.get("/api/advert/list").then((response) => {
     //   console.log(response.data);
