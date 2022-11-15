@@ -99,14 +99,11 @@ const LanguageScreen = ({ navigation }) => {
               i18n.changeLanguage(item.code).then(() => {
                 I18nManager.forceRTL(item.code === "arab");
               });
-              contextProfile.SetCurrentLanguage(item.code);
-              navigation.goBack();
-
               var selectedLanguage = languages.filter(
                 (x) => x.code === item.code
               );
-
               contextProfile.SetCurrentLanguage(selectedLanguage[0].language);
+              navigation.goBack();
             }}
           >
             <View style={{ flex: 1, height: 30 }}>{item.flag}</View>
