@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   // Image,
+  I18nManager,
   ScrollView,
   Switch,
   Text,
@@ -48,7 +49,7 @@ export const ProfileScreen = ({ navigation }) => {
   const [language, setLanguage] = useState("");
 
   const theme = UsedTheme();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   // const [selectedId, setSelectedId] = useState(null);
 
@@ -67,7 +68,11 @@ export const ProfileScreen = ({ navigation }) => {
     setLanguage(contextProfile.currentLanguage);
   }, [contextProfile]);
 
-  const logoutUser = () => {
+  const logoutUser = useCallback(() => {
+    contextProfile.SetCurrentLanguage("ENGLISH");
+    i18n.changeLanguage("eng");
+    I18nManager.forceRTL(false);
+
     userAuthInfoContext.SetCurrentUserInfo({
       message: "",
       status: 0,
@@ -81,10 +86,9 @@ export const ProfileScreen = ({ navigation }) => {
         phone: "",
       },
     });
-    // navigation.navigate("LoginScreen")
-  };
+  }, [contextProfile, i18n, userAuthInfoContext]);
+
   return (
-    // <CommonScreenView theme={theme}>
     <ScrollView vertical showsHorizontalScrollIndicator={false}>
       {/* *START - ACCOUNT* */}
       <View
@@ -492,6 +496,5 @@ export const ProfileScreen = ({ navigation }) => {
         </Button>
       </View>
     </ScrollView>
-    // </CommonScreenView>
   );
 };
