@@ -1,7 +1,5 @@
-import { View, Text, Button, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
-
-// const result = ages.filter(checkAdult);
 
 const TestScreenMock = () => {
   const [count, setCount] = useState(0);
