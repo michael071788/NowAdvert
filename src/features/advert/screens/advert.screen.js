@@ -35,6 +35,8 @@ export const AdvertScreen = ({ navigation }) => {
 
   const [liked, setLiked] = useState(false);
   const [countLikes, setCountLikes] = useState(0);
+  // const [selectedId, setSelectedId] = useState("");
+  const [selectedData, setSelectedData] = useState([]);
 
   const mounted = useRef(false);
   const [isPreloading, setIsPreloading] = useState(true);
@@ -101,20 +103,34 @@ export const AdvertScreen = ({ navigation }) => {
   const onlikeVideo = (item) => {
     console.log(`item id: ${item}`);
 
-    advertListData.filter((data) => {
-      if (data._id === item) {
-        console.log(`id is ${data._id}`);
-        setLiked(!liked);
-      } else {
-        setLiked(true);
-      }
-    });
+    // advertListData
+    //   .map((data) => data._id)
+    //   .filter((dataItem) => {
+    //     if (dataItem === item) {
+    //       setSelectedId(dataItem);
+    //       setLiked(!liked);
+    //     } else {
+    //       // setLiked(liked);
+    //     }
+    //   });
 
     // if (liked === true) {
     //   setCountLikes(countLikes - 1);
     // } else {
     //   setCountLikes(countLikes + 1);
     // }
+
+    const tempArr = [...selectedData];
+
+    if (selectedData.includes(item)) {
+      tempArr.splice(selectedData.indexOf(item), 1);
+    } else {
+      tempArr.push(item);
+    }
+
+    setSelectedData(tempArr);
+
+    console.log("-------------------");
   };
 
   const renderItem = ({ item }) => {
@@ -156,12 +172,15 @@ export const AdvertScreen = ({ navigation }) => {
                 >
                   <ButtonContainer
                     name={"HEART"}
-                    // label={"1.5k"}
-                    label={countLikes}
-                    iconcolor={liked ? "red" : ""}
+                    label={
+                      selectedData.includes(item._id)
+                        ? countLikes + 1
+                        : countLikes
+                    }
+                    // bgcolor={liked && item._id === selectedId ? "red" : ""}
+                    bgcolor={selectedData.includes(item._id) ? "red" : ""}
                     onpress={() => {
                       onlikeVideo(item._id);
-                      // console.log(item);
                     }}
                   />
 
