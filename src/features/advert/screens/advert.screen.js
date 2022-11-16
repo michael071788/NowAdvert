@@ -33,6 +33,9 @@ export const AdvertScreen = ({ navigation }) => {
   // eslint-disable-next-line no-unused-vars
   const [language, setLanguage] = useState("");
 
+  const [liked, setLiked] = useState(false);
+  const [countLikes, setCountLikes] = useState(0);
+
   const mounted = useRef(false);
   const [isPreloading, setIsPreloading] = useState(true);
   const [advertListData, setAdvertListData] = useState([]);
@@ -95,6 +98,25 @@ export const AdvertScreen = ({ navigation }) => {
   };
   const hideShareModal = () => setVisibleShareModal(false);
 
+  const onlikeVideo = (item) => {
+    console.log(`item id: ${item}`);
+
+    advertListData.filter((data) => {
+      if (data._id === item) {
+        console.log(`id is ${data._id}`);
+        setLiked(!liked);
+      } else {
+        setLiked(true);
+      }
+    });
+
+    // if (liked === true) {
+    //   setCountLikes(countLikes - 1);
+    // } else {
+    //   setCountLikes(countLikes + 1);
+    // }
+  };
+
   const renderItem = ({ item }) => {
     // Having an error on using themes here, still looking for a solution
     return (
@@ -132,7 +154,16 @@ export const AdvertScreen = ({ navigation }) => {
                     borderRadius: 30,
                   }}
                 >
-                  <ButtonContainer name={"HEART"} label={"1.5k"} />
+                  <ButtonContainer
+                    name={"HEART"}
+                    // label={"1.5k"}
+                    label={countLikes}
+                    iconcolor={liked ? "red" : ""}
+                    onpress={() => {
+                      onlikeVideo(item._id);
+                      // console.log(item);
+                    }}
+                  />
 
                   <ButtonContainer name={"EYE"} label={"300"} />
                   <ButtonContainer
@@ -223,6 +254,7 @@ export const AdvertScreen = ({ navigation }) => {
       await AxiosInstance.get("/api/advert/list")
         .then((response) => {
           _data = response.data;
+          setAdvertListData(response.data);
         })
         .catch((e) => {
           console.log(e);
