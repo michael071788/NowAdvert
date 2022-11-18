@@ -119,3 +119,55 @@ export const MOCK_ADVERT_LIST = [
     },
   },
 ];
+
+export const MOCK_DATA = [
+  {
+    id: "636162edbc124663d73c84a8",
+    number: 1,
+    like: 12,
+    views: 56,
+    share: 124,
+  },
+  {
+    id: "636163e5bc124663d73c84ac",
+    number: 2,
+    like: 100,
+    views: 151,
+    share: 23,
+  },
+  {
+    id: "6361646abc124663d73c84af",
+    number: 3,
+    like: 98,
+    views: 69,
+    share: 35,
+  },
+  {
+    id: "636164c1bc124663d73c84b1",
+    number: 4,
+    like: 88,
+    views: 376,
+    share: 165,
+  },
+  {
+    id: "6361651bbc124663d73c84b4",
+    number: 5,
+    like: 210,
+    views: 200,
+    share: 151,
+  },
+  {
+    id: "6361658dbc124663d73c84b6",
+    number: 6,
+    like: 126,
+    views: 61,
+    share: 90,
+  },
+  {
+    id: "63616605bc124663d73c84b8",
+    number: 7,
+    like: 151,
+    views: 642,
+    share: 272,
+  },
+];

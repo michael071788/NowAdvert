@@ -17,6 +17,7 @@ import UserInfoProvider from "./src/services/user.auth.provider";
 import UserProfileProvider from "./src/services/user.profile.provider.js";
 
 import "./src/utils/i18n";
+import UserCountProvider from "./src/services/counts.users.provider.js";
 
 export default function App() {
   const [oswaldLoaded] = useOswald({
@@ -33,7 +34,9 @@ export default function App() {
         <PrimaryAppProvider>
           <UserProfileProvider>
             <UserInfoProvider>
-              <Navigation />
+              <UserCountProvider>
+                <Navigation />
+              </UserCountProvider>
             </UserInfoProvider>
           </UserProfileProvider>
         </PrimaryAppProvider>

@@ -28,15 +28,24 @@ import { getErrorString } from "../../../services/common.function";
 import { AxiosInstance } from "../../../utils";
 import { useTranslation } from "react-i18next";
 import UsedProfile from "../../../services/use.user.profile";
+import UsedCount from "../../../services/counts.user";
+import { MOCK_DATA } from "../../../infrastucture/mockup/data.list";
 
-export const AdvertScreen = ({ navigation }) => {
+export const AdvertScreen = ({ route, navigation }) => {
   // eslint-disable-next-line no-unused-vars
   const [language, setLanguage] = useState("");
 
-  const [liked, setLiked] = useState(false);
-  const [countLikes, setCountLikes] = useState(0);
-  // const [selectedId, setSelectedId] = useState("");
+  const countViewContext = UsedCount();
+
+  // const [likeCounts, setLikesCounts] = useState(0);
+  // const [viewCounts, setViewCounts] = useState(0);
+  // const [shareCount, setShareCount] = useState(0);
+
   const [selectedData, setSelectedData] = useState([]);
+  const [selectedVideo, setSelectedVideo] = useState([]);
+  // const [alreadyWatch, setAlreadyWatch] = useState(false);
+  // const [alreadyShare, setAlreadyShare] = useState(false);
+  const [videoId, setVideoId] = useState("");
 
   const mounted = useRef(false);
   const [isPreloading, setIsPreloading] = useState(true);
@@ -54,7 +63,17 @@ export const AdvertScreen = ({ navigation }) => {
 
   useEffect(() => {
     setLanguage(contextProfile.currentLanguage);
+    // setViewCounts(JSON.stringify(countViews));
   }, [contextProfile]);
+
+  useEffect(() => {
+    // setData(MOCK_DATA);
+    countViewContext.SetMockData(MOCK_DATA);
+  }, []);
+
+  useEffect(() => {
+    setVideoId(countViewContext.videoId);
+  }, [countViewContext]);
 
   const shareToSocial = useCallback(
     async (social) => {
@@ -83,7 +102,11 @@ export const AdvertScreen = ({ navigation }) => {
       try {
         const ShareResponse = await Share.shareSingle(shareOptions);
         const result = ShareResponse;
-        if (result.success) hideShareModal();
+        if (result.success) {
+          countViewContext.SetAddShareCount(selectedItem._id);
+
+          hideShareModal();
+        }
       } catch (error) {
         console.log("Error =>", error);
         console.log("error: ".concat(getErrorString(error)));
@@ -100,37 +123,26 @@ export const AdvertScreen = ({ navigation }) => {
   };
   const hideShareModal = () => setVisibleShareModal(false);
 
+  // const onWatchVideo = (item) => {
+  //   const tempArr = [...selectedVideo];
+  //   if (selectedVideo.includes(item)) {
+  //     tempArr.splice(selectedVideo.indexOf(item), 1);
+  //   } else {
+  //     tempArr.push(item);
+  //   }
+  //   setSelectedVideo(tempArr);
+  // };
   const onlikeVideo = (item) => {
-    console.log(`item id: ${item}`);
-
-    // advertListData
-    //   .map((data) => data._id)
-    //   .filter((dataItem) => {
-    //     if (dataItem === item) {
-    //       setSelectedId(dataItem);
-    //       setLiked(!liked);
-    //     } else {
-    //       // setLiked(liked);
-    //     }
-    //   });
-
-    // if (liked === true) {
-    //   setCountLikes(countLikes - 1);
-    // } else {
-    //   setCountLikes(countLikes + 1);
-    // }
-
+    // console.log(item);
     const tempArr = [...selectedData];
-
     if (selectedData.includes(item)) {
       tempArr.splice(selectedData.indexOf(item), 1);
+      countViewContext.SetSubtractLikeCount(item);
     } else {
       tempArr.push(item);
+      countViewContext.SetAddLikeCount(item);
     }
-
     setSelectedData(tempArr);
-
-    console.log("-------------------");
   };
 
   const renderItem = ({ item }) => {
@@ -143,7 +155,7 @@ export const AdvertScreen = ({ navigation }) => {
             onPress={() => {
               primaryContext.ShowUserProfileBar(false);
               navigation.navigate("AdvertVideoScreen", {
-                id: item.id,
+                id: item._id,
                 videoURI: item.videoURI,
               });
               primaryContext.ShowUserProfileBar(false);
@@ -172,22 +184,28 @@ export const AdvertScreen = ({ navigation }) => {
                 >
                   <ButtonContainer
                     name={"HEART"}
-                    label={
-                      selectedData.includes(item._id)
-                        ? countLikes + 1
-                        : countLikes
+                    bgcolor={
+                      // countViewContext.alreadyLike === true ? "red" : ""
+                      selectedData.includes(item._id) ? "red" : ""
                     }
-                    // bgcolor={liked && item._id === selectedId ? "red" : ""}
-                    bgcolor={selectedData.includes(item._id) ? "red" : ""}
+                    label={countViewContext.testCountLike(item._id)}
                     onpress={() => {
                       onlikeVideo(item._id);
+                      // countViewContext.currentLike;
                     }}
                   />
 
-                  <ButtonContainer name={"EYE"} label={"300"} />
+                  <ButtonContainer
+                    name={"EYE"}
+                    bgcolor={selectedVideo.includes(item._id) ? "black" : ""}
+                    label={countViewContext.testCountViews(item._id)}
+                  />
                   <ButtonContainer
                     name={"SHARE"}
-                    label={"200"}
+                    bgcolor={
+                      countViewContext.alreadyShare === true ? "green" : ""
+                    }
+                    label={countViewContext.testCountShare(item._id)}
                     onpress={() => {
                       setLogoURI(item.logoURI);
                       showShareModal(item);
