@@ -37,8 +37,8 @@ const Login = ({ navigation }) => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      email: "mackdaniel06@gmail.com",
-      password: "P@ssword123",
+      email: "",
+      password: "",
     },
   });
 
@@ -78,7 +78,6 @@ const Login = ({ navigation }) => {
           <View
             style={{
               flex: 5,
-              // alignItems: "center",
               paddingVertical: 70,
             }}
           >
@@ -87,7 +86,6 @@ const Login = ({ navigation }) => {
                 flex: 1,
                 justifyContent: "flex-end",
                 alignItems: "baseline",
-                // marginBottom: 5,
               }}
             >
               {/* header text */}
