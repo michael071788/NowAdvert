@@ -168,7 +168,7 @@ export const AdvertScreen = ({ route, navigation }) => {
                   <ButtonContainer
                     name={"HEART"}
                     bgcolor={selectedData.includes(item._id) ? "red" : ""}
-                    label={countViewContext.testCountLike(item._id)}
+                    label={countViewContext.countLike(item._id)}
                     onpress={() => {
                       onlikeVideo(item._id);
                     }}
@@ -177,14 +177,14 @@ export const AdvertScreen = ({ route, navigation }) => {
                   <ButtonContainer
                     name={"EYE"}
                     bgcolor={selectedVideo.includes(item._id) ? "black" : ""}
-                    label={countViewContext.testCountViews(item._id)}
+                    label={countViewContext.countViews(item._id)}
                   />
                   <ButtonContainer
                     name={"SHARE"}
                     bgcolor={
                       countViewContext.alreadyShare === true ? "green" : ""
                     }
-                    label={countViewContext.testCountShare(item._id)}
+                    label={countViewContext.countShare(item._id)}
                     onpress={() => {
                       setLogoURI(item.logoURI);
                       showShareModal(item);

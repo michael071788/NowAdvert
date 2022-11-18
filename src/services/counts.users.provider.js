@@ -41,65 +41,65 @@ const UserCountProvider = ({ children }) => {
     setVideoId(val);
   };
   // display count like
-  const testCountLike = useCallback(
+  const countLike = useCallback(
     (id) => {
-      const testOutput = mockData.filter((item) => item.id === id);
-      if (testOutput.length > 0) {
-        return testOutput[0].like;
+      const output = mockData.filter((item) => item.id === id);
+      if (output.length > 0) {
+        return output[0].like;
       }
     },
     [mockData]
   );
   // add likes
   const addLikeCounts = (id) => {
-    const testOutput = mockData.filter((item) => item.id === id);
-    if (testOutput.length > 0) {
-      testOutput[0].like = testOutput[0].like + 1;
-      return testOutput[0].like;
+    const output = mockData.filter((item) => item.id === id);
+    if (output.length > 0) {
+      output[0].like = output[0].like + 1;
+      return output[0].like;
     }
   };
   // subtract likes
   const subtractLikeCounts = (id) => {
-    const testOutput = mockData.filter((item) => item.id === id);
-    if (testOutput.length > 0) {
-      testOutput[0].like = testOutput[0].like - 1;
-      return testOutput[0].like;
+    const output = mockData.filter((item) => item.id === id);
+    if (output.length > 0) {
+      output[0].like = output[0].like - 1;
+      return output[0].like;
     }
   };
   // display count views
-  const testCountViews = useCallback(
+  const countViews = useCallback(
     (id) => {
-      const testOutput = mockData.filter((item) => item.id === id);
-      if (testOutput.length > 0) {
-        return testOutput[0].views;
+      const output = mockData.filter((item) => item.id === id);
+      if (output.length > 0) {
+        return output[0].views;
       }
     },
     [mockData]
   );
   // add view counts
   const addViewCounts = (id) => {
-    const testOutput = mockData.filter((item) => item.id === id);
-    if (testOutput.length > 0) {
-      testOutput[0].views = testOutput[0].views + 1;
-      return testOutput[0].views;
+    const output = mockData.filter((item) => item.id === id);
+    if (output.length > 0) {
+      output[0].views = output[0].views + 1;
+      return output[0].views;
     }
   };
   // display count share
-  const testCountShare = useCallback(
+  const countShare = useCallback(
     (id) => {
-      const testOutput = mockData.filter((item) => item.id === id);
-      if (testOutput.length > 0) {
-        return testOutput[0].share;
+      const output = mockData.filter((item) => item.id === id);
+      if (output.length > 0) {
+        return output[0].share;
       }
     },
     [mockData]
   );
   // add count share
   const addShareCounts = (id) => {
-    const testOutput = mockData.filter((item) => item.id === id);
-    if (testOutput.length > 0) {
-      testOutput[0].share = testOutput[0].share + 1;
-      return testOutput[0].share;
+    const output = mockData.filter((item) => item.id === id);
+    if (output.length > 0) {
+      output[0].share = output[0].share + 1;
+      return output[0].share;
     }
   };
   return (
@@ -111,9 +111,9 @@ const UserCountProvider = ({ children }) => {
         currentShare,
         videoId,
         mockData,
-        testCountLike,
-        testCountViews,
-        testCountShare,
+        countLike,
+        countViews,
+        countShare,
         SetCurrentViews: onSetCurrentViews,
         SetCurrentLike: onSetAlreadyLike,
         SetAlreadyWatch: onSetAlreadyWatch,
