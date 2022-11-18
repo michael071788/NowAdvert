@@ -38,9 +38,6 @@ export const AdvertScreen = ({ route, navigation }) => {
   const countViewContext = UsedCount();
 
   const [selectedData, setSelectedData] = useState([]);
-  const [selectedVideo, setSelectedVideo] = useState([]);
-
-  const [videoId, setVideoId] = useState("");
 
   const mounted = useRef(false);
   const [isPreloading, setIsPreloading] = useState(true);
@@ -62,11 +59,8 @@ export const AdvertScreen = ({ route, navigation }) => {
 
   useEffect(() => {
     countViewContext.SetMockData(MOCK_DATA);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useEffect(() => {
-    setVideoId(countViewContext.videoId);
-  }, [countViewContext]);
 
   const shareToSocial = useCallback(
     async (social) => {
@@ -105,7 +99,7 @@ export const AdvertScreen = ({ route, navigation }) => {
         console.log("error: ".concat(getErrorString(error)));
       }
     },
-    [selectedItem]
+    [selectedItem, countViewContext]
   );
 
   const [visibleShareModal, setVisibleShareModal] = useState(false);
@@ -167,7 +161,7 @@ export const AdvertScreen = ({ route, navigation }) => {
                 >
                   <ButtonContainer
                     name={"HEART"}
-                    bgcolor={selectedData.includes(item._id) ? "red" : ""}
+                    bgcolor={selectedData.includes(item._id) ? "#FE64B1" : ""}
                     label={countViewContext.countLike(item._id)}
                     onpress={() => {
                       onlikeVideo(item._id);
@@ -176,14 +170,10 @@ export const AdvertScreen = ({ route, navigation }) => {
 
                   <ButtonContainer
                     name={"EYE"}
-                    bgcolor={selectedVideo.includes(item._id) ? "black" : ""}
                     label={countViewContext.countViews(item._id)}
                   />
                   <ButtonContainer
                     name={"SHARE"}
-                    bgcolor={
-                      countViewContext.alreadyShare === true ? "green" : ""
-                    }
                     label={countViewContext.countShare(item._id)}
                     onpress={() => {
                       setLogoURI(item.logoURI);

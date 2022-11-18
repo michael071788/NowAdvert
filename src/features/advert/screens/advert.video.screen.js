@@ -63,10 +63,6 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
   }, [primaryContext, navigation]);
 
   useEffect(() => {
-    countViewContext.alreadyWatch;
-  }, [countViewContext]);
-
-  useEffect(() => {
     mounted.current = true;
 
     return () => {
@@ -97,7 +93,7 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
         }
       }
     }
-  }, [status, isReadyForDisplay]);
+  }, [status, isReadyForDisplay, id, countViewContext]);
 
   useEffect(() => {
     setLanguage(contextProfile.currentLanguage);
@@ -179,7 +175,6 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
                   color: theme.colors.ACTIVE,
                 }}
               >
-                {/* HOORAY! YOU JUST WON */}
                 {t("HOORAY! YOU JUST WON")}
               </Text>
             </ModalContainer2>
