@@ -30,10 +30,16 @@ import { ButtonContainer } from "../../../infrastucture/theme/styles/advert.scre
 import { Divider } from "react-native-paper";
 import { useTranslation } from "react-i18next";
 import UsedProfile from "../../../services/use.user.profile";
+import UsedCount from "../../../services/counts.user";
 
 export const AdvertVideoScreen = ({ route, navigation }) => {
   // eslint-disable-next-line no-unused-vars
   const [language, setLanguage] = useState("");
+  // const [videoId, setVideoId] = useState("");
+  // const [viewCounts, setViewCounts] = useState(0);
+  // const [alreadyWatch, setAlreadyWatch] = useState(false);
+
+  const countViewContext = UsedCount();
 
   const mounted = useRef(false);
   const { t } = useTranslation();
@@ -43,7 +49,7 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
 
   const theme = UsedTheme();
 
-  const { videoURI } = route.params;
+  const { id, videoURI } = route.params;
 
   const video = useRef(null);
   const [status, setStatus] = useState({});
@@ -58,6 +64,10 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
     primaryContext.ShowUserProfileBar(true);
     navigation.goBack();
   }, [primaryContext, navigation]);
+
+  useEffect(() => {
+    countViewContext.alreadyWatch;
+  }, [countViewContext]);
 
   useEffect(() => {
     mounted.current = true;
@@ -84,11 +94,18 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
       //show modal ticket when done
       if (status.positionMillis === status.durationMillis) {
         if (status.didJustFinish) {
+          countViewContext.SetAddViewCount(id);
+          countViewContext.SetAlreadyWatch(true);
           showModal();
         }
       }
     }
   }, [status, isReadyForDisplay]);
+
+  // useEffect(() => {
+  //   console.log(`video alreadywatch: ${countViewContext.alreadyWatch}`);
+  //   console.log(`video id: ${countViewContext.videoId}`);
+  // }, [countViewContext]);
 
   useEffect(() => {
     setLanguage(contextProfile.currentLanguage);
