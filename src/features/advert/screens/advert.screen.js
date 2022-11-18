@@ -37,14 +37,9 @@ export const AdvertScreen = ({ route, navigation }) => {
 
   const countViewContext = UsedCount();
 
-  // const [likeCounts, setLikesCounts] = useState(0);
-  // const [viewCounts, setViewCounts] = useState(0);
-  // const [shareCount, setShareCount] = useState(0);
-
   const [selectedData, setSelectedData] = useState([]);
   const [selectedVideo, setSelectedVideo] = useState([]);
-  // const [alreadyWatch, setAlreadyWatch] = useState(false);
-  // const [alreadyShare, setAlreadyShare] = useState(false);
+
   const [videoId, setVideoId] = useState("");
 
   const mounted = useRef(false);
@@ -63,11 +58,9 @@ export const AdvertScreen = ({ route, navigation }) => {
 
   useEffect(() => {
     setLanguage(contextProfile.currentLanguage);
-    // setViewCounts(JSON.stringify(countViews));
   }, [contextProfile]);
 
   useEffect(() => {
-    // setData(MOCK_DATA);
     countViewContext.SetMockData(MOCK_DATA);
   }, []);
 
@@ -123,17 +116,7 @@ export const AdvertScreen = ({ route, navigation }) => {
   };
   const hideShareModal = () => setVisibleShareModal(false);
 
-  // const onWatchVideo = (item) => {
-  //   const tempArr = [...selectedVideo];
-  //   if (selectedVideo.includes(item)) {
-  //     tempArr.splice(selectedVideo.indexOf(item), 1);
-  //   } else {
-  //     tempArr.push(item);
-  //   }
-  //   setSelectedVideo(tempArr);
-  // };
   const onlikeVideo = (item) => {
-    // console.log(item);
     const tempArr = [...selectedData];
     if (selectedData.includes(item)) {
       tempArr.splice(selectedData.indexOf(item), 1);
@@ -184,14 +167,10 @@ export const AdvertScreen = ({ route, navigation }) => {
                 >
                   <ButtonContainer
                     name={"HEART"}
-                    bgcolor={
-                      // countViewContext.alreadyLike === true ? "red" : ""
-                      selectedData.includes(item._id) ? "red" : ""
-                    }
+                    bgcolor={selectedData.includes(item._id) ? "red" : ""}
                     label={countViewContext.testCountLike(item._id)}
                     onpress={() => {
                       onlikeVideo(item._id);
-                      // countViewContext.currentLike;
                     }}
                   />
 

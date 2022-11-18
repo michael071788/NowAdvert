@@ -11,7 +11,7 @@ const UserCountProvider = ({ children }) => {
   const [currentShare, setCurrentShare] = useState(0);
   const [alreadyWatch, setAlreadyWatch] = useState(false);
   const [alreadyLike, setAlreadyLike] = useState(false);
-  // const [alreadyShare, setAlreadyShare] = useState(false);
+
   const [videoId, setVideoId] = useState("");
   const [mockData, setMockData] = useState([]);
 
@@ -89,7 +89,6 @@ const UserCountProvider = ({ children }) => {
     (id) => {
       const testOutput = mockData.filter((item) => item.id === id);
       if (testOutput.length > 0) {
-        // setAlreadyShare(true);
         return testOutput[0].share;
       }
     },
@@ -99,7 +98,6 @@ const UserCountProvider = ({ children }) => {
   const addShareCounts = (id) => {
     const testOutput = mockData.filter((item) => item.id === id);
     if (testOutput.length > 0) {
-      // setAlreadyWatch(true);
       testOutput[0].share = testOutput[0].share + 1;
       return testOutput[0].share;
     }
@@ -111,7 +109,6 @@ const UserCountProvider = ({ children }) => {
         alreadyLike,
         alreadyWatch,
         currentShare,
-        // alreadyShare,
         videoId,
         mockData,
         testCountLike,
