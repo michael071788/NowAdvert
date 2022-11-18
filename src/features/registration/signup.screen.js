@@ -35,7 +35,8 @@ const SignUp = ({ navigation }) => {
   } = useForm({
     defaultValues: {
       email: "",
-      name: "",
+      firstName: "",
+      lastName: "",
       phone: "",
       password: "",
     },
@@ -122,16 +123,36 @@ const SignUp = ({ navigation }) => {
                     </>
                   ) : null}
                 </View>
-                {/* name input */}
+                {/* first name input */}
                 <Controller
-                  name="name"
+                  name="firstName"
                   control={control}
                   rules={{
                     required: "This is required",
                   }}
                   render={({ field: { onChange, value } }) => (
                     <Input
-                      placeholder="First & Last Name"
+                      placeholder="First Name"
+                      onChangeText={onChange}
+                      value={value}
+                    />
+                  )}
+                />
+                <View style={{ height: 18, fontSize: 15 }}>
+                  {errors.name && (
+                    <Text style={{ color: "red" }}>This is required.</Text>
+                  )}
+                </View>
+                {/* last name input */}
+                <Controller
+                  name="lastName"
+                  control={control}
+                  rules={{
+                    required: "This is required",
+                  }}
+                  render={({ field: { onChange, value } }) => (
+                    <Input
+                      placeholder="Last Name"
                       onChangeText={onChange}
                       value={value}
                     />
