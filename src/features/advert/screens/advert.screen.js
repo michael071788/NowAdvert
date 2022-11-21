@@ -37,15 +37,7 @@ export const AdvertScreen = ({ route, navigation }) => {
 
   const countViewContext = UsedCount();
 
-  // const [likeCounts, setLikesCounts] = useState(0);
-  // const [viewCounts, setViewCounts] = useState(0);
-  // const [shareCount, setShareCount] = useState(0);
-
   const [selectedData, setSelectedData] = useState([]);
-  const [selectedVideo, setSelectedVideo] = useState([]);
-  // const [alreadyWatch, setAlreadyWatch] = useState(false);
-  // const [alreadyShare, setAlreadyShare] = useState(false);
-  const [videoId, setVideoId] = useState("");
 
   const mounted = useRef(false);
   const [isPreloading, setIsPreloading] = useState(true);
@@ -67,13 +59,9 @@ export const AdvertScreen = ({ route, navigation }) => {
   }, [contextProfile]);
 
   useEffect(() => {
-    // setData(MOCK_DATA);
     countViewContext.SetMockData(MOCK_DATA);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useEffect(() => {
-    setVideoId(countViewContext.videoId);
-  }, [countViewContext]);
 
   const shareToSocial = useCallback(
     async (social) => {
@@ -112,7 +100,7 @@ export const AdvertScreen = ({ route, navigation }) => {
         console.log("error: ".concat(getErrorString(error)));
       }
     },
-    [selectedItem]
+    [selectedItem, countViewContext]
   );
 
   const [visibleShareModal, setVisibleShareModal] = useState(false);
@@ -123,17 +111,7 @@ export const AdvertScreen = ({ route, navigation }) => {
   };
   const hideShareModal = () => setVisibleShareModal(false);
 
-  // const onWatchVideo = (item) => {
-  //   const tempArr = [...selectedVideo];
-  //   if (selectedVideo.includes(item)) {
-  //     tempArr.splice(selectedVideo.indexOf(item), 1);
-  //   } else {
-  //     tempArr.push(item);
-  //   }
-  //   setSelectedVideo(tempArr);
-  // };
   const onlikeVideo = (item) => {
-    // console.log(item);
     const tempArr = [...selectedData];
     if (selectedData.includes(item)) {
       tempArr.splice(selectedData.indexOf(item), 1);
@@ -184,28 +162,19 @@ export const AdvertScreen = ({ route, navigation }) => {
                 >
                   <ButtonContainer
                     name={"HEART"}
-                    bgcolor={
-                      // countViewContext.alreadyLike === true ? "red" : ""
-                      selectedData.includes(item._id) ? "red" : ""
-                    }
-                    label={countViewContext.testCountLike(item._id)}
+                    label={countViewContext.countLike(item._id)}
                     onpress={() => {
                       onlikeVideo(item._id);
-                      // countViewContext.currentLike;
                     }}
                   />
 
                   <ButtonContainer
                     name={"EYE"}
-                    bgcolor={selectedVideo.includes(item._id) ? "black" : ""}
-                    label={countViewContext.testCountViews(item._id)}
+                    label={countViewContext.countViews(item._id)}
                   />
                   <ButtonContainer
                     name={"SHARE"}
-                    bgcolor={
-                      countViewContext.alreadyShare === true ? "green" : ""
-                    }
-                    label={countViewContext.testCountShare(item._id)}
+                    label={countViewContext.countShare(item._id)}
                     onpress={() => {
                       setLogoURI(item.logoURI);
                       showShareModal(item);

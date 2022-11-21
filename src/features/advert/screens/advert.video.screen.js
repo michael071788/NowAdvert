@@ -41,6 +41,8 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
 
   const countViewContext = UsedCount();
 
+  const countViewContext = UsedCount();
+
   const mounted = useRef(false);
   const { t } = useTranslation();
 
@@ -100,7 +102,7 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
         }
       }
     }
-  }, [status, isReadyForDisplay]);
+  }, [status, isReadyForDisplay, id, countViewContext]);
 
   // useEffect(() => {
   //   console.log(`video alreadywatch: ${countViewContext.alreadyWatch}`);
@@ -187,7 +189,6 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
                   color: theme.colors.ACTIVE,
                 }}
               >
-                {/* HOORAY! YOU JUST WON */}
                 {t("HOORAY! YOU JUST WON")}
               </Text>
             </ModalContainer2>
