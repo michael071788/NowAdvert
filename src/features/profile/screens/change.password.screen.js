@@ -7,7 +7,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-// import { Button } from "react-native-paper";
+import { useForm, Controller } from "react-hook-form";
 import UsedTheme from "../../../infrastucture/theme/use.theme";
 // import { CommonScreenView } from "../../../infrastucture/theme/styles/container.screen.style";
 // import {
@@ -27,6 +27,20 @@ const ChangePassword = () => {
     contextProfile.SetCurrentLocation("Change Password");
   }, [contextProfile]);
 
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      currentPassword: "",
+      newPassword: "",
+      confirmPassword: "",
+    },
+  });
+  const onSubmit = async (userData) => {
+    console.log("Submit");
+  };
   return (
     // <CommonScreenView theme={theme}>
     <ScrollView vertical showsHorizontalScrollIndicator={false}>
@@ -35,70 +49,118 @@ const ChangePassword = () => {
       {/* start input field */}
       <SafeAreaView style={{ flex: 1, padding: 10, paddingHorizontal: 20 }}>
         <View>
-          <View style={{ marginVertical: 10 }}>
-            <Text
-              style={{
-                fontFamily: theme.typography.PRIMARY,
-                color: "#aaa",
-                textTransform: "uppercase",
-              }}
-            >
-              {t("CURRENT PASSWORD")}
-            </Text>
-            <TextInput
-              secureTextEntry
-              style={{
-                backgroundColor: "transparent",
-                borderBottomWidth: 1,
-                fontFamily: theme.typography.PRIMARY,
-                fontSize: 30,
-                paddingHorizontal: 0,
-              }}
-            />
+          {/*  current password input */}
+          <Controller
+            name="currentPassword"
+            control={control}
+            rules={{
+              required: "This is required",
+            }}
+            render={({ field: { onChange, value } }) => (
+              <View>
+                <Text
+                  style={{
+                    fontFamily: theme.typography.PRIMARY,
+                    color: "#aaa",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  {t("CURRENT PASSWORD")}
+                </Text>
+                <TextInput
+                  onChangeText={onChange}
+                  value={value}
+                  style={{
+                    fontFamily: theme.typography.PRIMARY,
+                    borderBottomColor: "#aaa",
+                    borderBottomWidth: 1,
+                    paddingVertical: 2,
+                    fontSize: 22,
+                  }}
+                />
+              </View>
+            )}
+          />
+          <View style={{ height: 18, fontSize: 15 }}>
+            {errors.currentPassword && (
+              <Text style={{ color: "red" }}>This is required.</Text>
+            )}
           </View>
 
-          <View style={{ marginVertical: 10 }}>
-            <Text
-              style={{
-                color: "#aaa",
-                fontFamily: theme.typography.PRIMARY,
-                textTransform: "uppercase",
-              }}
-            >
-              {t("NEW PASSWORD")}
-            </Text>
-            <TextInput
-              secureTextEntry
-              style={{
-                backgroundColor: "transparent",
-                borderBottomWidth: 1,
-                fontFamily: theme.typography.PRIMARY,
-                fontSize: 30,
-                paddingHorizontal: 0,
-              }}
-            />
+          {/* new password input */}
+          <Controller
+            name="newPassword"
+            control={control}
+            rules={{
+              required: "This is required",
+            }}
+            render={({ field: { onChange, value } }) => (
+              <View>
+                <Text
+                  style={{
+                    fontFamily: theme.typography.PRIMARY,
+                    color: "#aaa",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  {t("NEW PASSWORD")}
+                </Text>
+                <TextInput
+                  onChangeText={onChange}
+                  value={value}
+                  style={{
+                    fontFamily: theme.typography.PRIMARY,
+                    borderBottomColor: "#aaa",
+                    borderBottomWidth: 1,
+                    paddingVertical: 2,
+                    fontSize: 22,
+                  }}
+                />
+              </View>
+            )}
+          />
+          <View style={{ height: 18, fontSize: 15 }}>
+            {errors.newPassword && (
+              <Text style={{ color: "red" }}>This is required.</Text>
+            )}
           </View>
 
-          <View style={{ marginVertical: 10 }}>
-            <Text
-              style={{
-                color: "#aaa",
-                fontFamily: theme.typography.PRIMARY,
-                textTransform: "uppercase",
-              }}
-            >
-              {t("CONFIRM PASSWORD")}
-            </Text>
-            <TextInput
-              secureTextEntry
-              style={{
-                backgroundColor: "transparent",
-                borderBottomWidth: 1,
-                fontFamily: theme.typography.PRIMARY,
-                fontSize: 30,
-                paddingHorizontal: 0,
-              }}
-            />
+          {/* confirm password input */}
+          <Controller
+            name="confirmPassword"
+            control={control}
+            rules={{
+              required: "This is required",
+            }}
+            render={({ field: { onChange, value } }) => (
+              <View>
+                <Text
+                  style={{
+                    fontFamily: theme.typography.PRIMARY,
+                    color: "#aaa",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  {t("CONFIRM PASSWORD")}
+                </Text>
+                <TextInput
+                  onChangeText={onChange}
+                  value={value}
+                  style={{
+                    fontFamily: theme.typography.PRIMARY,
+                    borderBottomColor: "#aaa",
+                    borderBottomWidth: 1,
+                    paddingVertical: 2,
+                    fontSize: 22,
+                  }}
+                />
+              </View>
+            )}
+          />
+          <View style={{ height: 18, fontSize: 15 }}>
+            {errors.confirmPassword && (
+              <Text style={{ color: "red" }}>This is required.</Text>
+            )}
           </View>
         </View>
         {/* end of input field  */}
@@ -112,6 +174,7 @@ const ChangePassword = () => {
           }}
         >
           <TouchableOpacity
+            onPress={handleSubmit(onSubmit)}
             style={{
               paddingVertical: 10,
               width: "50%",

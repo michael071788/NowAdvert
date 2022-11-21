@@ -30,10 +30,6 @@ export const AppNavigator = () => {
         >
           {userAuthInfoContext.userInfo.token ? (
             <>
-              {/* <AppStackNavigator.Screen
-                name="TestScreen"
-                component={TestScreenMock}
-              /> */}
               <AppStackNavigator.Screen
                 name="AdvertScreen"
                 component={AdvertScreen}

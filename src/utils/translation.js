@@ -13,6 +13,8 @@ const resources = {
       "LINKED ACCOUNTS": "حسابات متصلة",
       ACCOUNT: "الحساب",
       "EDIT PROFILE": "تعديل الملف الشخصي",
+      "FIRST NAME": "الاسم الاول",
+      "LAST NAME": "اللقب",
       NAME: "اسم",
       EMAIL: "البريد الإلكتروني",
       "MOBILE NUMBER": "رقم الهاتف المحمول",
