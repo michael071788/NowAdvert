@@ -37,13 +37,12 @@ const Login = ({ navigation }) => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      email: "mackdaniel06@gmail.com",
-      password: "P@ssword123",
+      email: "",
+      password: "",
     },
   });
 
   const onSubmit = async (userData) => {
-    console.log(userData);
     try {
       await AxiosInstance.post("/api/login", userData).then((response) => {
         if (response.status === 200) {
