@@ -55,6 +55,7 @@ export const AdvertScreen = ({ route, navigation }) => {
 
   useEffect(() => {
     setLanguage(contextProfile.currentLanguage);
+    // setViewCounts(JSON.stringify(countViews));
   }, [contextProfile]);
 
   useEffect(() => {
@@ -161,7 +162,6 @@ export const AdvertScreen = ({ route, navigation }) => {
                 >
                   <ButtonContainer
                     name={"HEART"}
-                    bgcolor={selectedData.includes(item._id) ? "#FE64B1" : ""}
                     label={countViewContext.countLike(item._id)}
                     onpress={() => {
                       onlikeVideo(item._id);

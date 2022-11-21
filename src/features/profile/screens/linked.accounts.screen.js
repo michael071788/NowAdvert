@@ -10,6 +10,7 @@ import {
 import UsedTheme from "../../../infrastucture/theme/use.theme";
 import UsedProfile from "../../../services/use.user.profile";
 import { useTranslation } from "react-i18next";
+import { useForm, Controller } from "react-hook-form";
 
 const LinkedAccounts = () => {
   const theme = UsedTheme();
@@ -19,6 +20,22 @@ const LinkedAccounts = () => {
   useEffect(() => {
     contextProfile.SetCurrentLocation("Linked Accounts");
   }, [contextProfile]);
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      google: "",
+      facebook: "",
+      twitter: "",
+      instagram: "",
+    },
+  });
+  const onSubmit = async (userData) => {
+    console.log("Submit");
+  };
 
   return (
     <ScrollView vertical showsHorizontalScrollIndicator={false}>
@@ -31,92 +48,152 @@ const LinkedAccounts = () => {
         }}
       >
         <View>
-          <View style={{ marginVertical: 10 }}>
-            <Text
-              style={{
-                fontFamily: theme.typography.PRIMARY,
-                color: "#aaa",
-                textTransform: "uppercase",
-              }}
-            >
-              {t("GOOGLE")}
-            </Text>
-            <TextInput
-              style={{
-                fontFamily: theme.typography.PRIMARY,
-                borderBottomColor: "#aaa",
-                borderBottomWidth: 1,
-                paddingVertical: 2,
-                fontSize: 22,
-                fontWeight: "bold",
-              }}
-            />
+          <Controller
+            name="google"
+            control={control}
+            rules={{
+              required: "This is required",
+            }}
+            render={({ field: { onChange, value } }) => (
+              <View>
+                <Text
+                  style={{
+                    fontFamily: theme.typography.PRIMARY,
+                    color: "#aaa",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  {t("GOOGLE")}
+                </Text>
+                <TextInput
+                  onChangeText={onChange}
+                  value={value}
+                  style={{
+                    fontFamily: theme.typography.PRIMARY,
+                    borderBottomColor: "#aaa",
+                    borderBottomWidth: 1,
+                    paddingVertical: 2,
+                    fontSize: 22,
+                  }}
+                />
+              </View>
+            )}
+          />
+          <View style={{ height: 18, fontSize: 15 }}>
+            {errors.google && (
+              <Text style={{ color: "red" }}>This is required.</Text>
+            )}
           </View>
 
-          <View style={{ marginVertical: 10 }}>
-            <Text
-              style={{
-                fontFamily: theme.typography.PRIMARY,
-                color: "#aaa",
-                textTransform: "uppercase",
-              }}
-            >
-              {t("FACEBOOK")}
-            </Text>
-            <TextInput
-              style={{
-                fontFamily: theme.typography.PRIMARY,
-                borderBottomColor: "#aaa",
-                borderBottomWidth: 1,
-                paddingVertical: 2,
-                fontSize: 22,
-                fontWeight: "bold",
-              }}
-            />
+          <Controller
+            name="facebook"
+            control={control}
+            rules={{
+              required: "This is required",
+            }}
+            render={({ field: { onChange, value } }) => (
+              <View>
+                <Text
+                  style={{
+                    fontFamily: theme.typography.PRIMARY,
+                    color: "#aaa",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  {t("FACEBOOK")}
+                </Text>
+                <TextInput
+                  onChangeText={onChange}
+                  value={value}
+                  style={{
+                    fontFamily: theme.typography.PRIMARY,
+                    borderBottomColor: "#aaa",
+                    borderBottomWidth: 1,
+                    paddingVertical: 2,
+                    fontSize: 22,
+                  }}
+                />
+              </View>
+            )}
+          />
+          <View style={{ height: 18, fontSize: 15 }}>
+            {errors.facebook && (
+              <Text style={{ color: "red" }}>This is required.</Text>
+            )}
           </View>
 
-          <View style={{ marginVertical: 10 }}>
-            <Text
-              style={{
-                fontFamily: theme.typography.PRIMARY,
-                color: "#aaa",
-                textTransform: "uppercase",
-              }}
-            >
-              {t("TWITTER")}
-            </Text>
-            <TextInput
-              style={{
-                fontFamily: theme.typography.PRIMARY,
-                borderBottomColor: "#aaa",
-                borderBottomWidth: 1,
-                paddingVertical: 2,
-                fontSize: 22,
-                fontWeight: "bold",
-              }}
-            />
+          <Controller
+            name="twitter"
+            control={control}
+            rules={{
+              required: "This is required",
+            }}
+            render={({ field: { onChange, value } }) => (
+              <View>
+                <Text
+                  style={{
+                    fontFamily: theme.typography.PRIMARY,
+                    color: "#aaa",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  {t("TWITTER")}
+                </Text>
+                <TextInput
+                  onChangeText={onChange}
+                  value={value}
+                  style={{
+                    fontFamily: theme.typography.PRIMARY,
+                    borderBottomColor: "#aaa",
+                    borderBottomWidth: 1,
+                    paddingVertical: 2,
+                    fontSize: 22,
+                  }}
+                />
+              </View>
+            )}
+          />
+          <View style={{ height: 18, fontSize: 15 }}>
+            {errors.twitter && (
+              <Text style={{ color: "red" }}>This is required.</Text>
+            )}
           </View>
 
-          <View style={{ marginVertical: 10 }}>
-            <Text
-              style={{
-                fontFamily: theme.typography.PRIMARY,
-                color: "#aaa",
-                textTransform: "uppercase",
-              }}
-            >
-              {t("INSTAGRAM")}
-            </Text>
-            <TextInput
-              style={{
-                fontFamily: theme.typography.PRIMARY,
-                borderBottomColor: "#aaa",
-                borderBottomWidth: 1,
-                paddingVertical: 2,
-                fontSize: 22,
-                fontWeight: "bold",
-              }}
-            />
+          <Controller
+            name="instagram"
+            control={control}
+            rules={{
+              required: "This is required",
+            }}
+            render={({ field: { onChange, value } }) => (
+              <View>
+                <Text
+                  style={{
+                    fontFamily: theme.typography.PRIMARY,
+                    color: "#aaa",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  {t("INSTAGRAM")}
+                </Text>
+                <TextInput
+                  onChangeText={onChange}
+                  value={value}
+                  style={{
+                    fontFamily: theme.typography.PRIMARY,
+                    borderBottomColor: "#aaa",
+                    borderBottomWidth: 1,
+                    paddingVertical: 2,
+                    fontSize: 22,
+                  }}
+                />
+              </View>
+            )}
+          />
+          <View style={{ height: 18, fontSize: 15 }}>
+            {errors.instagram && (
+              <Text style={{ color: "red" }}>This is required.</Text>
+            )}
           </View>
         </View>
         {/* end of input field  */}
@@ -131,6 +208,7 @@ const LinkedAccounts = () => {
           }}
         >
           <TouchableOpacity
+            onPress={handleSubmit(onSubmit)}
             style={{
               paddingVertical: 10,
               width: "50%",

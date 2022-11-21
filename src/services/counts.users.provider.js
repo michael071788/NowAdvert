@@ -11,7 +11,6 @@ const UserCountProvider = ({ children }) => {
   const [currentShare, setCurrentShare] = useState(0);
   const [alreadyWatch, setAlreadyWatch] = useState(false);
   const [alreadyLike, setAlreadyLike] = useState(false);
-
   const [videoId, setVideoId] = useState("");
   const [mockData, setMockData] = useState([]);
 
