@@ -9,6 +9,7 @@ import { useForm, Controller } from "react-hook-form";
 import { Modal } from "react-native-paper";
 import { SvgIcon } from "../../components/svg.icon";
 import { AxiosInstance } from "../../utils";
+import axios from "axios";
 
 const SignUp = ({ navigation }) => {
   const [result, setResult] = useState(false);
@@ -50,7 +51,8 @@ const SignUp = ({ navigation }) => {
             setResult(true);
             setMessage(response.data.message);
             setTimeout(() => {
-              navigation.navigate("VerificationScreen");
+              // navigation.navigate("VerificationScreen");
+              navigation.navigate("LoginScreen");
             }, 2000);
           }
         }
@@ -58,8 +60,9 @@ const SignUp = ({ navigation }) => {
     } catch (error) {
       showModal();
       setResult(false);
-      setMessage(error.response.data.message);
-      console.log(error.response.data.message);
+      // setMessage(error.response.data.message);
+      // console.log(error.response.data.message);
+      console.log(error);
     }
   };
   return (
@@ -139,7 +142,7 @@ const SignUp = ({ navigation }) => {
                   )}
                 />
                 <View style={{ height: 18, fontSize: 15 }}>
-                  {errors.name && (
+                  {errors.firstName && (
                     <Text style={{ color: "red" }}>This is required.</Text>
                   )}
                 </View>
@@ -159,7 +162,7 @@ const SignUp = ({ navigation }) => {
                   )}
                 />
                 <View style={{ height: 18, fontSize: 15 }}>
-                  {errors.name && (
+                  {errors.lastName && (
                     <Text style={{ color: "red" }}>This is required.</Text>
                   )}
                 </View>
@@ -273,6 +276,7 @@ const SignUp = ({ navigation }) => {
                   </View>
                 </View>
               </View>
+              {/* end */}
             </View>
           </View>
           <View

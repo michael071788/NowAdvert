@@ -30,10 +30,17 @@ import { useTranslation } from "react-i18next";
 import UsedProfile from "../../../services/use.user.profile";
 import UsedCount from "../../../services/counts.user";
 import { MOCK_DATA } from "../../../infrastucture/mockup/data.list";
-
+// --
+import { UsedUserAuthInfoContext } from "../../../services/user.auth.provider";
+// --
 export const AdvertScreen = ({ route, navigation }) => {
   // eslint-disable-next-line no-unused-vars
   const [language, setLanguage] = useState("");
+  const [data, setData] = useState([]);
+
+  // --
+  const userAuthInfoContext = UsedUserAuthInfoContext();
+  // --
 
   const countViewContext = UsedCount();
 
@@ -60,6 +67,7 @@ export const AdvertScreen = ({ route, navigation }) => {
 
   useEffect(() => {
     countViewContext.SetMockData(MOCK_DATA);
+    console.log(userAuthInfoContext.userInfo.user._id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -121,6 +129,62 @@ export const AdvertScreen = ({ route, navigation }) => {
       countViewContext.SetAddLikeCount(item);
     }
     setSelectedData(tempArr);
+  };
+
+  // initial
+  const likePost = (id) => {
+    fetch("http://localhost:14961/like", {
+      method: "put",
+      headers: {
+        "Content-Type": "application/json",
+        // Authorization: "Bearer " + localStorage.getItem("jwt"),
+      },
+      body: JSON.stringify({
+        videoId: id,
+      }),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        //   console.log(result)
+        const newData = data.map((item) => {
+          if (item._id == result._id) {
+            return result;
+          } else {
+            return item;
+          }
+        });
+        setData(newData);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const unlikePost = (id) => {
+    fetch("http://localhost:14961/like", {
+      method: "put",
+      headers: {
+        "Content-Type": "application/json",
+        // Authorization: "Bearer " + localStorage.getItem("jwt"),
+      },
+      body: JSON.stringify({
+        videoId: id,
+      }),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        //   console.log(result)
+        const newData = data.map((item) => {
+          if (item._id == result._id) {
+            return result;
+          } else {
+            return item;
+          }
+        });
+        setData(newData);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const renderItem = ({ item }) => {

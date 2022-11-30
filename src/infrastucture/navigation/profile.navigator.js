@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Image } from "react-native";
 
 import EditProfile from "../../features/profile/screens/edit.screen";
 import ChangePassword from "../../features/profile/screens/change.password.screen";
@@ -14,7 +14,7 @@ import { List, Avatar } from "react-native-paper";
 
 import { useTranslation } from "react-i18next";
 import { UsedUserAuthInfoContext } from "../../services/user.auth.provider";
-// import * as ImagePicker from "expo-image-picker";
+import * as ImagePicker from "expo-image-picker";
 
 const ProfileStack = createStackNavigator();
 
@@ -40,7 +40,18 @@ export const ProfileNavigator = ({ navigation }) => {
   }, [contextProfile]);
 
   const openImagePicker = async () => {
-    console.log("picked");
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
   };
 
   return (
@@ -96,7 +107,7 @@ export const ProfileNavigator = ({ navigation }) => {
                 alignItems: "center",
               }}
             >
-              <Avatar.Image
+              {/* <Avatar.Image
                 size={180}
                 source={
                   image
@@ -104,6 +115,21 @@ export const ProfileNavigator = ({ navigation }) => {
                     : require("../../../assets/avatar_profile_icon.png")
                 }
                 style={{ backgroundColor: "#fff", elevation: 1 }}
+              /> */}
+              <Image
+                // size={180}
+                source={
+                  image
+                    ? image
+                    : require("../../../assets/avatar_profile_icon.png")
+                }
+                // style={{ backgroundColor: "#fff", elevation: 1 }}
+                style={{
+                  backgroundColor: "#fff",
+                  height: 180,
+                  width: 180,
+                  borderRadius: 180,
+                }}
               />
               <TouchableOpacity
                 onPress={openImagePicker}
