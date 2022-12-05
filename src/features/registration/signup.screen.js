@@ -9,7 +9,6 @@ import { useForm, Controller } from "react-hook-form";
 import { Modal } from "react-native-paper";
 import { SvgIcon } from "../../components/svg.icon";
 import { AxiosInstance } from "../../utils";
-import axios from "axios";
 
 const SignUp = ({ navigation }) => {
   const [result, setResult] = useState(false);
@@ -46,23 +45,23 @@ const SignUp = ({ navigation }) => {
     try {
       await AxiosInstance.post("/api/users/signup", userData).then(
         (response) => {
+          console.log(response);
           if (response.status === 201) {
-            showModal();
             setResult(true);
             setMessage(response.data.message);
+            showModal();
             setTimeout(() => {
-              // navigation.navigate("VerificationScreen");
-              navigation.navigate("LoginScreen");
+              navigation.navigate("VerificationScreen");
             }, 2000);
           }
         }
       );
     } catch (error) {
-      showModal();
-      setResult(false);
-      // setMessage(error.response.data.message);
+      setMessage(error.response.data.message);
       // console.log(error.response.data.message);
-      console.log(error);
+      console.log(error.response);
+      setResult(false);
+      showModal();
     }
   };
   return (

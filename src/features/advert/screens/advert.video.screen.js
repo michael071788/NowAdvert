@@ -35,9 +35,6 @@ import UsedCount from "../../../services/counts.user";
 export const AdvertVideoScreen = ({ route, navigation }) => {
   // eslint-disable-next-line no-unused-vars
   const [language, setLanguage] = useState("");
-  // const [videoId, setVideoId] = useState("");
-  // const [viewCounts, setViewCounts] = useState(0);
-  // const [alreadyWatch, setAlreadyWatch] = useState(false);
 
   const countViewContext = UsedCount();
 
@@ -101,11 +98,6 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
       }
     }
   }, [status, isReadyForDisplay, id, countViewContext]);
-
-  // useEffect(() => {
-  //   console.log(`video alreadywatch: ${countViewContext.alreadyWatch}`);
-  //   console.log(`video id: ${countViewContext.videoId}`);
-  // }, [countViewContext]);
 
   useEffect(() => {
     setLanguage(contextProfile.currentLanguage);

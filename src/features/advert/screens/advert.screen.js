@@ -32,11 +32,13 @@ import UsedCount from "../../../services/counts.user";
 import { MOCK_DATA } from "../../../infrastucture/mockup/data.list";
 // --
 import { UsedUserAuthInfoContext } from "../../../services/user.auth.provider";
+import axios from "axios";
 // --
 export const AdvertScreen = ({ route, navigation }) => {
   // eslint-disable-next-line no-unused-vars
   const [language, setLanguage] = useState("");
   const [data, setData] = useState([]);
+  const [userId, setUserId] = useState("");
 
   // --
   const userAuthInfoContext = UsedUserAuthInfoContext();
@@ -62,12 +64,12 @@ export const AdvertScreen = ({ route, navigation }) => {
 
   useEffect(() => {
     setLanguage(contextProfile.currentLanguage);
-    // setViewCounts(JSON.stringify(countViews));
   }, [contextProfile]);
 
   useEffect(() => {
     countViewContext.SetMockData(MOCK_DATA);
-    console.log(userAuthInfoContext.userInfo.user._id);
+    setUserId(userAuthInfoContext.userInfo.user._id);
+    // console.log(userAuthInfoContext.userInfo.user._id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -99,8 +101,8 @@ export const AdvertScreen = ({ route, navigation }) => {
         const ShareResponse = await Share.shareSingle(shareOptions);
         const result = ShareResponse;
         if (result.success) {
+          sharePost(selectedItem._id);
           countViewContext.SetAddShareCount(selectedItem._id);
-
           hideShareModal();
         }
       } catch (error) {
@@ -132,23 +134,34 @@ export const AdvertScreen = ({ route, navigation }) => {
   };
 
   // initial
-  const likePost = (id) => {
-    fetch("http://localhost:14961/like", {
-      method: "put",
-      headers: {
-        "Content-Type": "application/json",
-        // Authorization: "Bearer " + localStorage.getItem("jwt"),
-      },
-      body: JSON.stringify({
+  const likeVideo = async (id) => {
+    await axios
+      .put(`http://192.168.1.12:14961/like/${userId}`, {
         videoId: id,
-      }),
-    })
-      .then((res) => res.json())
-      .then((result) => {
-        //   console.log(result)
+      })
+      .then((response) => {
         const newData = data.map((item) => {
-          if (item._id == result._id) {
-            return result;
+          if (item._id == response.data._id) {
+            return response.data;
+          } else {
+            return item;
+          }
+        });
+        setData(newData);
+      })
+      .catch((error) => {
+        console.log("error ", error.response);
+      });
+  };
+  const unlikeVideo = (id) => {
+    axios
+      .put(`http://192.168.1.12:14961/unlike/${userId}`, {
+        videoId: id,
+      })
+      .then((response) => {
+        const newData = data.map((item) => {
+          if (item._id == response.data._id) {
+            return response.data;
           } else {
             return item;
           }
@@ -159,23 +172,34 @@ export const AdvertScreen = ({ route, navigation }) => {
         console.log(err);
       });
   };
-  const unlikePost = (id) => {
-    fetch("http://localhost:14961/like", {
-      method: "put",
-      headers: {
-        "Content-Type": "application/json",
-        // Authorization: "Bearer " + localStorage.getItem("jwt"),
-      },
-      body: JSON.stringify({
+  const watchVideo = (id) => {
+    axios
+      .put(`http://192.168.1.12:14961/watch/${userId}`, {
         videoId: id,
-      }),
-    })
-      .then((res) => res.json())
-      .then((result) => {
-        //   console.log(result)
+      })
+      .then((response) => {
         const newData = data.map((item) => {
-          if (item._id == result._id) {
-            return result;
+          if (item._id == response.data._id) {
+            return response.data;
+          } else {
+            return item;
+          }
+        });
+        setData(newData);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const shareVideo = (id) => {
+    axios
+      .put(`http://192.168.1.12:14961/share/${userId}`, {
+        videoId: id,
+      })
+      .then((response) => {
+        const newData = data.map((item) => {
+          if (item._id == response.data._id) {
+            return response.data;
           } else {
             return item;
           }
@@ -226,19 +250,26 @@ export const AdvertScreen = ({ route, navigation }) => {
                 >
                   <ButtonContainer
                     name={"HEART"}
+                    // bgcolor={item.likes.includes(userId) ? "red" : ""}
                     label={countViewContext.countLike(item._id)}
+                    // label={item.likes.length}
                     onpress={() => {
                       onlikeVideo(item._id);
+                      // item.likes.includes(userId)
+                      //   ? unlikePost(item._id)
+                      //   : likePost(item._id);
                     }}
                   />
 
                   <ButtonContainer
                     name={"EYE"}
                     label={countViewContext.countViews(item._id)}
+                    // label={item.watch.length}
                   />
                   <ButtonContainer
                     name={"SHARE"}
                     label={countViewContext.countShare(item._id)}
+                    // label={item.share.length}
                     onpress={() => {
                       setLogoURI(item.logoURI);
                       showShareModal(item);
@@ -322,6 +353,8 @@ export const AdvertScreen = ({ route, navigation }) => {
     const fetchData = async () => {
       let _data = [];
       await AxiosInstance.get("/api/advert/list")
+        // await axios
+        //   .get("http://192.168.1.12:14961/api/advert/list")
         .then((response) => {
           _data = response.data;
           setAdvertListData(response.data);

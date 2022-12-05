@@ -10,6 +10,7 @@ import { useForm, Controller } from "react-hook-form";
 import { Modal } from "react-native-paper";
 import { SvgIcon } from "../../components/svg.icon";
 import { AxiosInstance } from "../../utils";
+import axios from "axios";
 
 const Login = ({ navigation }) => {
   const [result, setResult] = useState(false);

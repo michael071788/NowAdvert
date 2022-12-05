@@ -118,12 +118,11 @@ export const ProfileNavigator = ({ navigation }) => {
               /> */}
               <Image
                 // size={180}
-                source={
-                  image
+                source={{
+                  uri: image
                     ? image
-                    : require("../../../assets/avatar_profile_icon.png")
-                }
-                // style={{ backgroundColor: "#fff", elevation: 1 }}
+                    : "../../../assets/avatar_profile_icon.png",
+                }}
                 style={{
                   backgroundColor: "#fff",
                   height: 180,
