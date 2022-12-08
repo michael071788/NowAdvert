@@ -17,15 +17,25 @@ import UsedTheme from "../../../infrastucture/theme/use.theme";
 // import { tabBarTotalHeight } from "../../../infrastucture/theme/styles/app.navigator.style";
 import UsedProfile from "../../../services/use.user.profile";
 import { useTranslation } from "react-i18next";
+import { UsedUserAuthInfoContext } from "../../../services/user.auth.provider";
+import axios from "axios";
 
 const EditProfile = () => {
+  const [userId, setUserId] = useState();
+
   const theme = UsedTheme();
   const contextProfile = UsedProfile();
   const { t } = useTranslation();
+  const userAuthInfoContext = UsedUserAuthInfoContext();
 
   useEffect(() => {
     contextProfile.SetCurrentLocation("Edit Profile");
   }, [contextProfile]);
+
+  useEffect(() => {
+    setUserId(userAuthInfoContext.userInfo.user._id);
+    console.log(userAuthInfoContext.userInfo.user._id);
+  }, []);
 
   const {
     control,
@@ -40,7 +50,18 @@ const EditProfile = () => {
     },
   });
   const onSubmit = async (userData) => {
+    console.log("user data ", userData);
     console.log("Submit");
+    try {
+      await AxiosInstance.post("/api/users/signup", userData).then(
+        (response) => {
+          console.log("response ", response);
+        }
+      );
+    } catch (error) {
+      // console.log(error.response.data.message);
+      console.log("error ", error);
+    }
   };
 
   return (
@@ -183,6 +204,7 @@ const EditProfile = () => {
                   {t("MOBILE NUMBER")}
                 </Text>
                 <TextInput
+                  keyboardType="numeric"
                   onChangeText={onChange}
                   value={value}
                   style={{

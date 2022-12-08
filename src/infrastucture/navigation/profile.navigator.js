@@ -154,15 +154,33 @@ export const ProfileNavigator = ({ navigation }) => {
               source={require("../../../assets/avatar_profile_icon.png")}
               style={{ height: 180, width: 180 }}
             /> */}
-            <Text
+            <View
               style={{
-                fontFamily: theme.typography.PRIMARY,
-                fontSize: 20,
-                textTransform: "uppercase",
+                flexDirection: "row",
               }}
             >
-              {userAuthInfoContext.userInfo.user.name}
-            </Text>
+              <Text
+                style={{
+                  fontFamily: theme.typography.PRIMARY,
+                  fontSize: 20,
+                  textTransform: "uppercase",
+                  marginRight: 5,
+                }}
+              >
+                {/* {userAuthInfoContext.userInfo.user.name} */}
+                {userAuthInfoContext.userInfo.user.firstName}
+              </Text>
+              <Text
+                style={{
+                  fontFamily: theme.typography.PRIMARY,
+                  fontSize: 20,
+                  textTransform: "uppercase",
+                }}
+              >
+                {/* {userAuthInfoContext.userInfo.user.name} */}
+                {userAuthInfoContext.userInfo.user.lastName}
+              </Text>
+            </View>
             <Text
               style={{
                 color: theme.colors.SECONDARY,
