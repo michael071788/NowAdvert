@@ -25,7 +25,7 @@ import {
 } from "../../../infrastucture/theme/styles/advert.video.screen.style";
 import { UsedPrimaryAppContext } from "../../../services/primary.app.provider";
 import UsedTheme from "../../../infrastucture/theme/use.theme";
-import { Modal } from "react-native-paper";
+import { Button, Modal } from "react-native-paper";
 import { ButtonContainer } from "../../../infrastucture/theme/styles/advert.screen.style";
 import { Divider } from "react-native-paper";
 import { useTranslation } from "react-i18next";
@@ -46,8 +46,9 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
 
   const theme = UsedTheme();
 
-  const { id, videoURI } = route.params;
+  const { id, videoURI, companyName, logoURI } = route.params;
 
+  console.log("company ", companyName);
   const video = useRef(null);
   const [status, setStatus] = useState({});
   const [isPreloading, setIsPreloading] = useState(true);
@@ -249,7 +250,76 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
                   </FlexCenterContainer>
                 </TicketInnerContainer3>
               </TicketContainer>
-              <View style={{ flex: 2 }} />
+              <View style={{ flex: 2 }}>
+                <View
+                  style={{
+                    flex: 1,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    flexDirection: "column",
+                  }}
+                >
+                  <Text
+                    style={{
+                      color: "#fff",
+                      fontFamily: theme.typography.PRIMARY,
+                    }}
+                  >
+                    WANT TO WIN ANOTHER TICKET?
+                  </Text>
+                  <Text
+                    style={{
+                      color: "#aaa",
+                      fontFamily: theme.typography.PRIMARY,
+                    }}
+                  >
+                    DOWNLOAD THE APP AND DOUBLE YOUR CHANCE
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    flex: 1,
+                    justifyContent: "center",
+                    flexDirection: "row",
+                    alignItems: "center",
+                  }}
+                >
+                  <Image
+                    source={{ uri: logoURI }}
+                    style={{
+                      width: 200,
+                      height: 100,
+                      resizeMode: "contain",
+                    }}
+                  />
+                  <Text
+                    style={{
+                      color: "#fff",
+                      fontFamily: theme.typography.PRIMARY,
+                    }}
+                  >
+                    {companyName}
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    flex: 1,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Button
+                    style={{ borderRadius: 20, width: "50%" }}
+                    mode="contained"
+                    color="#fff"
+                    contentStyle={{
+                      fontFamily: theme.typography.PRIMARY,
+                    }}
+                  >
+                    DOWNLOAD NOW
+                  </Button>
+                </View>
+              </View>
             </ModalContainer3>
           </Modal>
         </>

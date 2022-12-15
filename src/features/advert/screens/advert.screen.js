@@ -223,6 +223,8 @@ export const AdvertScreen = ({ route, navigation }) => {
               navigation.navigate("AdvertVideoScreen", {
                 id: item._id,
                 videoURI: item.videoURI,
+                logoURI: item.logoURI,
+                companyName: item.companyName,
               });
               primaryContext.ShowUserProfileBar(false);
             }}
