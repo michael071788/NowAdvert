@@ -41,8 +41,6 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
 
   const countViewContext = UsedCount();
 
-  const countViewContext = UsedCount();
-
   const mounted = useRef(false);
   const { t } = useTranslation();
 
