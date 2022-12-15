@@ -50,7 +50,8 @@ const SignUp = ({ navigation }) => {
             setResult(true);
             setMessage(response.data.message);
             setTimeout(() => {
-              navigation.navigate("VerificationScreen");
+              //navigation.navigate("VerificationScreen");
+              navigation.navigate("LoginScreen"); //Temporarily navigate to LoginScreen after sign up since OTP is still under construction.
             }, 2000);
           }
         }
