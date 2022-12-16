@@ -33,6 +33,7 @@ import { MOCK_DATA } from "../../../infrastucture/mockup/data.list";
 // --
 import { UsedUserAuthInfoContext } from "../../../services/user.auth.provider";
 import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 // --
 export const AdvertScreen = ({ route, navigation }) => {
   // eslint-disable-next-line no-unused-vars
@@ -70,6 +71,11 @@ export const AdvertScreen = ({ route, navigation }) => {
     countViewContext.SetMockData(MOCK_DATA);
     // setUserId(userAuthInfoContext.userInfo.user._id);
     // console.log(userAuthInfoContext.userInfo.user._id);
+
+    AsyncStorage.getItem("userData").then((value) => {
+      const jsonData = JSON.parse(value);
+      setUserId(jsonData.user._id);
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -121,24 +127,24 @@ export const AdvertScreen = ({ route, navigation }) => {
   };
   const hideShareModal = () => setVisibleShareModal(false);
 
-  const onlikeVideo = (item) => {
-    const tempArr = [...selectedData];
-    if (selectedData.includes(item)) {
-      tempArr.splice(selectedData.indexOf(item), 1);
-      countViewContext.SetSubtractLikeCount(item);
-    } else {
-      tempArr.push(item);
-      countViewContext.SetAddLikeCount(item);
-    }
-    setSelectedData(tempArr);
-  };
+  // const onlikeVideo = (item) => {
+  //   const tempArr = [...selectedData];
+  //   if (selectedData.includes(item)) {
+  //     tempArr.splice(selectedData.indexOf(item), 1);
+  //     countViewContext.SetSubtractLikeCount(item);
+  //   } else {
+  //     tempArr.push(item);
+  //     countViewContext.SetAddLikeCount(item);
+  //   }
+  //   setSelectedData(tempArr);
+  // };
 
   // initial
   const likeVideo = async (id) => {
-    await axios
-      .put(`http://192.168.1.12:14961/like/${userId}`, {
-        videoId: id,
-      })
+    console.log("clicked like");
+    await AxiosInstance.put(`/like/${userId}`, {
+      videoId: id,
+    })
       .then((response) => {
         const newData = data.map((item) => {
           if (item._id == response.data._id) {
@@ -150,7 +156,7 @@ export const AdvertScreen = ({ route, navigation }) => {
         setData(newData);
       })
       .catch((error) => {
-        console.log("error ", error.response);
+        console.log(error.response);
       });
   };
   const unlikeVideo = async (id) => {
@@ -252,9 +258,9 @@ export const AdvertScreen = ({ route, navigation }) => {
                 >
                   <ButtonContainer
                     name={"HEART"}
-                    // bgcolor={item.likes.includes(userId) ? "red" : ""}
-                    label={countViewContext.countLike(item._id)}
-                    // label={item.likes.length}
+                    bgcolor={item.likes.includes(userId) ? "red" : ""}
+                    // label={countViewContext.countLike(item._id)}
+                    label={item.likes.length}
                     onpress={() => {
                       // onlikeVideo(item._id);
                       item.likes.includes(userId)

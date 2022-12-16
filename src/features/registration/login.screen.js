@@ -39,7 +39,7 @@ const Login = ({ navigation }) => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      email: "testUser@test.com",
+      email: "WitchDoctor123@test.com",
       password: "P@ssword123",
     },
   });
@@ -50,6 +50,7 @@ const Login = ({ navigation }) => {
 
   const getStatus = async () => {
     let login = await AsyncStorage.getItem("islogged");
+    console.log(login);
     if (login == 1) {
       navigation.replace("AdvertScreen");
     }
@@ -60,7 +61,7 @@ const Login = ({ navigation }) => {
         if (response.status === 200) {
           AsyncStorage.setItem("userData", JSON.stringify(response.data));
           AsyncStorage.setItem("token", JSON.stringify(response.data.token));
-          AsyncStorage.setItem("islogged", "1");
+          AsyncStorage.setItem("islogged", "true");
           showModal();
           setResult(true);
           setMessage(response.data.message);

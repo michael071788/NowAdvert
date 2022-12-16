@@ -11,6 +11,6 @@ export function WinPix(percentage) {
 
 export const AxiosInstance = axios.create({
   baseURL:
-    "http://nowadvertapiapp-env.eba-pbhdcwat.eu-west-3.elasticbeanstalk.com",
-  // "http://192.168.254.112:14961",
+    // "http://nowadvertapiapp-env.eba-pbhdcwat.eu-west-3.elasticbeanstalk.com",
+    "http://192.168.254.112:14961",
 });
