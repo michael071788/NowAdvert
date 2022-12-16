@@ -15,12 +15,16 @@ import { List, Avatar } from "react-native-paper";
 import { useTranslation } from "react-i18next";
 import { UsedUserAuthInfoContext } from "../../services/user.auth.provider";
 import * as ImagePicker from "expo-image-picker";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ProfileStack = createStackNavigator();
 
 export const ProfileNavigator = ({ navigation }) => {
   const [location, setLocation] = useState("");
   const [language, setLanguage] = useState("");
+
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
 
   // eslint-disable-next-line no-unused-vars
   const [image, setImage] = useState(null);
@@ -32,6 +36,13 @@ export const ProfileNavigator = ({ navigation }) => {
   const userAuthInfoContext = UsedUserAuthInfoContext();
 
   // contextProfile.SetCurrentLocation("");
+  useEffect(() => {
+    AsyncStorage.getItem("userData").then((value) => {
+      const jsonData = JSON.parse(value);
+      setFirstName(jsonData.user.firstName);
+      setLastName(jsonData.user.lastName);
+    });
+  }, []);
 
   useEffect(() => {
     // contextProfile.SetCurrentLocation("ProfileScreen");
@@ -168,7 +179,7 @@ export const ProfileNavigator = ({ navigation }) => {
                 }}
               >
                 {/* {userAuthInfoContext.userInfo.user.name} */}
-                {userAuthInfoContext.userInfo.user.firstName}
+                {firstName}
               </Text>
               <Text
                 style={{
@@ -178,7 +189,7 @@ export const ProfileNavigator = ({ navigation }) => {
                 }}
               >
                 {/* {userAuthInfoContext.userInfo.user.name} */}
-                {userAuthInfoContext.userInfo.user.lastName}
+                {lastName}
               </Text>
             </View>
             <Text

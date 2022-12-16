@@ -19,6 +19,7 @@ import UsedProfile from "../../../services/use.user.profile";
 import { useTranslation } from "react-i18next";
 import { UsedUserAuthInfoContext } from "../../../services/user.auth.provider";
 import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const EditProfile = () => {
   const [userId, setUserId] = useState();
@@ -33,8 +34,10 @@ const EditProfile = () => {
   }, [contextProfile]);
 
   useEffect(() => {
-    setUserId(userAuthInfoContext.userInfo.user._id);
-    console.log(userAuthInfoContext.userInfo.user._id);
+    AsyncStorage.getItem("userData").then((value) => {
+      const jsonData = JSON.parse(value);
+      setUserId(jsonData.user._id);
+    });
   }, []);
 
   const {

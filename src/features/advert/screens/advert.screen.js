@@ -68,7 +68,7 @@ export const AdvertScreen = ({ route, navigation }) => {
 
   useEffect(() => {
     countViewContext.SetMockData(MOCK_DATA);
-    setUserId(userAuthInfoContext.userInfo.user._id);
+    // setUserId(userAuthInfoContext.userInfo.user._id);
     // console.log(userAuthInfoContext.userInfo.user._id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -153,8 +153,8 @@ export const AdvertScreen = ({ route, navigation }) => {
         console.log("error ", error.response);
       });
   };
-  const unlikeVideo = (id) => {
-    axios
+  const unlikeVideo = async (id) => {
+    await axios
       .put(`http://192.168.1.12:14961/unlike/${userId}`, {
         videoId: id,
       })
@@ -256,10 +256,10 @@ export const AdvertScreen = ({ route, navigation }) => {
                     label={countViewContext.countLike(item._id)}
                     // label={item.likes.length}
                     onpress={() => {
-                      onlikeVideo(item._id);
-                      // item.likes.includes(userId)
-                      //   ? unlikePost(item._id)
-                      //   : likePost(item._id);
+                      // onlikeVideo(item._id);
+                      item.likes.includes(userId)
+                        ? unlikeVideo(item._id)
+                        : likeVideo(item._id);
                     }}
                   />
 

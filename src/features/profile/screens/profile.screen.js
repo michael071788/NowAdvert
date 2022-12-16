@@ -21,6 +21,7 @@ import { UsedUserAuthInfoContext } from "../../../services/user.auth.provider";
 //   InnerContentView,
 // } from "../../../infrastucture/theme/styles/user.profile.style";
 import UsedProfile from "../../../services/use.user.profile";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // import { ProfileNavigator } from "../../../infrastucture/navigation/profile.navigator";
 
@@ -73,21 +74,27 @@ export const ProfileScreen = ({ navigation }) => {
     i18n.changeLanguage("eng");
     I18nManager.forceRTL(false);
 
-    userAuthInfoContext.SetCurrentUserInfo({
-      message: "",
-      status: 0,
-      token: "",
-      user: {
-        __v: 0,
-        _id: "",
-        email: "",
-        name: "",
-        password: "",
-        phone: "",
-      },
-    });
+    // userAuthInfoContext.SetCurrentUserInfo({
+    //   message: "",
+    //   status: 0,
+    //   token: "",
+    //   user: {
+    //     __v: 0,
+    //     _id: "",
+    //     email: "",
+    //     name: "",
+    //     password: "",
+    //     phone: "",
+    //   },
+    // });
+
+    logOut();
   }, [contextProfile, i18n, userAuthInfoContext]);
 
+  const logOut = async () => {
+    await AsyncStorage.clear();
+    navigation.replace("LoginScreen");
+  };
   return (
     <ScrollView vertical showsHorizontalScrollIndicator={false}>
       {/* *START - ACCOUNT* */}

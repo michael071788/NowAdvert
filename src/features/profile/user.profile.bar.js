@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Image, TouchableOpacity, View } from "react-native";
 import UsedTheme from "../../infrastucture/theme/use.theme";
 import {
@@ -8,10 +8,22 @@ import {
 } from "../../infrastucture/theme/styles/user.profile.style";
 
 import { UsedUserAuthInfoContext } from "../../services/user.auth.provider";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const UserProfileBar = ({ isShown, navigation }) => {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+
   const theme = UsedTheme();
   const userAuthInfoContext = UsedUserAuthInfoContext();
+
+  useEffect(() => {
+    AsyncStorage.getItem("userData").then((value) => {
+      const jsonData = JSON.parse(value);
+      setFirstName(jsonData.user.firstName);
+      setLastName(jsonData.user.lastName);
+    });
+  }, []);
 
   return (
     <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
@@ -24,7 +36,8 @@ export const UserProfileBar = ({ isShown, navigation }) => {
         </UserProfileBarImageContainer>
         <View style={{ justifyContent: "center", alignItems: "center" }}>
           <UserFullName theme={theme}>
-            {userAuthInfoContext.userInfo.user.name}
+            {/* {userAuthInfoContext.userInfo.user.name} */}
+            {firstName} {lastName}
           </UserFullName>
         </View>
       </UserProfileBarContainer>
