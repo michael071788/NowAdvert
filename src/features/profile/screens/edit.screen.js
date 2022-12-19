@@ -22,7 +22,7 @@ import { UsedUserAuthInfoContext } from "../../../services/user.auth.provider";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const EditProfile = () => {
+const EditProfile = ({ navigation }) => {
   const [userId, setUserId] = useState();
 
   const theme = UsedTheme();

@@ -16,6 +16,7 @@ import { useTranslation } from "react-i18next";
 import { UsedUserAuthInfoContext } from "../../services/user.auth.provider";
 import * as ImagePicker from "expo-image-picker";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { AxiosInstance } from "../../utils";
 
 const ProfileStack = createStackNavigator();
 
@@ -28,6 +29,7 @@ export const ProfileNavigator = ({ navigation }) => {
 
   // eslint-disable-next-line no-unused-vars
   const [image, setImage] = useState(null);
+  const [imageUpload, setImageUpload] = useState();
 
   const { t } = useTranslation();
 
@@ -61,10 +63,45 @@ export const ProfileNavigator = ({ navigation }) => {
     console.log(result);
 
     if (!result.cancelled) {
+      try {
+        await pickImage(result);
+      } catch (error) {
+        console.log(error);
+      }
       setImage(result.uri);
     }
   };
 
+  const pickImage = async (image) => {
+    const formdata = new FormData();
+    // formdata.append("image", imageUpload);
+    formdata.append("image", {
+      // name: new Date() + "_profile",
+      name: "image",
+      uri: image.uri,
+      type: "image/jpg",
+    });
+
+    await AxiosInstance.post(
+      "/profile-image/6391ea8eca6fe490470ee54f",
+      // "/upload",
+      formdata,
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    )
+      .then((res) => {
+        // then print response status
+        console.log(res);
+        console.log("Uploaded");
+      })
+      .catch((err) => {
+        console.log("err, ", err);
+      });
+  };
   return (
     <View style={{ flex: 1 }}>
       <View

@@ -76,10 +76,8 @@ export const AdvertScreen = ({ route, navigation }) => {
       const jsonData = JSON.parse(value);
       setUserId(jsonData.user._id);
     });
+    console.log(userId);
 
-    // return () => {
-    //   Bac
-    // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
