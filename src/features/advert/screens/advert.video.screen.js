@@ -1,5 +1,11 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { Image, Text, TouchableWithoutFeedback, View } from "react-native";
+import {
+  Image,
+  Linking,
+  Text,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
 import CircularProgress from "react-native-circular-progress-indicator";
 import { Video } from "expo-av";
 import {
@@ -46,7 +52,8 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
 
   const theme = UsedTheme();
 
-  const { id, videoURI, companyName, logoURI } = route.params;
+  const { id, videoURI, companyName, logoURI, browserURI, mobileAppURI } =
+    route.params;
 
   const video = useRef(null);
   const [status, setStatus] = useState({});
@@ -283,22 +290,39 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
                     alignItems: "center",
                   }}
                 >
-                  <Image
-                    source={{ uri: logoURI }}
+                  <View
                     style={{
-                      width: 200,
-                      height: 100,
-                      resizeMode: "contain",
-                    }}
-                  />
-                  <Text
-                    style={{
-                      color: "#fff",
-                      fontFamily: theme.typography.PRIMARY,
+                      flex: 1,
+                      justifyContent: "center",
+                      alignItems: "center",
                     }}
                   >
-                    {companyName}
-                  </Text>
+                    <Image
+                      source={{ uri: logoURI }}
+                      style={{
+                        width: "80%",
+                        height: "100%",
+                        resizeMode: "contain",
+                        borderRadius: 8,
+                      }}
+                    />
+                  </View>
+                  <View
+                    style={{
+                      flex: 1,
+                      flexDirection: "row",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Text
+                      style={{
+                        color: "#fff",
+                        fontFamily: theme.typography.PRIMARY,
+                      }}
+                    >
+                      {companyName}
+                    </Text>
+                  </View>
                 </View>
                 <View
                   style={{
@@ -314,8 +338,12 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
                     contentStyle={{
                       fontFamily: theme.typography.PRIMARY,
                     }}
+                    onPress={() => console.log(browserURI)}
                   >
-                    DOWNLOAD NOW
+                    {mobileAppURI === undefined
+                      ? "GO TO BROWSER"
+                      : "DOWNLOAD NOW"}
+                    {/* DOWNLOAD NOW */}
                   </Button>
                 </View>
               </View>

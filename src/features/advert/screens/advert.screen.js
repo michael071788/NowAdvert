@@ -249,6 +249,8 @@ export const AdvertScreen = ({ route, navigation }) => {
                 videoURI: item.videoURI,
                 logoURI: item.logoURI,
                 companyName: item.companyName,
+                browserURI: item.browserURI,
+                mobileAppURI: item.mobileAppURI,
               });
               primaryContext.ShowUserProfileBar(false);
             }}
