@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { TouchableOpacity, View, Text } from "react-native";
+import { TouchableOpacity, View, Text, BackHandler, Alert } from "react-native";
 import Share from "react-native-share";
 import UsedTheme from "../../../infrastucture/theme/use.theme";
 import {
@@ -76,6 +76,10 @@ export const AdvertScreen = ({ route, navigation }) => {
       const jsonData = JSON.parse(value);
       setUserId(jsonData.user._id);
     });
+
+    // return () => {
+    //   Bac
+    // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -107,7 +111,7 @@ export const AdvertScreen = ({ route, navigation }) => {
         const ShareResponse = await Share.shareSingle(shareOptions);
         const result = ShareResponse;
         if (result.success) {
-          sharePost(selectedItem._id);
+          shareVideo(selectedItem._id);
           countViewContext.SetAddShareCount(selectedItem._id);
           hideShareModal();
         }
@@ -141,7 +145,6 @@ export const AdvertScreen = ({ route, navigation }) => {
 
   // initial
   const likeVideo = async (id) => {
-    console.log("clicked like");
     await AxiosInstance.put(`/like/${userId}`, {
       videoId: id,
     })
@@ -160,10 +163,10 @@ export const AdvertScreen = ({ route, navigation }) => {
       });
   };
   const unlikeVideo = async (id) => {
-    await axios
-      .put(`http://192.168.1.12:14961/unlike/${userId}`, {
-        videoId: id,
-      })
+    console.log("unlike");
+    await AxiosInstance.put(`/unlike/${userId}`, {
+      videoId: id,
+    })
       .then((response) => {
         const newData = data.map((item) => {
           if (item._id == response.data._id) {
@@ -178,11 +181,10 @@ export const AdvertScreen = ({ route, navigation }) => {
         console.log(err);
       });
   };
-  const watchVideo = (id) => {
-    axios
-      .put(`http://192.168.1.12:14961/watch/${userId}`, {
-        videoId: id,
-      })
+  const watchVideo = async (id) => {
+    await AxiosInstance.put(`/watch/${userId}`, {
+      videoId: id,
+    })
       .then((response) => {
         const newData = data.map((item) => {
           if (item._id == response.data._id) {
@@ -197,26 +199,44 @@ export const AdvertScreen = ({ route, navigation }) => {
         console.log(err);
       });
   };
-  const shareVideo = (id) => {
-    axios
-      .put(`http://192.168.1.12:14961/share/${userId}`, {
-        videoId: id,
-      })
+  const shareVideo = async (id) => {
+    await AxiosInstance.put(`/share/${userId}`, {
+      videoId: id,
+    })
       .then((response) => {
+        console.log(response.data._id);
         const newData = data.map((item) => {
+          console.log(response.data.share);
           if (item._id == response.data._id) {
             return response.data;
           } else {
             return item;
           }
         });
-        setData(newData);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
 
+        setData(newData);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const handleBackPress = () => {
+    Alert.alert("Exit App", "Exiting the application", [
+      {
+        text: "Cancel",
+        onPress: () => {
+          console.log("Cancel Pressed");
+        },
+        style: "cancel",
+      },
+      {
+        text: "OK",
+        onPress: () => {
+          BackHandler.exitApp();
+        },
+      },
+    ]);
+  };
   const renderItem = ({ item }) => {
     // Having an error on using themes here, still looking for a solution
     return (
@@ -271,13 +291,15 @@ export const AdvertScreen = ({ route, navigation }) => {
 
                   <ButtonContainer
                     name={"EYE"}
-                    label={countViewContext.countViews(item._id)}
-                    // label={item.watch.length}
+                    bgcolor={item.watch.includes(userId) ? "black" : ""}
+                    // label={countViewContext.countViews(item._id)}
+                    label={item.watch.length}
                   />
                   <ButtonContainer
                     name={"SHARE"}
-                    label={countViewContext.countShare(item._id)}
-                    // label={item.share.length}
+                    bgcolor={item.share.includes(userId) ? "green" : ""}
+                    // label={countViewContext.countShare(item._id)}
+                    label={item.share.length}
                     onpress={() => {
                       setLogoURI(item.logoURI);
                       showShareModal(item);

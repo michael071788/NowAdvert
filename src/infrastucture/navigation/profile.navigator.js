@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import { View, Text, TouchableOpacity, Image, BackHandler } from "react-native";
 
 import EditProfile from "../../features/profile/screens/edit.screen";
 import ChangePassword from "../../features/profile/screens/change.password.screen";
@@ -214,13 +214,16 @@ export const ProfileNavigator = ({ navigation }) => {
         >
           <ProfileStack.Screen name="ProfileScreen" component={ProfileScreen} />
 
-          <ProfileStack.Screen name="Edit Profile" component={EditProfile} />
           <ProfileStack.Screen
-            name="Change Password"
+            name="EditProfileScreen"
+            component={EditProfile}
+          />
+          <ProfileStack.Screen
+            name="ChangePasswordScreen"
             component={ChangePassword}
           />
           <ProfileStack.Screen
-            name="Linked Accounts"
+            name="LinkedAccountsScreen"
             component={LinkedAccounts}
           />
           {/* <ProfileStack.Screen name="Tickets" component={Tickets} /> */}

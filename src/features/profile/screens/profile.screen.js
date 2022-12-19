@@ -126,7 +126,9 @@ export const ProfileScreen = ({ navigation }) => {
           <Divider />
 
           {/* Edit Profile */}
-          <TouchableOpacity onPress={() => navigation.navigate("Edit Profile")}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("EditProfileScreen")}
+          >
             {/* <View style={{ flexDirection: "row" }}> */}
             <View
               style={{
@@ -168,7 +170,7 @@ export const ProfileScreen = ({ navigation }) => {
           </TouchableOpacity>
           {/* Change Password */}
           <TouchableOpacity
-            onPress={() => navigation.navigate("Change Password")}
+            onPress={() => navigation.navigate("ChangePasswordScreen")}
           >
             <View
               style={{
@@ -209,7 +211,7 @@ export const ProfileScreen = ({ navigation }) => {
           </TouchableOpacity>
           {/* Linked Accounts */}
           <TouchableOpacity
-            onPress={() => navigation.navigate("Linked Accounts")}
+            onPress={() => navigation.navigate("LinkedAccountsScreen")}
           >
             <View
               style={{

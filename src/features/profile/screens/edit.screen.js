@@ -6,6 +6,7 @@ import {
   TextInput,
   SafeAreaView,
   TouchableOpacity,
+  BackHandler,
 } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import UsedTheme from "../../../infrastucture/theme/use.theme";

@@ -48,7 +48,6 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
 
   const { id, videoURI, companyName, logoURI } = route.params;
 
-  console.log("company ", companyName);
   const video = useRef(null);
   const [status, setStatus] = useState({});
   const [isPreloading, setIsPreloading] = useState(true);

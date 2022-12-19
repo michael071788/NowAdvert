@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  Alert,
+  BackHandler,
+} from "react-native";
 import UsedTheme from "../../infrastucture/theme/use.theme";
 import { UsedUserAuthInfoContext } from "../../services/user.auth.provider";
 import {
@@ -46,13 +53,30 @@ const Login = ({ navigation }) => {
 
   useEffect(() => {
     getStatus();
+    BackHandler.addEventListener("hardwareBackPress", handleBackPress);
   }, []);
 
   const getStatus = async () => {
-    let login = await AsyncStorage.getItem("islogged");
-    console.log(login);
-    if (login == 1) {
+    let login = await AsyncStorage.getItem("token");
+    if (login !== null) {
       navigation.replace("AdvertScreen");
+    }
+  };
+  const handleBackPress = async () => {
+    let login = await AsyncStorage.getItem("token");
+    if (login === null) {
+      Alert.alert("Exit App", "Exiting the Apllication", [
+        {
+          text: "Cancel",
+          onPress: () => {
+            console.log("cancel pressed");
+          },
+        },
+        {
+          text: "OK",
+          onPress: () => BackHandler.exitApp(),
+        },
+      ]);
     }
   };
   const onSubmit = async (userData) => {

@@ -20,7 +20,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const AppStackNavigator = createStackNavigator();
 
 export const AppNavigator = () => {
-  // const [token, setToken] = useState(null);
+  const [token, setToken] = useState(null);
   // const [allKeys, setAllKeys] = useState();
   // const [data, setData] = useState();
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -36,8 +36,6 @@ export const AppNavigator = () => {
   //     const jsonData = JSON.parse(value);
   //     console.log(jsonData);
   //     setToken(jsonData);
-
-  //
   //   });
   //   await AsyncStorage.getItem("keepLoggedin").then((value) => {
   //     console.log(value);
@@ -46,7 +44,7 @@ export const AppNavigator = () => {
   //     setIsLoggedIn(valueLog);
 
   //
-  //   });
+  // };
 
   return (
     <>
