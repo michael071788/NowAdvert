@@ -41,7 +41,7 @@ export const AdvertScreen = ({ route, navigation }) => {
   const [data, setData] = useState([]);
   const [userId, setUserId] = useState("");
   const [shareData, setShareData] = useState([]);
-
+  const [alreadyShare, setAlreadyShare] = useState(false);
   // --
   const userAuthInfoContext = UsedUserAuthInfoContext();
   // --
@@ -64,6 +64,24 @@ export const AdvertScreen = ({ route, navigation }) => {
   const [selectedItem, setSelectedItem] = useState();
   const [logoURI, setLogoURI] = useState("");
 
+  const random =
+    (parseInt(Math.floor(Math.random() * (999 - 0) + 0), 10) + 1000)
+      .toString()
+      .substr(1) +
+    "-" +
+    (parseInt(Math.floor(Math.random() * (999999999 - 0) + 0), 10) + 100000000)
+      .toString()
+      .substr(1) +
+    "-" +
+    (parseInt(Math.floor(Math.random() * (9999 - 0) + 0), 10) + 10000)
+      .toString()
+      .substr(1) +
+    "-" +
+    (parseInt(Math.floor(Math.random() * (99 - 0) + 0), 10) + 101)
+      .toString()
+      .substr(1);
+  console.log(random);
+
   useEffect(() => {
     setLanguage(contextProfile.currentLanguage);
   }, [contextProfile]);
@@ -77,6 +95,14 @@ export const AdvertScreen = ({ route, navigation }) => {
       const jsonData = JSON.parse(value);
       setUserId(jsonData.user._id);
     });
+
+    // const number = Math.floor(Math.random() * 100);
+    // const next = (
+    //   parseInt(Math.floor(Math.random() * (9999 - 0) + 0), 10) + 10000
+    // )
+    //   .toString()
+    //   .substr(1);
+    // console.log("next ", next);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -114,7 +140,10 @@ export const AdvertScreen = ({ route, navigation }) => {
           hideShareModal();
 
           if (!shareData.includes(userId)) {
-            shareVideo(selectedItem._id);
+            if (alreadyShare === false) {
+              shareVideo(selectedItem._id);
+              setAlreadyShare(true);
+            }
           }
         }
       } catch (error) {
@@ -254,7 +283,9 @@ export const AdvertScreen = ({ route, navigation }) => {
                 logoURI: item.logoURI,
                 companyName: item.companyName,
                 watch: item.watch,
+                random: random,
               });
+              console.log(item.watch);
               primaryContext.ShowUserProfileBar(false);
             }}
             activeOpacity={0.8}

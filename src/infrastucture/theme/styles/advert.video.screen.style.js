@@ -73,7 +73,7 @@ export const ModalContainer3 = styled(View)`
 
 /* prettier-ignore */
 export const TicketContainer = styled(View)`
-flex: 1;
+flex: 3;
 borderRadius: 15px;
 backgroundColor: white;
 alignItems: stretch;

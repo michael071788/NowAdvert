@@ -33,6 +33,7 @@ import UsedProfile from "../../../services/use.user.profile";
 import UsedCount from "../../../services/counts.user";
 import { AxiosInstance } from "../../../utils";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { prepareUIRegistry } from "react-native-reanimated/lib/reanimated2/frameCallback/FrameCallbackRegistryUI";
 
 export const AdvertVideoScreen = ({ route, navigation }) => {
   // eslint-disable-next-line no-unused-vars
@@ -41,6 +42,8 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
   const [userId, setUserId] = useState("");
   const [watchData, setWatchData] = useState([]);
   const [alreadyWatch, SetAlreadyWatch] = useState(false);
+  const [doneWatching, setDoneWatching] = useState(false);
+  const [ticketNumber, setTicketNumber] = useState("");
 
   const countViewContext = UsedCount();
 
@@ -52,7 +55,7 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
 
   const theme = UsedTheme();
 
-  const { id, videoURI, companyName, logoURI, watch } = route.params;
+  const { id, videoURI, companyName, logoURI, watch, random } = route.params;
 
   const video = useRef(null);
   const [status, setStatus] = useState({});
@@ -73,16 +76,24 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
   }, [contextProfile]);
 
   useEffect(() => {
+    countViewContext.alreadyWatch;
+  }, [countViewContext]);
+  //
+
+  //
+  useEffect(() => {
     AsyncStorage.getItem("userData").then((value) => {
       const jsonData = JSON.parse(value);
       setUserId(jsonData.user._id);
     });
     setWatchData(watch);
-  }, []);
 
-  useEffect(() => {
-    countViewContext.alreadyWatch;
-  }, [countViewContext]);
+    if (doneWatching === true) {
+      if (!watchData.includes(userId)) {
+        watchVideo(id);
+      }
+    }
+  }, []);
 
   useEffect(() => {
     mounted.current = true;
@@ -111,23 +122,31 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
         if (status.didJustFinish) {
           // countViewContext.SetAddViewCount(id);
           // countViewContext.SetAlreadyWatch(true);
-          if (watchData.includes(userId)) {
-            watchVideo(id);
-            SetAlreadyWatch(true);
-          }
+          console.log("random ", random);
+          setTicketNumber(random);
+          setDoneWatching(true);
           showModal();
         }
       }
     }
-  }, [status, isReadyForDisplay, id, countViewContext]);
+  }, [
+    status,
+    isReadyForDisplay,
+    id,
+    countViewContext,
+    doneWatching,
+    watchData,
+  ]);
 
   useEffect(() => {
     setLanguage(contextProfile.currentLanguage);
   }, [contextProfile]);
 
-  const watchVideo = async (id) => {
+  const watchVideo = async (videoid) => {
+    console.log("watch video ", watchData);
+    console.log("video id ", videoid);
     await AxiosInstance.put(`/watch/${userId}`, {
-      videoId: id,
+      videoId: videoid,
     })
       .then((response) => {
         const newData = data.map((item) => {
@@ -138,11 +157,16 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
           }
         });
         setData(newData);
+        SetAlreadyWatch(true);
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
+  //
+
+  //
   return (
     <MainScreenView>
       {mounted && (
@@ -212,155 +236,175 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
                 />
               </View>
             </ModalContainer1>
-            <ModalContainer2>
-              <Text
-                style={{
-                  fontFamily: theme.typography.PRIMARY,
-                  fontSize: 20,
-                  color: theme.colors.ACTIVE,
-                }}
-              >
-                {t("HOORAY! YOU JUST WON")}
-              </Text>
-            </ModalContainer2>
-            <ModalContainer3 style={{ flex: 20 }}>
-              <TicketContainer>
-                <TicketInnerContainer1>
+            <View style={{ flex: 20 }}>
+              <View style={{ flex: 1 }}>
+                {/*  */}
+                {alreadyWatch === true ? (
+                  <></>
+                ) : (
                   <View style={{ flex: 1 }}>
+                    <ModalContainer2>
+                      <Text
+                        style={{
+                          fontFamily: theme.typography.PRIMARY,
+                          fontSize: 20,
+                          color: theme.colors.ACTIVE,
+                        }}
+                      >
+                        {t("HOORAY! YOU JUST WON")}
+                      </Text>
+                    </ModalContainer2>
+                    <TicketContainer>
+                      <TicketInnerContainer1>
+                        <View style={{ flex: 1 }}>
+                          <Image
+                            source={require("../../../../assets/nowadvert_bg1.png")}
+                            style={{
+                              width: 200,
+                              height: 100,
+                              resizeMode: "contain",
+                            }}
+                          />
+                        </View>
+                        <Divider />
+                      </TicketInnerContainer1>
+                      <TicketInnerContainer2>
+                        <View style={{ flex: 1, alignItems: "center" }}>
+                          <Text
+                            style={{
+                              fontFamily: theme.typography.PRIMARY,
+                              fontSize: 15,
+                              color: theme.colors.PRIMARY,
+                            }}
+                          >
+                            {t("TICKET NUMBER")}
+                          </Text>
+                        </View>
+
+                        <View style={{ flex: 1, alignItems: "center" }}>
+                          <Text
+                            style={{
+                              fontFamily: theme.typography.PRIMARY,
+                              fontSize: 15,
+                              color: theme.colors.PRIMARY,
+                            }}
+                          >
+                            {/* 000-01234687-4817-01 */}
+                            {/* {random} */}
+                            {ticketNumber}
+                          </Text>
+                        </View>
+                      </TicketInnerContainer2>
+                      <TicketInnerContainer3>
+                        <FlexCenterContainer>
+                          <TicketStatusContainer
+                            bgcolor={theme.colors.SECONDARY}
+                          >
+                            <Text
+                              style={{
+                                fontFamily: theme.typography.PRIMARY,
+                                fontSize: 15,
+                                color: theme.colors.PRIMARY,
+                              }}
+                            >
+                              {t("ACTIVE")}
+                            </Text>
+                          </TicketStatusContainer>
+                        </FlexCenterContainer>
+                        <FlexCenterContainer>
+                          <Text
+                            style={{
+                              fontFamily: theme.typography.PRIMARY,
+                              fontSize: 15,
+                              color: theme.colors.ACTIVE,
+                            }}
+                          >
+                            000-01234687-4817-01
+                          </Text>
+                        </FlexCenterContainer>
+                      </TicketInnerContainer3>
+                    </TicketContainer>
+                  </View>
+                )}
+                {/*  */}
+                <View style={{ flex: 1 }}>
+                  <View
+                    style={{
+                      marginTop: 20,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <Text
+                      style={{
+                        color: "#fff",
+                        fontFamily: theme.typography.PRIMARY,
+                      }}
+                    >
+                      WANT TO WIN ANOTHER TICKET?
+                    </Text>
+                    <Text
+                      style={{
+                        color: "#aaa",
+                        fontFamily: theme.typography.PRIMARY,
+                      }}
+                    >
+                      DOWNLOAD THE APP AND DOUBLE YOUR CHANCE
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      marginTop: 20,
+                      justifyContent: "center",
+                      flexDirection: "row",
+                      alignItems: "center",
+                    }}
+                  >
                     <Image
-                      source={require("../../../../assets/nowadvert_bg1.png")}
+                      source={{ uri: logoURI }}
                       style={{
                         width: 200,
                         height: 100,
                         resizeMode: "contain",
                       }}
                     />
-                  </View>
-                  <Divider />
-                </TicketInnerContainer1>
-                <TicketInnerContainer2>
-                  <View style={{ flex: 1, alignItems: "center" }}>
                     <Text
                       style={{
+                        color: "#fff",
                         fontFamily: theme.typography.PRIMARY,
-                        fontSize: 15,
-                        color: theme.colors.PRIMARY,
                       }}
                     >
-                      {t("TICKET NUMBER")}
+                      {companyName}
                     </Text>
                   </View>
-
-                  <View style={{ flex: 1, alignItems: "center" }}>
-                    <Text
-                      style={{
+                  <View
+                    style={{
+                      marginTop: 20,
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Button
+                      style={{ borderRadius: 20, width: "50%" }}
+                      mode="contained"
+                      color="#fff"
+                      contentStyle={{
                         fontFamily: theme.typography.PRIMARY,
-                        fontSize: 15,
-                        color: theme.colors.PRIMARY,
                       }}
                     >
-                      000-01234687-4817-01
-                    </Text>
+                      DOWNLOAD NOW
+                    </Button>
                   </View>
-                </TicketInnerContainer2>
-                <TicketInnerContainer3>
-                  <FlexCenterContainer>
-                    <TicketStatusContainer bgcolor={theme.colors.SECONDARY}>
-                      <Text
-                        style={{
-                          fontFamily: theme.typography.PRIMARY,
-                          fontSize: 15,
-                          color: theme.colors.PRIMARY,
-                        }}
-                      >
-                        {t("ACTIVE")}
-                      </Text>
-                    </TicketStatusContainer>
-                  </FlexCenterContainer>
-                  <FlexCenterContainer>
-                    <Text
-                      style={{
-                        fontFamily: theme.typography.PRIMARY,
-                        fontSize: 15,
-                        color: theme.colors.ACTIVE,
-                      }}
-                    >
-                      000-01234687-4817-01
-                    </Text>
-                  </FlexCenterContainer>
-                </TicketInnerContainer3>
-              </TicketContainer>
-              <View style={{ flex: 2 }}>
-                <View
-                  style={{
-                    flex: 1,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    flexDirection: "column",
-                  }}
-                >
-                  <Text
-                    style={{
-                      color: "#fff",
-                      fontFamily: theme.typography.PRIMARY,
-                    }}
-                  >
-                    WANT TO WIN ANOTHER TICKET?
-                  </Text>
-                  <Text
-                    style={{
-                      color: "#aaa",
-                      fontFamily: theme.typography.PRIMARY,
-                    }}
-                  >
-                    DOWNLOAD THE APP AND DOUBLE YOUR CHANCE
-                  </Text>
-                </View>
-                <View
-                  style={{
-                    flex: 1,
-                    justifyContent: "center",
-                    flexDirection: "row",
-                    alignItems: "center",
-                  }}
-                >
-                  <Image
-                    source={{ uri: logoURI }}
-                    style={{
-                      width: 200,
-                      height: 100,
-                      resizeMode: "contain",
-                    }}
-                  />
-                  <Text
-                    style={{
-                      color: "#fff",
-                      fontFamily: theme.typography.PRIMARY,
-                    }}
-                  >
-                    {companyName}
-                  </Text>
-                </View>
-                <View
-                  style={{
-                    flex: 1,
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <Button
-                    style={{ borderRadius: 20, width: "50%" }}
-                    mode="contained"
-                    color="#fff"
-                    contentStyle={{
-                      fontFamily: theme.typography.PRIMARY,
-                    }}
-                  >
-                    DOWNLOAD NOW
-                  </Button>
                 </View>
               </View>
-            </ModalContainer3>
+            </View>
+            {/* 
+          
+            <ModalContainer3 style={{ flex: 20 }}>
+              
+            
+            </ModalContainer3> */}
           </Modal>
         </>
       )}
