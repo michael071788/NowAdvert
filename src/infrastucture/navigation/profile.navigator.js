@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, Image, BackHandler } from "react-native";
+import { View, Text, TouchableOpacity, Image } from "react-native";
 
 import EditProfile from "../../features/profile/screens/edit.screen";
 import ChangePassword from "../../features/profile/screens/change.password.screen";
@@ -15,6 +15,7 @@ import { List, Avatar } from "react-native-paper";
 import { useTranslation } from "react-i18next";
 import { UsedUserAuthInfoContext } from "../../services/user.auth.provider";
 import * as ImagePicker from "expo-image-picker";
+import { AxiosInstance } from "../../utils";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ProfileStack = createStackNavigator();
@@ -36,13 +37,6 @@ export const ProfileNavigator = ({ navigation }) => {
   const userAuthInfoContext = UsedUserAuthInfoContext();
 
   // contextProfile.SetCurrentLocation("");
-  useEffect(() => {
-    AsyncStorage.getItem("userData").then((value) => {
-      const jsonData = JSON.parse(value);
-      setFirstName(jsonData.user.firstName);
-      setLastName(jsonData.user.lastName);
-    });
-  }, []);
 
   useEffect(() => {
     // contextProfile.SetCurrentLocation("ProfileScreen");
@@ -50,6 +44,14 @@ export const ProfileNavigator = ({ navigation }) => {
     setLanguage(contextProfile.currentLanguage);
   }, [contextProfile]);
 
+  useEffect(() => {
+    AsyncStorage.getItem("userData").then((value) => {
+      const jsonData = JSON.parse(value);
+      setFirstName(jsonData.user.firstName);
+      setLastName(jsonData.user.lastName);
+      console.log(jsonData.user._id);
+    });
+  }, []);
   const openImagePicker = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -61,8 +63,44 @@ export const ProfileNavigator = ({ navigation }) => {
     console.log(result);
 
     if (!result.cancelled) {
+      try {
+        await pickImage(result);
+      } catch (error) {
+        console.log(error);
+      }
       setImage(result.uri);
     }
+  };
+
+  const pickImage = async (image) => {
+    const formdata = new FormData();
+    // formdata.append("image", imageUpload);
+    formdata.append("image", {
+      // name: new Date() + "_profile",
+      name: "image",
+      uri: image.uri,
+      type: "image/jpg",
+    });
+
+    await AxiosInstance.post(
+      "/profile-image/638914e1422868eaa0112a06",
+      // "/upload",
+      formdata,
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    )
+      .then((res) => {
+        // then print response status
+        console.log(res);
+        console.log("Uploaded");
+      })
+      .catch((err) => {
+        console.log("err, ", err);
+      });
   };
 
   return (
@@ -175,21 +213,11 @@ export const ProfileNavigator = ({ navigation }) => {
                   fontFamily: theme.typography.PRIMARY,
                   fontSize: 20,
                   textTransform: "uppercase",
-                  marginRight: 5,
                 }}
               >
+                {firstName} {lastName}
                 {/* {userAuthInfoContext.userInfo.user.name} */}
-                {firstName}
-              </Text>
-              <Text
-                style={{
-                  fontFamily: theme.typography.PRIMARY,
-                  fontSize: 20,
-                  textTransform: "uppercase",
-                }}
-              >
-                {/* {userAuthInfoContext.userInfo.user.name} */}
-                {lastName}
+                {/* {userAuthInfoContext.userInfo.user.lastName} */}
               </Text>
             </View>
             <Text
@@ -214,16 +242,13 @@ export const ProfileNavigator = ({ navigation }) => {
         >
           <ProfileStack.Screen name="ProfileScreen" component={ProfileScreen} />
 
+          <ProfileStack.Screen name="Edit Profile" component={EditProfile} />
           <ProfileStack.Screen
-            name="EditProfileScreen"
-            component={EditProfile}
-          />
-          <ProfileStack.Screen
-            name="ChangePasswordScreen"
+            name="Change Password"
             component={ChangePassword}
           />
           <ProfileStack.Screen
-            name="LinkedAccountsScreen"
+            name="Linked Accounts"
             component={LinkedAccounts}
           />
           {/* <ProfileStack.Screen name="Tickets" component={Tickets} /> */}

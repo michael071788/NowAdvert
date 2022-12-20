@@ -58,9 +58,9 @@ export const AppNavigator = () => {
           {/* {isLoggedIn === true ? (
             <> */}
           {/* <AppStackNavigator.Screen
-                name="TestScreenMock"
-                component={TestScreenMock}
-              /> */}
+            name="TestScreenMock"
+            component={TestScreenMock}
+          /> */}
 
           <AppStackNavigator.Screen
             name="AdvertScreen"

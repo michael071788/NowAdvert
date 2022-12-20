@@ -22,7 +22,7 @@ import { UsedUserAuthInfoContext } from "../../../services/user.auth.provider";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const EditProfile = () => {
+const EditProfile = ({ navigation }) => {
   const [userId, setUserId] = useState();
 
   const theme = UsedTheme();
@@ -32,6 +32,7 @@ const EditProfile = () => {
 
   useEffect(() => {
     contextProfile.SetCurrentLocation("Edit Profile");
+    BackHandler.addEventListener("hardwareBackPress", handleBackPress);
   }, [contextProfile]);
 
   useEffect(() => {
@@ -67,7 +68,9 @@ const EditProfile = () => {
       console.log("error ", error);
     }
   };
-
+  const handleBackPress = async () => {
+    navigation.goBack();
+  };
   return (
     // <CommonScreenView theme={theme}>
     <ScrollView vertical showsHorizontalScrollIndicator={false}>

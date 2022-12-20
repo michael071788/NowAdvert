@@ -40,6 +40,7 @@ export const AdvertScreen = ({ route, navigation }) => {
   const [language, setLanguage] = useState("");
   const [data, setData] = useState([]);
   const [userId, setUserId] = useState("");
+  const [shareData, setShareData] = useState([]);
 
   // --
   const userAuthInfoContext = UsedUserAuthInfoContext();
@@ -77,9 +78,6 @@ export const AdvertScreen = ({ route, navigation }) => {
       setUserId(jsonData.user._id);
     });
 
-    // return () => {
-    //   Bac
-    // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -111,9 +109,13 @@ export const AdvertScreen = ({ route, navigation }) => {
         const ShareResponse = await Share.shareSingle(shareOptions);
         const result = ShareResponse;
         if (result.success) {
-          shareVideo(selectedItem._id);
-          countViewContext.SetAddShareCount(selectedItem._id);
+          // shareVideo(selectedItem._id);
+          // countViewContext.SetAddShareCount(selectedItem._id);
           hideShareModal();
+
+          if (!shareData.includes(userId)) {
+            shareVideo(selectedItem._id);
+          }
         }
       } catch (error) {
         console.log("Error =>", error);
@@ -204,9 +206,8 @@ export const AdvertScreen = ({ route, navigation }) => {
       videoId: id,
     })
       .then((response) => {
-        console.log(response.data._id);
+        setShareData(response.data.share);
         const newData = data.map((item) => {
-          console.log(response.data.share);
           if (item._id == response.data._id) {
             return response.data;
           } else {
@@ -237,6 +238,7 @@ export const AdvertScreen = ({ route, navigation }) => {
       },
     ]);
   };
+
   const renderItem = ({ item }) => {
     // Having an error on using themes here, still looking for a solution
     return (
@@ -251,6 +253,7 @@ export const AdvertScreen = ({ route, navigation }) => {
                 videoURI: item.videoURI,
                 logoURI: item.logoURI,
                 companyName: item.companyName,
+                watch: item.watch,
               });
               primaryContext.ShowUserProfileBar(false);
             }}
@@ -302,6 +305,7 @@ export const AdvertScreen = ({ route, navigation }) => {
                     label={item.share.length}
                     onpress={() => {
                       setLogoURI(item.logoURI);
+                      setShareData(item.share);
                       showShareModal(item);
                     }}
                   />

@@ -31,10 +31,16 @@ import { Divider } from "react-native-paper";
 import { useTranslation } from "react-i18next";
 import UsedProfile from "../../../services/use.user.profile";
 import UsedCount from "../../../services/counts.user";
+import { AxiosInstance } from "../../../utils";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const AdvertVideoScreen = ({ route, navigation }) => {
   // eslint-disable-next-line no-unused-vars
   const [language, setLanguage] = useState("");
+  const [data, setData] = useState([]);
+  const [userId, setUserId] = useState("");
+  const [watchData, setWatchData] = useState([]);
+  const [alreadyWatch, SetAlreadyWatch] = useState(false);
 
   const countViewContext = UsedCount();
 
@@ -46,7 +52,7 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
 
   const theme = UsedTheme();
 
-  const { id, videoURI, companyName, logoURI } = route.params;
+  const { id, videoURI, companyName, logoURI, watch } = route.params;
 
   const video = useRef(null);
   const [status, setStatus] = useState({});
@@ -61,6 +67,18 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
     primaryContext.ShowUserProfileBar(true);
     navigation.goBack();
   }, [primaryContext, navigation]);
+
+  useEffect(() => {
+    setLanguage(contextProfile.currentLanguage);
+  }, [contextProfile]);
+
+  useEffect(() => {
+    AsyncStorage.getItem("userData").then((value) => {
+      const jsonData = JSON.parse(value);
+      setUserId(jsonData.user._id);
+    });
+    setWatchData(watch);
+  }, []);
 
   useEffect(() => {
     countViewContext.alreadyWatch;
@@ -91,8 +109,12 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
       //show modal ticket when done
       if (status.positionMillis === status.durationMillis) {
         if (status.didJustFinish) {
-          countViewContext.SetAddViewCount(id);
-          countViewContext.SetAlreadyWatch(true);
+          // countViewContext.SetAddViewCount(id);
+          // countViewContext.SetAlreadyWatch(true);
+          if (watchData.includes(userId)) {
+            watchVideo(id);
+            SetAlreadyWatch(true);
+          }
           showModal();
         }
       }
@@ -103,6 +125,24 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
     setLanguage(contextProfile.currentLanguage);
   }, [contextProfile]);
 
+  const watchVideo = async (id) => {
+    await AxiosInstance.put(`/watch/${userId}`, {
+      videoId: id,
+    })
+      .then((response) => {
+        const newData = data.map((item) => {
+          if (item._id == response.data._id) {
+            return response.data;
+          } else {
+            return item;
+          }
+        });
+        setData(newData);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <MainScreenView>
       {mounted && (
@@ -156,6 +196,7 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
             </Container2>
             <Container3 />
           </VideoButtonContainer>
+          {/* ------- */}
           <Modal
             visible={visibleModal}
             onDismiss={hideModal}
