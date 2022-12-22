@@ -38,10 +38,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export const AdvertScreen = ({ route, navigation }) => {
   // eslint-disable-next-line no-unused-vars
   const [language, setLanguage] = useState("");
-  const [data, setData] = useState([]);
   const [userId, setUserId] = useState("");
   const [shareData, setShareData] = useState([]);
   const [alreadyShare, setAlreadyShare] = useState(false);
+
+  const [watchData, setWatchData] = useState();
   // --
   const userAuthInfoContext = UsedUserAuthInfoContext();
   // --
@@ -80,7 +81,6 @@ export const AdvertScreen = ({ route, navigation }) => {
     (parseInt(Math.floor(Math.random() * (99 - 0) + 0), 10) + 101)
       .toString()
       .substr(1);
-  console.log(random);
 
   useEffect(() => {
     setLanguage(contextProfile.currentLanguage);
@@ -95,14 +95,6 @@ export const AdvertScreen = ({ route, navigation }) => {
       const jsonData = JSON.parse(value);
       setUserId(jsonData.user._id);
     });
-
-    // const number = Math.floor(Math.random() * 100);
-    // const next = (
-    //   parseInt(Math.floor(Math.random() * (9999 - 0) + 0), 10) + 10000
-    // )
-    //   .toString()
-    //   .substr(1);
-    // console.log("next ", next);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -180,51 +172,34 @@ export const AdvertScreen = ({ route, navigation }) => {
       videoId: id,
     })
       .then((response) => {
-        const newData = data.map((item) => {
+        const newData = countViewContext.advertData.map((item) => {
           if (item._id == response.data._id) {
             return response.data;
           } else {
             return item;
           }
         });
-        setData(newData);
+        // setAdvertListData(newData);
+        countViewContext.SetAdvertData(newData);
       })
       .catch((error) => {
         console.log(error.response);
       });
   };
   const unlikeVideo = async (id) => {
-    console.log("unlike");
     await AxiosInstance.put(`/unlike/${userId}`, {
       videoId: id,
     })
       .then((response) => {
-        const newData = data.map((item) => {
+        const newData = countViewContext.advertData.map((item) => {
           if (item._id == response.data._id) {
             return response.data;
           } else {
             return item;
           }
         });
-        setData(newData);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-  const watchVideo = async (id) => {
-    await AxiosInstance.put(`/watch/${userId}`, {
-      videoId: id,
-    })
-      .then((response) => {
-        const newData = data.map((item) => {
-          if (item._id == response.data._id) {
-            return response.data;
-          } else {
-            return item;
-          }
-        });
-        setData(newData);
+        // setAdvertListData(newData);
+        countViewContext.SetAdvertData(newData);
       })
       .catch((err) => {
         console.log(err);
@@ -236,15 +211,15 @@ export const AdvertScreen = ({ route, navigation }) => {
     })
       .then((response) => {
         setShareData(response.data.share);
-        const newData = data.map((item) => {
+        const newData = countViewContext.advertData.map((item) => {
           if (item._id == response.data._id) {
             return response.data;
           } else {
             return item;
           }
         });
-
-        setData(newData);
+        // advertListData(newData);
+        countViewContext.SetAdvertData(newData);
       })
       .catch((err) => {
         console.log(err);
@@ -284,8 +259,9 @@ export const AdvertScreen = ({ route, navigation }) => {
                 companyName: item.companyName,
                 watch: item.watch,
                 random: random,
+                userId: userId,
               });
-              console.log(item.watch);
+              // countViewContext.SetCurrentViews(item.watch);
               primaryContext.ShowUserProfileBar(false);
             }}
             activeOpacity={0.8}
@@ -418,11 +394,12 @@ export const AdvertScreen = ({ route, navigation }) => {
     const fetchData = async () => {
       let _data = [];
       await AxiosInstance.get("/api/advert/list")
-        // await axios
-        //   .get("http://192.168.1.12:14961/api/advert/list")
+
         .then((response) => {
           _data = response.data;
-          setAdvertListData(response.data);
+          // setAdvertListData(response.data);
+          countViewContext.SetAdvertData(response.data);
+          // setData(response.data);
         })
         .catch((e) => {
           console.log(e);
@@ -432,7 +409,8 @@ export const AdvertScreen = ({ route, navigation }) => {
 
     fetchData()
       .then((data) => {
-        setAdvertListData(data);
+        // setAdvertListData(data);
+        countViewContext.SetAdvertData(data);
         setIsPreloading(false);
       })
       .catch(console.error);
@@ -455,7 +433,10 @@ export const AdvertScreen = ({ route, navigation }) => {
               <UserProfileBar isShown={true} navigation={navigation} />
             </HeaderBarContainer>
             <AdvertCarouselContainer>
-              <AdvertCarousel data={advertListData} renderItem={renderItem} />
+              <AdvertCarousel
+                data={countViewContext.advertData}
+                renderItem={renderItem}
+              />
             </AdvertCarouselContainer>
           </>
         )}

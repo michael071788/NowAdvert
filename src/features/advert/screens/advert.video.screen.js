@@ -39,9 +39,8 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
   // eslint-disable-next-line no-unused-vars
   const [language, setLanguage] = useState("");
   const [data, setData] = useState([]);
-  const [userId, setUserId] = useState("");
-  const [watchData, setWatchData] = useState([]);
-  const [alreadyWatch, SetAlreadyWatch] = useState(false);
+  // const [userId, setUserId] = useState("");
+  const [alreadyWatch, setAlreadyWatch] = useState(false);
   const [doneWatching, setDoneWatching] = useState(false);
   const [ticketNumber, setTicketNumber] = useState("");
 
@@ -55,7 +54,8 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
 
   const theme = UsedTheme();
 
-  const { id, videoURI, companyName, logoURI, watch, random } = route.params;
+  const { id, videoURI, companyName, logoURI, watch, random, userId } =
+    route.params;
 
   const video = useRef(null);
   const [status, setStatus] = useState({});
@@ -75,25 +75,15 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
     setLanguage(contextProfile.currentLanguage);
   }, [contextProfile]);
 
-  useEffect(() => {
-    countViewContext.alreadyWatch;
-  }, [countViewContext]);
-  //
+  // useEffect(() => {
+  //   countViewContext.alreadyWatch;
+  // }, [countViewContext]);
 
-  //
   useEffect(() => {
-    AsyncStorage.getItem("userData").then((value) => {
-      const jsonData = JSON.parse(value);
-      setUserId(jsonData.user._id);
-    });
-    setWatchData(watch);
-
     if (doneWatching === true) {
-      if (!watchData.includes(userId)) {
-        watchVideo(id);
-      }
+      watchVideo(id);
     }
-  }, []);
+  }, [doneWatching]);
 
   useEffect(() => {
     mounted.current = true;
@@ -102,6 +92,11 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
       mounted.current = false;
     };
   }, []);
+
+  // useEffect(() => {
+  //   setData(watch);
+  //   console.log(watch);
+  // }, []);
 
   const onLongPress = useCallback(async () => {
     if (!status.didJustFinish) {
@@ -122,51 +117,45 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
         if (status.didJustFinish) {
           // countViewContext.SetAddViewCount(id);
           // countViewContext.SetAlreadyWatch(true);
-          console.log("random ", random);
-          setTicketNumber(random);
-          setDoneWatching(true);
           showModal();
+          if (!watch.includes(userId)) {
+            if (alreadyWatch === false) {
+              setDoneWatching(true);
+            }
+          } else {
+            setAlreadyWatch(true);
+          }
         }
       }
     }
-  }, [
-    status,
-    isReadyForDisplay,
-    id,
-    countViewContext,
-    doneWatching,
-    watchData,
-  ]);
+  }, [status, isReadyForDisplay, id, countViewContext, alreadyWatch]);
 
   useEffect(() => {
     setLanguage(contextProfile.currentLanguage);
   }, [contextProfile]);
 
-  const watchVideo = async (videoid) => {
-    console.log("watch video ", watchData);
-    console.log("video id ", videoid);
+  const watchVideo = async (id) => {
     await AxiosInstance.put(`/watch/${userId}`, {
-      videoId: videoid,
+      videoId: id,
     })
       .then((response) => {
-        const newData = data.map((item) => {
+        const newData = countViewContext.advertData.map((item) => {
           if (item._id == response.data._id) {
             return response.data;
           } else {
             return item;
           }
         });
-        setData(newData);
-        SetAlreadyWatch(true);
+        // setData(newData);
+        countViewContext.SetAdvertData(newData);
+        // countViewContext.c(newData);
+        setTicketNumber(random);
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-  //
-
-  //
   return (
     <MainScreenView>
       {mounted && (
@@ -240,7 +229,7 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
               <View style={{ flex: 1 }}>
                 {/*  */}
                 {alreadyWatch === true ? (
-                  <></>
+                  <>{}</>
                 ) : (
                   <View style={{ flex: 1 }}>
                     <ModalContainer2>
@@ -399,11 +388,8 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
                 </View>
               </View>
             </View>
-            {/* 
-          
-            <ModalContainer3 style={{ flex: 20 }}>
-              
-            
+            {/*          
+            <ModalContainer3 style={{ flex: 20 }}>   
             </ModalContainer3> */}
           </Modal>
         </>
