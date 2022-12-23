@@ -33,7 +33,6 @@ import UsedProfile from "../../../services/use.user.profile";
 import UsedCount from "../../../services/counts.user";
 import { AxiosInstance } from "../../../utils";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { prepareUIRegistry } from "react-native-reanimated/lib/reanimated2/frameCallback/FrameCallbackRegistryUI";
 
 export const AdvertVideoScreen = ({ route, navigation }) => {
   // eslint-disable-next-line no-unused-vars
@@ -93,11 +92,6 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
     };
   }, []);
 
-  // useEffect(() => {
-  //   setData(watch);
-  //   console.log(watch);
-  // }, []);
-
   const onLongPress = useCallback(async () => {
     if (!status.didJustFinish) {
       video.current.playAsync();
@@ -128,7 +122,15 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
         }
       }
     }
-  }, [status, isReadyForDisplay, id, countViewContext, alreadyWatch]);
+  }, [
+    status,
+    isReadyForDisplay,
+    id,
+    countViewContext,
+    alreadyWatch,
+    doneWatching,
+    ticketNumber,
+  ]);
 
   useEffect(() => {
     setLanguage(contextProfile.currentLanguage);
@@ -148,14 +150,25 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
         });
         // setData(newData);
         countViewContext.SetAdvertData(newData);
-        // countViewContext.c(newData);
         setTicketNumber(random);
+        earnTickets(id);
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
+  const earnTickets = async (id) => {
+    await AxiosInstance.post(`/tickets/${userId}`, {
+      videoTicket: id,
+      ticketNumber: random,
+      status: "active",
+    })
+      .then((response) => {
+        countViewContext.SetUserTickets(response.data.result.earnedTickets);
+      })
+      .then((err) => console.log(err));
+  };
   return (
     <MainScreenView>
       {mounted && (

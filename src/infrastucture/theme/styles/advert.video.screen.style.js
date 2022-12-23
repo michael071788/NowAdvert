@@ -79,6 +79,7 @@ backgroundColor: white;
 alignItems: stretch;
 marginHorizontal: 15px;
 paddingHorizontal: 15px;
+
 `;
 
 /* prettier-ignore */

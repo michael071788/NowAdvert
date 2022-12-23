@@ -49,7 +49,6 @@ export const ProfileNavigator = ({ navigation }) => {
       const jsonData = JSON.parse(value);
       setFirstName(jsonData.user.firstName);
       setLastName(jsonData.user.lastName);
-      console.log(jsonData.user._id);
     });
   }, []);
   const openImagePicker = async () => {
@@ -82,17 +81,12 @@ export const ProfileNavigator = ({ navigation }) => {
       type: "image/jpg",
     });
 
-    await AxiosInstance.post(
-      "/profile-image/638914e1422868eaa0112a06",
-      // "/upload",
-      formdata,
-      {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    )
+    await AxiosInstance.post(`/profile-image/${userId}`, formdata, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "multipart/form-data",
+      },
+    })
       .then((res) => {
         // then print response status
         console.log(res);
@@ -242,13 +236,16 @@ export const ProfileNavigator = ({ navigation }) => {
         >
           <ProfileStack.Screen name="ProfileScreen" component={ProfileScreen} />
 
-          <ProfileStack.Screen name="Edit Profile" component={EditProfile} />
           <ProfileStack.Screen
-            name="Change Password"
+            name="EditProfileScreen"
+            component={EditProfile}
+          />
+          <ProfileStack.Screen
+            name="ChangePasswordScreen"
             component={ChangePassword}
           />
           <ProfileStack.Screen
-            name="Linked Accounts"
+            name="LinkedAccountsScreen"
             component={LinkedAccounts}
           />
           {/* <ProfileStack.Screen name="Tickets" component={Tickets} /> */}
