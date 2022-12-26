@@ -9,6 +9,8 @@ export const UsedUserProfileContext = () => {
 const UserProfileProvider = ({ children }) => {
   const [currentLocation, setCurrentLocation] = useState("");
   const [currentLanguage, setCurrentLanguage] = useState("ENGLISH");
+  const [userData, setUserData] = useState();
+  const [userId, setUserId] = useState("");
 
   const onSetCurrentLocation = (val) => {
     setCurrentLocation(val);
@@ -18,6 +20,14 @@ const UserProfileProvider = ({ children }) => {
     setCurrentLanguage(val);
   };
 
+  const onSetUserData = (val) => {
+    setUserData(val);
+  };
+
+  const onSetUserId = (val) => {
+    setUserId(val);
+  };
+
   return (
     <UserProfileContext.Provider
       value={{
@@ -25,6 +35,10 @@ const UserProfileProvider = ({ children }) => {
         SetCurrentLocation: onSetCurrentLocation,
         currentLanguage,
         SetCurrentLanguage: onSetCurrentLanguage,
+        userData,
+        SetUserData: onSetUserData,
+        userId,
+        SetUserId: onSetUserId,
       }}
     >
       {children}

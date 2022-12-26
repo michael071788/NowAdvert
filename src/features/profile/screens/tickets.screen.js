@@ -32,29 +32,9 @@ const Tickets = ({ navigation }) => {
   }, [contextProfile]);
 
   useEffect(() => {
-    if (userId === "") {
-      AsyncStorage.getItem("userData").then((value) => {
-        const jsonData = JSON.parse(value);
-        setUserId(jsonData.user._id);
-      });
-    }
+    setEarnedTickets(contextProfile.userData.earnedTickets);
+    // console.log("tickets ", contextProfile.userData.earnedTickets);
   }, []);
-
-  useEffect(() => {
-    if (userId !== "") {
-      getUserTicket();
-    }
-  }, [userId]);
-
-  const getUserTicket = async () => {
-    await AxiosInstance.get(`/user/${userId}`)
-      .then((res) => {
-        setEarnedTickets(res.data.earnedTickets);
-      })
-      .catch((err) => {
-        console.log("err", err);
-      });
-  };
 
   const data = [
     {

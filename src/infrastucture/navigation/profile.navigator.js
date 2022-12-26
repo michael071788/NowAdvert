@@ -17,12 +17,14 @@ import { UsedUserAuthInfoContext } from "../../services/user.auth.provider";
 import * as ImagePicker from "expo-image-picker";
 import { AxiosInstance } from "../../utils";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import UsedCount from "../../services/counts.user";
 
 const ProfileStack = createStackNavigator();
 
 export const ProfileNavigator = ({ navigation }) => {
   const [location, setLocation] = useState("");
   const [language, setLanguage] = useState("");
+  const [userId, setUserId] = useState("");
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -35,6 +37,7 @@ export const ProfileNavigator = ({ navigation }) => {
   const theme = UsedTheme();
   const contextProfile = UsedProfile();
   const userAuthInfoContext = UsedUserAuthInfoContext();
+  const countViewContext = UsedCount();
 
   // contextProfile.SetCurrentLocation("");
 
@@ -45,37 +48,63 @@ export const ProfileNavigator = ({ navigation }) => {
   }, [contextProfile]);
 
   useEffect(() => {
-    AsyncStorage.getItem("userData").then((value) => {
-      const jsonData = JSON.parse(value);
-      setFirstName(jsonData.user.firstName);
-      setLastName(jsonData.user.lastName);
-    });
-  }, []);
-  const openImagePicker = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-
-    console.log(result);
-
-    if (!result.cancelled) {
-      try {
-        await pickImage(result);
-      } catch (error) {
-        console.log(error);
-      }
-      setImage(result.uri);
+    console.log("user ", userId);
+    if (userId === "") {
+      AsyncStorage.getItem("userData").then((value) => {
+        const jsonData = JSON.parse(value);
+        contextProfile.SetUserId(jsonData.user._id);
+        setUserId(jsonData.user._id);
+        setFirstName(jsonData.user.firstName);
+        setLastName(jsonData.user.lastName);
+        // setFirstName(countViewContext.userData.firstName);
+        // setLastName(countViewContext.userData.lastName);
+        // console.log("data ", countViewContext.userData._id);
+        console.log("get id");
+      });
     }
+  }, []);
+
+  useEffect(() => {
+    if (userId !== "") {
+      getUser();
+    }
+  }, [userId]);
+
+  const getUser = async () => {
+    await AxiosInstance.get(`/user/${userId}`)
+      .then((res) => {
+        console.log("get data");
+        contextProfile.SetUserData(res.data);
+        console.log("user id in get user ", userId);
+        // setEarnedTickets(res.data.earnedTickets);
+      })
+      .catch((err) => {
+        console.log("err", err);
+      });
+  };
+
+  const openImagePicker = async () => {
+    console.log("user data ", contextProfile.userData._id);
+    // let result = await ImagePicker.launchImageLibraryAsync({
+    //   mediaTypes: ImagePicker.MediaTypeOptions.All,
+    //   allowsEditing: true,
+    //   aspect: [4, 3],
+    //   quality: 1,
+    // });
+    // console.log(result);
+    // if (!result.cancelled) {
+    //   try {
+    //     await pickImage(result);
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    //   // setImage(result.uri);
+    // }
   };
 
   const pickImage = async (image) => {
     const formdata = new FormData();
-    // formdata.append("image", imageUpload);
     formdata.append("image", {
-      // name: new Date() + "_profile",
       name: "image",
       uri: image.uri,
       type: "image/jpg",
@@ -88,10 +117,23 @@ export const ProfileNavigator = ({ navigation }) => {
       },
     })
       .then((res) => {
+        const blob = new Blob([res.data.userData.profile_image.data.data], {
+          type: res.data.userData.profile_image.contentType,
+        });
+        // setImage(URL.createObjectURL(blob));
+
+        const fileReaderInstance = new FileReader();
+        fileReaderInstance.readAsDataURL(blob);
+        fileReaderInstance.onload = () => {
+          const base64data = fileReaderInstance.result;
+          console.log("base64data ", base64data);
+          setImage(base64data);
+        };
         // then print response status
-        console.log(res);
-        console.log("Uploaded");
+        // res.data.userData.profile_image.data.data;
+        // console.log("Res ", res.data.userData.phone);
       })
+
       .catch((err) => {
         console.log("err, ", err);
       });

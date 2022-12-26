@@ -10,6 +10,7 @@ const UserCountProvider = ({ children }) => {
   const [mockData, setMockData] = useState([]);
   const [advertData, setAdvertData] = useState([]);
   const [userTickets, setUserTickets] = useState([]);
+  const [userData, setUserData] = useState();
   const [userId, setUserId] = useState("");
 
   const [currentViews, setCurrentViews] = useState([]);
@@ -26,7 +27,12 @@ const UserCountProvider = ({ children }) => {
   const onSetMockData = (val) => {
     setMockData(val);
   };
-
+  const onSetUserData = (val) => {
+    setUserData(val);
+  };
+  const onSetUserId = (val) => {
+    setUserId(val);
+  };
   return (
     <UserCountContext.Provider
       value={{
@@ -34,7 +40,11 @@ const UserCountProvider = ({ children }) => {
         mockData,
         userTickets,
         advertData,
+        userData,
+        userId,
         SetUserTickets: onSetUserTickets,
+        SetUserId: onSetUserId,
+        SetUserData: onSetUserData,
         SetAdvertData: onSetAdvertData,
         SetCurrentViews: onSetCurrentViews,
         SetMockData: onSetMockData,

@@ -87,7 +87,7 @@ export const AdvertScreen = ({ route, navigation }) => {
   }, [contextProfile]);
 
   useEffect(() => {
-    countViewContext.SetMockData(MOCK_DATA);
+    // countViewContext.SetMockData(MOCK_DATA);
     // setUserId(userAuthInfoContext.userInfo.user._id);
     // console.log(userAuthInfoContext.userInfo.user._id);
 
@@ -411,6 +411,7 @@ export const AdvertScreen = ({ route, navigation }) => {
       .then((data) => {
         // setAdvertListData(data);
         countViewContext.SetAdvertData(data);
+
         setIsPreloading(false);
       })
       .catch(console.error);
