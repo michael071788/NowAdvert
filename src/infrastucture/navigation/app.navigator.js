@@ -16,35 +16,42 @@ import VerificationScreen from "../../features/registration/verification.screen"
 
 import { UsedUserAuthInfoContext } from "../../services/user.auth.provider";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import UsedProfile from "../../services/use.user.profile";
+import { AxiosInstance } from "../../utils";
 
 const AppStackNavigator = createStackNavigator();
 
 export const AppNavigator = () => {
-  const [token, setToken] = useState(null);
-  // const [allKeys, setAllKeys] = useState();
-  // const [data, setData] = useState();
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userId, setUserId] = useState("");
 
   const userAuthInfoContext = UsedUserAuthInfoContext();
+  const contextProfile = UsedProfile();
 
-  // useEffect(() => {
-  //   getKeyItems();
-  // }, []);
+  useEffect(() => {
+    if (userId === "") {
+      AsyncStorage.getItem("userData").then((value) => {
+        const jsonData = JSON.parse(value);
+        contextProfile.SetUserData(jsonData.user);
+        setUserId(contextProfile.userData._id);
+      });
+    }
+  }, []);
 
-  // const getKeyItems = async () => {
-  //   await AsyncStorage.getItem("token").then((value) => {
-  //     const jsonData = JSON.parse(value);
-  //     console.log(jsonData);
-  //     setToken(jsonData);
-  //   });
-  //   await AsyncStorage.getItem("keepLoggedin").then((value) => {
-  //     console.log(value);
-  //     const valueLog = JSON.parse(value);
-  //     console.log("valueLog", valueLog);
-  //     setIsLoggedIn(valueLog);
+  useEffect(() => {
+    if (userId !== "") {
+      getUser();
+    }
+  }, [userId]);
 
-  //
-  // };
+  const getUser = async () => {
+    await AxiosInstance.get(`/user/${contextProfile.userData._id}`)
+      .then((res) => {
+        contextProfile.SetUserData(res.data);
+      })
+      .catch((err) => {
+        console.log("err", err);
+      });
+  };
 
   return (
     <>

@@ -26,8 +26,8 @@ export const ProfileNavigator = ({ navigation }) => {
   const [language, setLanguage] = useState("");
   const [userId, setUserId] = useState("");
 
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  // const [firstName, setFirstName] = useState("");
+  // const [lastName, setLastName] = useState("");
 
   // eslint-disable-next-line no-unused-vars
   const [image, setImage] = useState(null);
@@ -47,62 +47,25 @@ export const ProfileNavigator = ({ navigation }) => {
     setLanguage(contextProfile.currentLanguage);
   }, [contextProfile]);
 
-  useEffect(() => {
-    console.log("user ", userId);
-    if (userId === "") {
-      AsyncStorage.getItem("userData").then((value) => {
-        const jsonData = JSON.parse(value);
-        contextProfile.SetUserId(jsonData.user._id);
-        setUserId(jsonData.user._id);
-        setFirstName(jsonData.user.firstName);
-        setLastName(jsonData.user.lastName);
-        // setFirstName(countViewContext.userData.firstName);
-        // setLastName(countViewContext.userData.lastName);
-        // console.log("data ", countViewContext.userData._id);
-        console.log("get id");
-      });
-    }
-  }, []);
-
-  useEffect(() => {
-    if (userId !== "") {
-      getUser();
-    }
-  }, [userId]);
-
-  const getUser = async () => {
-    await AxiosInstance.get(`/user/${userId}`)
-      .then((res) => {
-        console.log("get data");
-        contextProfile.SetUserData(res.data);
-        console.log("user id in get user ", userId);
-        // setEarnedTickets(res.data.earnedTickets);
-      })
-      .catch((err) => {
-        console.log("err", err);
-      });
-  };
-
   const openImagePicker = async () => {
-    console.log("user data ", contextProfile.userData._id);
-    // let result = await ImagePicker.launchImageLibraryAsync({
-    //   mediaTypes: ImagePicker.MediaTypeOptions.All,
-    //   allowsEditing: true,
-    //   aspect: [4, 3],
-    //   quality: 1,
-    // });
-    // console.log(result);
-    // if (!result.cancelled) {
-    //   try {
-    //     await pickImage(result);
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    //   // setImage(result.uri);
-    // }
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+    console.log(result);
+    if (!result.cancelled) {
+      try {
+        await uploadImage(result);
+      } catch (error) {
+        console.log(error);
+      }
+      // setImage(result.uri);
+    }
   };
 
-  const pickImage = async (image) => {
+  const uploadImage = async (image) => {
     const formdata = new FormData();
     formdata.append("image", {
       name: "image",
@@ -110,12 +73,16 @@ export const ProfileNavigator = ({ navigation }) => {
       type: "image/jpg",
     });
 
-    await AxiosInstance.post(`/profile-image/${userId}`, formdata, {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "multipart/form-data",
-      },
-    })
+    await AxiosInstance.post(
+      `/profile-image/${contextProfile.userData._id}`,
+      formdata,
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    )
       .then((res) => {
         const blob = new Blob([res.data.userData.profile_image.data.data], {
           type: res.data.userData.profile_image.contentType,
@@ -251,7 +218,9 @@ export const ProfileNavigator = ({ navigation }) => {
                   textTransform: "uppercase",
                 }}
               >
-                {firstName} {lastName}
+                {contextProfile.userData.firstName}{" "}
+                {contextProfile.userData.lastName}
+                {/* {firstName} {lastName} */}
                 {/* {userAuthInfoContext.userInfo.user.name} */}
                 {/* {userAuthInfoContext.userInfo.user.lastName} */}
               </Text>
