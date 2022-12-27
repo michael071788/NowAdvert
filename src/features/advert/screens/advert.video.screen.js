@@ -53,8 +53,7 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
 
   const theme = UsedTheme();
 
-  const { id, videoURI, companyName, logoURI, watch, random, userId } =
-    route.params;
+  const { id, videoURI, companyName, logoURI, watch, random } = route.params;
 
   const video = useRef(null);
   const [status, setStatus] = useState({});
@@ -112,7 +111,7 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
           // countViewContext.SetAddViewCount(id);
           // countViewContext.SetAlreadyWatch(true);
           showModal();
-          if (!watch.includes(userId)) {
+          if (!watch.includes(contextProfile.userData._id)) {
             if (alreadyWatch === false) {
               setDoneWatching(true);
             }
@@ -137,7 +136,7 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
   }, [contextProfile]);
 
   const watchVideo = async (id) => {
-    await AxiosInstance.put(`/watch/${userId}`, {
+    await AxiosInstance.put(`/watch/${contextProfile.userData._id}`, {
       videoId: id,
     })
       .then((response) => {
@@ -159,7 +158,7 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
   };
 
   const earnTickets = async (id) => {
-    await AxiosInstance.post(`/tickets/${userId}`, {
+    await AxiosInstance.post(`/tickets/${contextProfile.userData._id}`, {
       videoTicket: id,
       ticketNumber: random,
       status: "active",

@@ -17,8 +17,10 @@ import UsedTheme from "../../../infrastucture/theme/use.theme";
 // import { tabBarTotalHeight } from "../../../infrastucture/theme/styles/app.navigator.style";
 import UsedProfile from "../../../services/use.user.profile";
 import { useTranslation } from "react-i18next";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { AxiosInstance } from "../../../utils";
 
-const ChangePassword = () => {
+const ChangePassword = ({ navigation }) => {
   const theme = UsedTheme();
   const contextProfile = UsedProfile();
   const { t } = useTranslation();
@@ -39,7 +41,20 @@ const ChangePassword = () => {
     },
   });
   const onSubmit = async (userData) => {
-    console.log("Submit");
+    console.log("data ", userData);
+    try {
+      await AxiosInstance.patch(
+        `/api/users/update-password/${contextProfile.userData._id}`,
+        userData
+      ).then((response) => {
+        contextProfile.SetUserData(response.data);
+        AsyncStorage.clear();
+        navigation.replace("LoginScreen");
+      });
+    } catch (error) {
+      // console.log(error.response.data.message);
+      console.log("error ", error.response.data);
+    }
   };
   return (
     // <CommonScreenView theme={theme}>

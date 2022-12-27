@@ -87,17 +87,30 @@ export const AdvertScreen = ({ route, navigation }) => {
   }, [contextProfile]);
 
   useEffect(() => {
-    // countViewContext.SetMockData(MOCK_DATA);
-    // setUserId(userAuthInfoContext.userInfo.user._id);
-    // console.log(userAuthInfoContext.userInfo.user._id);
-
-    AsyncStorage.getItem("userData").then((value) => {
-      const jsonData = JSON.parse(value);
-      setUserId(jsonData.user._id);
-    });
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (userId === "") {
+      AsyncStorage.getItem("userData").then((value) => {
+        const jsonData = JSON.parse(value);
+        contextProfile.SetUserData(jsonData.user);
+        setUserId(contextProfile.userData._id);
+      });
+    }
   }, []);
+
+  useEffect(() => {
+    if (userId !== "") {
+      getUser();
+    }
+  }, [userId]);
+
+  const getUser = async () => {
+    await AxiosInstance.get(`/user/${contextProfile.userData._id}`)
+      .then((res) => {
+        contextProfile.SetUserData(res.data);
+      })
+      .catch((err) => {
+        console.log("err", err);
+      });
+  };
 
   const shareToSocial = useCallback(
     async (social) => {
@@ -131,7 +144,7 @@ export const AdvertScreen = ({ route, navigation }) => {
           // countViewContext.SetAddShareCount(selectedItem._id);
           hideShareModal();
 
-          if (!shareData.includes(userId)) {
+          if (!shareData.includes(contextProfile.userData._id)) {
             if (alreadyShare === false) {
               shareVideo(selectedItem._id);
               setAlreadyShare(true);
@@ -168,7 +181,7 @@ export const AdvertScreen = ({ route, navigation }) => {
 
   // initial
   const likeVideo = async (id) => {
-    await AxiosInstance.put(`/like/${userId}`, {
+    await AxiosInstance.put(`/like/${contextProfile.userData._id}`, {
       videoId: id,
     })
       .then((response) => {
@@ -180,6 +193,7 @@ export const AdvertScreen = ({ route, navigation }) => {
           }
         });
         // setAdvertListData(newData);
+        console.log("context ", contextProfile.userData._id);
         countViewContext.SetAdvertData(newData);
       })
       .catch((error) => {
@@ -187,7 +201,7 @@ export const AdvertScreen = ({ route, navigation }) => {
       });
   };
   const unlikeVideo = async (id) => {
-    await AxiosInstance.put(`/unlike/${userId}`, {
+    await AxiosInstance.put(`/unlike/${contextProfile.userData._id}`, {
       videoId: id,
     })
       .then((response) => {
@@ -206,7 +220,7 @@ export const AdvertScreen = ({ route, navigation }) => {
       });
   };
   const shareVideo = async (id) => {
-    await AxiosInstance.put(`/share/${userId}`, {
+    await AxiosInstance.put(`/share/${contextProfile.userData._id}`, {
       videoId: id,
     })
       .then((response) => {
@@ -259,7 +273,7 @@ export const AdvertScreen = ({ route, navigation }) => {
                 companyName: item.companyName,
                 watch: item.watch,
                 random: random,
-                userId: userId,
+                // userId: userId,
               });
               // countViewContext.SetCurrentViews(item.watch);
               primaryContext.ShowUserProfileBar(false);
@@ -288,12 +302,16 @@ export const AdvertScreen = ({ route, navigation }) => {
                 >
                   <ButtonContainer
                     name={"HEART"}
-                    bgcolor={item.likes.includes(userId) ? "red" : ""}
+                    bgcolor={
+                      item.likes.includes(contextProfile.userData._id)
+                        ? "red"
+                        : ""
+                    }
                     // label={countViewContext.countLike(item._id)}
                     label={item.likes.length}
                     onpress={() => {
                       // onlikeVideo(item._id);
-                      item.likes.includes(userId)
+                      item.likes.includes(contextProfile.userData._id)
                         ? unlikeVideo(item._id)
                         : likeVideo(item._id);
                     }}
@@ -301,13 +319,21 @@ export const AdvertScreen = ({ route, navigation }) => {
 
                   <ButtonContainer
                     name={"EYE"}
-                    bgcolor={item.watch.includes(userId) ? "black" : ""}
+                    bgcolor={
+                      item.watch.includes(contextProfile.userData._id)
+                        ? "black"
+                        : ""
+                    }
                     // label={countViewContext.countViews(item._id)}
                     label={item.watch.length}
                   />
                   <ButtonContainer
                     name={"SHARE"}
-                    bgcolor={item.share.includes(userId) ? "green" : ""}
+                    bgcolor={
+                      item.share.includes(contextProfile.userData._id)
+                        ? "green"
+                        : ""
+                    }
                     // label={countViewContext.countShare(item._id)}
                     label={item.share.length}
                     onpress={() => {

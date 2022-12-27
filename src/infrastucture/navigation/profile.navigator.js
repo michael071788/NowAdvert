@@ -61,7 +61,7 @@ export const ProfileNavigator = ({ navigation }) => {
       } catch (error) {
         console.log(error);
       }
-      // setImage(result.uri);
+      setImage(result.uri);
     }
   };
 
@@ -84,21 +84,26 @@ export const ProfileNavigator = ({ navigation }) => {
       }
     )
       .then((res) => {
+        console.log("blob ", res.config.env.blob);
+        contextProfile.SetUserData(res.data);
         const blob = new Blob([res.data.userData.profile_image.data.data], {
           type: res.data.userData.profile_image.contentType,
         });
+
         // setImage(URL.createObjectURL(blob));
 
-        const fileReaderInstance = new FileReader();
-        fileReaderInstance.readAsDataURL(blob);
-        fileReaderInstance.onload = () => {
-          const base64data = fileReaderInstance.result;
-          console.log("base64data ", base64data);
-          setImage(base64data);
-        };
+        // const fileReaderInstance = new FileReader();
+        // fileReaderInstance.readAsDataURL(blob);
+        // fileReaderInstance.onload = () => {
+        //   const base64data = fileReaderInstance.result;
+        //   console.log("base64data ", base64data);
+        //   setImage(base64data);
+        // };
         // then print response status
         // res.data.userData.profile_image.data.data;
         // console.log("Res ", res.data.userData.phone);
+        // const data = res.data.userData.profile_image.data.data;
+        // data.blob();
       })
 
       .catch((err) => {
@@ -170,11 +175,16 @@ export const ProfileNavigator = ({ navigation }) => {
               /> */}
               <Image
                 // size={180}
-                source={{
-                  uri: image
-                    ? image
-                    : "../../../assets/avatar_profile_icon.png",
-                }}
+                // source={{
+                //   uri: image
+                //     ? image
+                //     : require("../../../assets/avatar_profile_icon.png"),
+                // }}
+                source={
+                  image
+                    ? { uri: image }
+                    : require("../../../assets/avatar_profile_icon.png")
+                }
                 style={{
                   backgroundColor: "#fff",
                   height: 180,

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { cloneElement, useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -19,10 +19,12 @@ import { SvgIcon } from "../../components/svg.icon";
 import { AxiosInstance } from "../../utils";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import UsedProfile from "../../services/use.user.profile";
 
 const Login = ({ navigation }) => {
   const [result, setResult] = useState(false);
   const [message, setMessage] = useState("");
+  const [userId, setUserId] = useState("");
 
   const [visible, setVisible] = useState(false);
 
@@ -39,6 +41,35 @@ const Login = ({ navigation }) => {
 
   const theme = UsedTheme();
   const userAuthInfoContext = UsedUserAuthInfoContext();
+  const contextProfile = UsedProfile();
+
+  // useEffect(() => {
+  //   if (userId === "") {
+  //     AsyncStorage.getItem("userData").then((value) => {
+  //       const jsonData = JSON.parse(value);
+  //       if (jsonData === "") {
+  //         contextProfile.SetUserData(jsonData.user);
+  //         setUserId(contextProfile.userData._id);
+  //       }
+  //     });
+  //   }
+  // }, [contextProfile]);
+
+  // useEffect(() => {
+  //   if (userId !== "") {
+  //     getUser();
+  //   }
+  // }, [userId]);
+
+  // const getUser = async () => {
+  //   await AxiosInstance.get(`/user/${contextProfile.userData._id}`)
+  //     .then((res) => {
+  //       contextProfile.SetUserData(res.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log("err", err);
+  //     });
+  // };
 
   const {
     control,

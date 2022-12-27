@@ -27,31 +27,31 @@ export const AppNavigator = () => {
   const userAuthInfoContext = UsedUserAuthInfoContext();
   const contextProfile = UsedProfile();
 
-  useEffect(() => {
-    if (userId === "") {
-      AsyncStorage.getItem("userData").then((value) => {
-        const jsonData = JSON.parse(value);
-        contextProfile.SetUserData(jsonData.user);
-        setUserId(contextProfile.userData._id);
-      });
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (userId === "") {
+  //     AsyncStorage.getItem("userData").then((value) => {
+  //       const jsonData = JSON.parse(value);
+  //       contextProfile.SetUserData(jsonData.user);
+  //       setUserId(contextProfile.userData._id);
+  //     });
+  //   }
+  // }, [contextProfile]);
 
-  useEffect(() => {
-    if (userId !== "") {
-      getUser();
-    }
-  }, [userId]);
+  // useEffect(() => {
+  //   if (userId !== "") {
+  //     getUser();
+  //   }
+  // }, [userId]);
 
-  const getUser = async () => {
-    await AxiosInstance.get(`/user/${contextProfile.userData._id}`)
-      .then((res) => {
-        contextProfile.SetUserData(res.data);
-      })
-      .catch((err) => {
-        console.log("err", err);
-      });
-  };
+  // const getUser = async () => {
+  //   await AxiosInstance.get(`/user/${contextProfile.userData._id}`)
+  //     .then((res) => {
+  //       contextProfile.SetUserData(res.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log("err", err);
+  //     });
+  // };
 
   return (
     <>

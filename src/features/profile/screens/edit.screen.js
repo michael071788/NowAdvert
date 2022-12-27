@@ -24,7 +24,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AxiosInstance } from "../../../utils";
 
 const EditProfile = ({ navigation }) => {
-  const [userId, setUserId] = useState();
+  // const [userId, setUserId] = useState();
 
   const theme = UsedTheme();
   const contextProfile = UsedProfile();
@@ -36,9 +36,6 @@ const EditProfile = ({ navigation }) => {
     BackHandler.addEventListener("hardwareBackPress", handleBackPress);
   }, [contextProfile]);
 
-  useEffect(() => {
-    console.log("context id ", contextProfile.userData._id);
-  }, []);
   // useEffect(() => {
   //   AsyncStorage.getItem("userData").then((value) => {
   //     const jsonData = JSON.parse(value);
@@ -59,8 +56,6 @@ const EditProfile = ({ navigation }) => {
     },
   });
   const onSubmit = async (userData) => {
-    console.log("user data ", userData);
-    // console.log("Submit");
     try {
       await AxiosInstance.patch(
         `/api/users/update/${contextProfile.userData._id}`,
