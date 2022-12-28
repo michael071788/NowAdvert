@@ -87,30 +87,15 @@ export const AdvertScreen = ({ route, navigation }) => {
   }, [contextProfile]);
 
   useEffect(() => {
-    if (userId === "") {
-      AsyncStorage.getItem("userData").then((value) => {
-        const jsonData = JSON.parse(value);
-        contextProfile.SetUserData(jsonData.user);
-        setUserId(contextProfile.userData._id);
-      });
-    }
+    console.log("advert ", contextProfile.userData._id);
+    //   if (userId === "") {
+    //     AsyncStorage.getItem("userData").then((value) => {
+    //       const jsonData = JSON.parse(value);
+    //       contextProfile.SetUserData(jsonData.user);
+    //       setUserId(contextProfile.userData._id);
+    //     });
+    //   }
   }, []);
-
-  useEffect(() => {
-    if (userId !== "") {
-      getUser();
-    }
-  }, [userId]);
-
-  const getUser = async () => {
-    await AxiosInstance.get(`/user/${contextProfile.userData._id}`)
-      .then((res) => {
-        contextProfile.SetUserData(res.data);
-      })
-      .catch((err) => {
-        console.log("err", err);
-      });
-  };
 
   const shareToSocial = useCallback(
     async (social) => {
@@ -181,7 +166,7 @@ export const AdvertScreen = ({ route, navigation }) => {
 
   // initial
   const likeVideo = async (id) => {
-    await AxiosInstance.put(`/like/${contextProfile.userData._id}`, {
+    await AxiosInstance.put(`/api/advert/like/${contextProfile.userData._id}`, {
       videoId: id,
     })
       .then((response) => {
@@ -201,9 +186,12 @@ export const AdvertScreen = ({ route, navigation }) => {
       });
   };
   const unlikeVideo = async (id) => {
-    await AxiosInstance.put(`/unlike/${contextProfile.userData._id}`, {
-      videoId: id,
-    })
+    await AxiosInstance.put(
+      `/api/advert/unlike/${contextProfile.userData._id}`,
+      {
+        videoId: id,
+      }
+    )
       .then((response) => {
         const newData = countViewContext.advertData.map((item) => {
           if (item._id == response.data._id) {
@@ -220,9 +208,12 @@ export const AdvertScreen = ({ route, navigation }) => {
       });
   };
   const shareVideo = async (id) => {
-    await AxiosInstance.put(`/share/${contextProfile.userData._id}`, {
-      videoId: id,
-    })
+    await AxiosInstance.put(
+      `/api/advert/share/${contextProfile.userData._id}`,
+      {
+        videoId: id,
+      }
+    )
       .then((response) => {
         setShareData(response.data.share);
         const newData = countViewContext.advertData.map((item) => {

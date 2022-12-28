@@ -61,7 +61,9 @@ const EditProfile = ({ navigation }) => {
         `/api/users/update/${contextProfile.userData._id}`,
         userData
       ).then((response) => {
-        contextProfile.SetUserData(response.data);
+        // console.log("Response ", response.data);
+        // contextProfile.SetUserData(response.data.user);
+        navigation.goBack();
       });
     } catch (error) {
       // console.log(error.response.data.message);

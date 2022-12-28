@@ -18,6 +18,12 @@ import * as ImagePicker from "expo-image-picker";
 import { AxiosInstance } from "../../utils";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import UsedCount from "../../services/counts.user";
+// import { Buffer } from "buffer";
+
+// import utf8 from "utf8";
+// import base64 from "base-64";
+// import binaryToBase64 from "binary-base64";
+import { Buffer } from "buffer";
 
 const ProfileStack = createStackNavigator();
 
@@ -25,6 +31,8 @@ export const ProfileNavigator = ({ navigation }) => {
   const [location, setLocation] = useState("");
   const [language, setLanguage] = useState("");
   const [userId, setUserId] = useState("");
+  const [imageBase, setImageBase] = useState("");
+  const [hasProfileImage, setHasProfileImage] = useState(false);
 
   // const [firstName, setFirstName] = useState("");
   // const [lastName, setLastName] = useState("");
@@ -41,6 +49,9 @@ export const ProfileNavigator = ({ navigation }) => {
 
   // contextProfile.SetCurrentLocation("");
 
+  // useEffect(() => {
+  //   console.log("prof nav ", contextProfile.userData._id);
+  // }, []);
   useEffect(() => {
     // contextProfile.SetCurrentLocation("ProfileScreen");
     setLocation(contextProfile.currentLocation);
@@ -53,15 +64,16 @@ export const ProfileNavigator = ({ navigation }) => {
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
+      // base64: true,
     });
-    console.log(result);
+
     if (!result.cancelled) {
       try {
         await uploadImage(result);
       } catch (error) {
         console.log(error);
       }
-      setImage(result.uri);
+      // setImage(result.uri);
     }
   };
 
@@ -84,33 +96,27 @@ export const ProfileNavigator = ({ navigation }) => {
       }
     )
       .then((res) => {
-        console.log("blob ", res.config.env.blob);
-        contextProfile.SetUserData(res.data);
-        const blob = new Blob([res.data.userData.profile_image.data.data], {
-          type: res.data.userData.profile_image.contentType,
-        });
-
-        // setImage(URL.createObjectURL(blob));
-
-        // const fileReaderInstance = new FileReader();
-        // fileReaderInstance.readAsDataURL(blob);
-        // fileReaderInstance.onload = () => {
-        //   const base64data = fileReaderInstance.result;
-        //   console.log("base64data ", base64data);
-        //   setImage(base64data);
-        // };
-        // then print response status
-        // res.data.userData.profile_image.data.data;
-        // console.log("Res ", res.data.userData.phone);
-        // const data = res.data.userData.profile_image.data.data;
-        // data.blob();
+        console.log("success");
+        setHasProfileImage(true);
       })
-
       .catch((err) => {
-        console.log("err, ", err);
+        console.log("err ", err);
       });
   };
 
+  // const getImage = async () => {
+  //   console.log("get image");
+  //   console.log("id ", contextProfile.userData._id);
+  //   await AxiosInstance.get(
+  //     `/api/users/profile-image/${contextProfile.userData._id}`
+  //   )
+  //     .then((res) => {
+  //       const imageBuffer = Buffer.from(res.data.data);
+  //       const imageBase64 = imageBuffer.toString("base64");
+  //       setHasProfileImage(true);
+  //     })
+  //     .catch((err) => console.log("err profile ", err));
+  // };
   return (
     <View style={{ flex: 1 }}>
       <View
@@ -164,26 +170,21 @@ export const ProfileNavigator = ({ navigation }) => {
                 alignItems: "center",
               }}
             >
-              {/* <Avatar.Image
-                size={180}
-                source={
-                  image
-                    ? image
-                    : require("../../../assets/avatar_profile_icon.png")
-                }
-                style={{ backgroundColor: "#fff", elevation: 1 }}
-              /> */}
               <Image
-                // size={180}
                 // source={{
-                //   uri: image
-                //     ? image
-                //     : require("../../../assets/avatar_profile_icon.png"),
+                //   uri: "data:image/jpeg;base64," + arrayBufferToBase64(image), //data.data in your case
                 // }}
                 source={
-                  image
-                    ? { uri: image }
-                    : require("../../../assets/avatar_profile_icon.png")
+                  // hasProfileImage === true
+                  // ?
+                  {
+                    uri: `data:image/jpeg;base64,${contextProfile.userData.profile_image.data.data}`,
+                  }
+                  // : require("../../../assets/avatar_profile_icon.png")
+                  // image
+                  //   ? { uri: image }
+                  //   : // { uri: `data:image/jpeg;base64,${imageBuffer64}` }
+                  //     require("../../../assets/avatar_profile_icon.png")
                 }
                 style={{
                   backgroundColor: "#fff",
@@ -192,6 +193,7 @@ export const ProfileNavigator = ({ navigation }) => {
                   borderRadius: 180,
                 }}
               />
+
               <TouchableOpacity
                 onPress={openImagePicker}
                 style={{

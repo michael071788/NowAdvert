@@ -11,6 +11,7 @@ const UserProfileProvider = ({ children }) => {
   const [currentLanguage, setCurrentLanguage] = useState("ENGLISH");
   const [userData, setUserData] = useState({});
   const [userId, setUserId] = useState("");
+  const [userProfileImage, setUserProfileImage] = useState("");
 
   const onSetCurrentLocation = (val) => {
     setCurrentLocation(val);
@@ -28,6 +29,10 @@ const UserProfileProvider = ({ children }) => {
     setUserId(val);
   };
 
+  const onSetUserProfileImage = (val) => {
+    setUserProfileImage(val);
+  };
+
   return (
     <UserProfileContext.Provider
       value={{
@@ -39,6 +44,8 @@ const UserProfileProvider = ({ children }) => {
         SetUserData: onSetUserData,
         userId,
         SetUserId: onSetUserId,
+        userProfileImage,
+        SetUserProfileImage: onSetUserProfileImage,
       }}
     >
       {children}

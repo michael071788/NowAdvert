@@ -135,10 +135,13 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
     setLanguage(contextProfile.currentLanguage);
   }, [contextProfile]);
 
-  const watchVideo = async (id) => {
-    await AxiosInstance.put(`/watch/${contextProfile.userData._id}`, {
-      videoId: id,
-    })
+  const watchVideo = async () => {
+    await AxiosInstance.put(
+      `/api/advert/watch/${contextProfile.userData._id}`,
+      {
+        videoId: id,
+      }
+    )
       .then((response) => {
         const newData = countViewContext.advertData.map((item) => {
           if (item._id == response.data._id) {
@@ -157,14 +160,19 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
       });
   };
 
-  const earnTickets = async (id) => {
-    await AxiosInstance.post(`/tickets/${contextProfile.userData._id}`, {
-      videoTicket: id,
-      ticketNumber: random,
-      status: "active",
-    })
+  const earnTickets = async () => {
+    await AxiosInstance.post(
+      `/api/users/tickets/${contextProfile.userData._id}`,
+      {
+        videoTicket: id,
+        ticketNumber: random,
+        status: "active",
+      }
+    )
       .then((response) => {
-        countViewContext.SetUserTickets(response.data.result.earnedTickets);
+        // console.log("response ", response.data.result);
+        // countViewContext.SetUserTickets(response.data.result.earnedTickets);
+        contextProfile.SetUserData(response.data.result);
       })
       .then((err) => console.log(err));
   };

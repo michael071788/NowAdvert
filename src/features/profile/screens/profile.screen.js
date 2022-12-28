@@ -74,26 +74,13 @@ export const ProfileScreen = ({ navigation }) => {
     i18n.changeLanguage("eng");
     I18nManager.forceRTL(false);
 
-    // userAuthInfoContext.SetCurrentUserInfo({
-    //   message: "",
-    //   status: 0,
-    //   token: "",
-    //   user: {
-    //     __v: 0,
-    //     _id: "",
-    //     email: "",
-    //     name: "",
-    //     password: "",
-    //     phone: "",
-    //   },
-    // });
-
     logOut();
   }, [contextProfile, i18n, userAuthInfoContext]);
 
   const logOut = async () => {
     await AsyncStorage.clear();
     navigation.replace("LoginScreen");
+    AsyncStorage.setItem("islogged", "false");
   };
   return (
     <ScrollView vertical showsHorizontalScrollIndicator={false}>
