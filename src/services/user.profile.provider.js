@@ -14,6 +14,8 @@ const UserProfileProvider = ({ children }) => {
   const [hasUserData, setHasUserData] = useState(false);
   const [userUpdate, setUserUpdate] = useState(false);
 
+  const [sampleData, setSampleData] = useState("");
+
   const onSetCurrentLocation = (val) => {
     setCurrentLocation(val);
   };
@@ -38,6 +40,10 @@ const UserProfileProvider = ({ children }) => {
     setHasProfile(val);
   };
 
+  //
+  const onSetSampleData = (val) => {
+    setSampleData(val);
+  };
   return (
     <UserProfileContext.Provider
       value={{
@@ -53,6 +59,9 @@ const UserProfileProvider = ({ children }) => {
         SetUserUpdate: onSetUserUpdate,
         hasProfile,
         SetHasProfile: onSetHasProfile,
+        //
+        sampleData,
+        SetSampleData: onSetSampleData,
       }}
     >
       {children}

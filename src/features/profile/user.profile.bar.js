@@ -14,19 +14,17 @@ import { AxiosInstance } from "../../utils";
 import { Buffer } from "buffer";
 
 export const UserProfileBar = ({ isShown, navigation, profile }) => {
-  const [imageBase, setImageBase] = useState("");
-  const [hasProfileImage, setHasProfileImage] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
 
   const theme = UsedTheme();
   const userAuthInfoContext = UsedUserAuthInfoContext();
   const contextProfile = UsedProfile();
 
-  // useEffect(() => {
-  //   if (contextProfile.userData !== null) {
-  //     setImageBase(contextProfile.userData.profile_image.data);
-  //   }
-  // }, [contextProfile]);
+  useEffect(() => {
+    setFirstName(contextProfile.userData.firstName);
+    setLastName(contextProfile.userData.lastName);
+  }, [contextProfile]);
   return (
     <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
       <UserProfileBarContainer isShown={isShown}>
@@ -40,9 +38,7 @@ export const UserProfileBar = ({ isShown, navigation, profile }) => {
         </UserProfileBarImageContainer>
         <View style={{ justifyContent: "center", alignItems: "center" }}>
           <UserFullName theme={theme}>
-            {contextProfile.userData.firstName}{" "}
-            {contextProfile.userData.lastName}
-            {/* {contextProfile.userData.profile_image.data.data.slice(0, 6)} */}
+            {firstName} {lastName}
           </UserFullName>
         </View>
       </UserProfileBarContainer>

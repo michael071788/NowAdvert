@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import { View, Text, TouchableOpacity, Image, TextInput } from "react-native";
 
 import EditProfile from "../../features/profile/screens/edit.screen";
 import ChangePassword from "../../features/profile/screens/change.password.screen";
@@ -25,6 +25,8 @@ export const ProfileNavigator = ({ navigation }) => {
   const [language, setLanguage] = useState("");
   const [imageBase, setImageBase] = useState("");
 
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   // eslint-disable-next-line no-unused-vars
 
   const { t } = useTranslation();
@@ -36,6 +38,8 @@ export const ProfileNavigator = ({ navigation }) => {
     // contextProfile.SetCurrentLocation("ProfileScreen");
     setLocation(contextProfile.currentLocation);
     setLanguage(contextProfile.currentLanguage);
+    setFirstName(contextProfile.userData.firstName);
+    setLastName(contextProfile.userData.lastName);
 
     if (contextProfile.hasUserData === true) {
       if (contextProfile.hasProfile === true) {
@@ -87,16 +91,18 @@ export const ProfileNavigator = ({ navigation }) => {
       }
     )
       .then((res) => {
-        contextProfile.SetUserData(res.data.userData);
-        contextProfile.SetHasUserData(true);
-        // contextProfile.SetUserUpdate(true);
-        if (Array.isArray(contextProfile.userData.profile_image.data)) {
-          const imageBuffer = Buffer.from(
-            contextProfile.userData.profile_image.data
-          );
-          contextProfile.userData.profile_image.data =
-            imageBuffer.toString("base64");
-        }
+        console.log("success");
+        contextProfile.SetUserUpdate(true);
+        // contextProfile.SetUserData(res.data.userData);
+        // contextProfile.SetHasUserData(true);
+        // // contextProfile.SetUserUpdate(true);
+        // if (Array.isArray(contextProfile.userData.profile_image.data)) {
+        //   const imageBuffer = Buffer.from(
+        //     contextProfile.userData.profile_image.data
+        //   );
+        //   contextProfile.userData.profile_image.data =
+        //     imageBuffer.toString("base64");
+        // }
       })
       .catch((err) => {
         console.log("err ", err);
@@ -217,8 +223,8 @@ export const ProfileNavigator = ({ navigation }) => {
                   textTransform: "uppercase",
                 }}
               >
-                {contextProfile.userData.firstName}{" "}
-                {contextProfile.userData.lastName}
+                {firstName}
+                {lastName}
               </Text>
             </View>
             <Text

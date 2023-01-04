@@ -49,15 +49,17 @@ export const AppNavigator = () => {
     }
   }, [userId]);
 
-  // useEffect(() => {
-  //   if (contextProfile.userUpdate === true) {
-  //     getUser();
-  //   }
-  // }, [contextProfile.userUpdate]);
+  useEffect(() => {
+    if (contextProfile.userUpdate === true) {
+      getUser();
+    }
+  }, [contextProfile.userUpdate]);
 
   const getUser = async () => {
+    console.log("get user");
     await AxiosInstance.get(`/api/users/${contextProfile.userData._id}`)
       .then((res) => {
+        console.log("response");
         contextProfile.SetHasUserData(true);
         contextProfile.SetUserData(res.data);
         contextProfile.SetHasProfile(res.data.hasProfile);
@@ -70,6 +72,7 @@ export const AppNavigator = () => {
               imageBuffer.toString("base64");
           }
         }
+        contextProfile.SetUserUpdate(false);
       })
       .catch((err) => {
         console.log("err app", err);

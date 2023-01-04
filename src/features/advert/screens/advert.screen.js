@@ -156,18 +156,6 @@ export const AdvertScreen = ({ route, navigation }) => {
   };
   const hideShareModal = () => setVisibleShareModal(false);
 
-  // const onlikeVideo = (item) => {
-  //   const tempArr = [...selectedData];
-  //   if (selectedData.includes(item)) {
-  //     tempArr.splice(selectedData.indexOf(item), 1);
-  //     countViewContext.SetSubtractLikeCount(item);
-  //   } else {
-  //     tempArr.push(item);
-  //     countViewContext.SetAddLikeCount(item);
-  //   }
-  //   setSelectedData(tempArr);
-  // };
-
   // initial
   const likeVideo = async (id) => {
     await AxiosInstance.put(`/api/advert/like/${contextProfile.userData._id}`, {
