@@ -10,8 +10,9 @@ const UserProfileProvider = ({ children }) => {
   const [currentLocation, setCurrentLocation] = useState("");
   const [currentLanguage, setCurrentLanguage] = useState("ENGLISH");
   const [userData, setUserData] = useState({});
-  const [userId, setUserId] = useState("");
-  const [userProfileImage, setUserProfileImage] = useState("");
+  const [hasProfile, setHasProfile] = useState(false);
+  const [hasUserData, setHasUserData] = useState(false);
+  const [userUpdate, setUserUpdate] = useState(false);
 
   const onSetCurrentLocation = (val) => {
     setCurrentLocation(val);
@@ -25,12 +26,16 @@ const UserProfileProvider = ({ children }) => {
     setUserData(val);
   };
 
-  const onSetUserId = (val) => {
-    setUserId(val);
+  const onSetHasUserData = (val) => {
+    setHasUserData(val);
   };
 
-  const onSetUserProfileImage = (val) => {
-    setUserProfileImage(val);
+  const onSetUserUpdate = (val) => {
+    setUserUpdate(val);
+  };
+
+  const onSetHasProfile = (val) => {
+    setHasProfile(val);
   };
 
   return (
@@ -42,10 +47,12 @@ const UserProfileProvider = ({ children }) => {
         SetCurrentLanguage: onSetCurrentLanguage,
         userData,
         SetUserData: onSetUserData,
-        userId,
-        SetUserId: onSetUserId,
-        userProfileImage,
-        SetUserProfileImage: onSetUserProfileImage,
+        hasUserData,
+        SetHasUserData: onSetHasUserData,
+        userUpdate,
+        SetUserUpdate: onSetUserUpdate,
+        hasProfile,
+        SetHasProfile: onSetHasProfile,
       }}
     >
       {children}

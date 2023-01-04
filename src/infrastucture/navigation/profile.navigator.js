@@ -4,25 +4,18 @@ import { View, Text, TouchableOpacity, Image } from "react-native";
 import EditProfile from "../../features/profile/screens/edit.screen";
 import ChangePassword from "../../features/profile/screens/change.password.screen";
 import LinkedAccounts from "../../features/profile/screens/linked.accounts.screen";
-// import Tickets from "../../features/profile/screens/tickets.screen";
 import UsedTheme from "../../infrastucture/theme/use.theme";
 import UsedProfile from "../../services/use.user.profile";
+
 import { createStackNavigator } from "@react-navigation/stack";
 import { ProfileScreen } from "../../features/profile/screens/profile.screen";
 
 import { List, Avatar } from "react-native-paper";
 
 import { useTranslation } from "react-i18next";
-import { UsedUserAuthInfoContext } from "../../services/user.auth.provider";
 import * as ImagePicker from "expo-image-picker";
 import { AxiosInstance } from "../../utils";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import UsedCount from "../../services/counts.user";
-// import { Buffer } from "buffer";
 
-// import utf8 from "utf8";
-// import base64 from "base-64";
-// import binaryToBase64 from "binary-base64";
 import { Buffer } from "buffer";
 
 const ProfileStack = createStackNavigator();
@@ -30,34 +23,32 @@ const ProfileStack = createStackNavigator();
 export const ProfileNavigator = ({ navigation }) => {
   const [location, setLocation] = useState("");
   const [language, setLanguage] = useState("");
-  const [userId, setUserId] = useState("");
   const [imageBase, setImageBase] = useState("");
-  const [hasProfileImage, setHasProfileImage] = useState(false);
-
-  // const [firstName, setFirstName] = useState("");
-  // const [lastName, setLastName] = useState("");
 
   // eslint-disable-next-line no-unused-vars
-  const [image, setImage] = useState(null);
 
   const { t } = useTranslation();
 
   const theme = UsedTheme();
   const contextProfile = UsedProfile();
-  const userAuthInfoContext = UsedUserAuthInfoContext();
-  const countViewContext = UsedCount();
 
-  // contextProfile.SetCurrentLocation("");
-
-  // useEffect(() => {
-  //   console.log("prof nav ", contextProfile.userData._id);
-  // }, []);
   useEffect(() => {
     // contextProfile.SetCurrentLocation("ProfileScreen");
     setLocation(contextProfile.currentLocation);
     setLanguage(contextProfile.currentLanguage);
+
+    if (contextProfile.hasUserData === true) {
+      if (contextProfile.hasProfile === true) {
+        setImageBase(contextProfile.userData.profile_image.data);
+      }
+    }
   }, [contextProfile]);
 
+  // useEffect(() => {
+  //   if (contextProfile.hasUserData === true) {
+  //     setImageBase(contextProfile.userData.profile_image.data);
+  //   }
+  // }, []);
   const openImagePicker = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -82,7 +73,7 @@ export const ProfileNavigator = ({ navigation }) => {
     formdata.append("image", {
       name: "image",
       uri: image.uri,
-      type: "image/jpg",
+      type: "image/png",
     });
 
     await AxiosInstance.post(
@@ -96,8 +87,16 @@ export const ProfileNavigator = ({ navigation }) => {
       }
     )
       .then((res) => {
-        console.log("success");
-        setHasProfileImage(true);
+        contextProfile.SetUserData(res.data.userData);
+        contextProfile.SetHasUserData(true);
+        // contextProfile.SetUserUpdate(true);
+        if (Array.isArray(contextProfile.userData.profile_image.data)) {
+          const imageBuffer = Buffer.from(
+            contextProfile.userData.profile_image.data
+          );
+          contextProfile.userData.profile_image.data =
+            imageBuffer.toString("base64");
+        }
       })
       .catch((err) => {
         console.log("err ", err);
@@ -171,20 +170,11 @@ export const ProfileNavigator = ({ navigation }) => {
               }}
             >
               <Image
-                // source={{
-                //   uri: "data:image/jpeg;base64," + arrayBufferToBase64(image), //data.data in your case
-                // }}
                 source={
-                  // hasProfileImage === true
-                  // ?
                   {
-                    uri: `data:image/jpeg;base64,${contextProfile.userData.profile_image.data.data}`,
+                    uri: `data:image/png;base64,${imageBase}`,
                   }
-                  // : require("../../../assets/avatar_profile_icon.png")
-                  // image
-                  //   ? { uri: image }
-                  //   : // { uri: `data:image/jpeg;base64,${imageBuffer64}` }
-                  //     require("../../../assets/avatar_profile_icon.png")
+                  // require("../../../assets/avatar_profile_icon.png")
                 }
                 style={{
                   backgroundColor: "#fff",
@@ -214,10 +204,7 @@ export const ProfileNavigator = ({ navigation }) => {
                 <List.Icon icon="pencil" color="#000" />
               </TouchableOpacity>
             </View>
-            {/* <Image
-              source={require("../../../assets/avatar_profile_icon.png")}
-              style={{ height: 180, width: 180 }}
-            /> */}
+
             <View
               style={{
                 flexDirection: "row",
@@ -232,9 +219,6 @@ export const ProfileNavigator = ({ navigation }) => {
               >
                 {contextProfile.userData.firstName}{" "}
                 {contextProfile.userData.lastName}
-                {/* {firstName} {lastName} */}
-                {/* {userAuthInfoContext.userInfo.user.name} */}
-                {/* {userAuthInfoContext.userInfo.user.lastName} */}
               </Text>
             </View>
             <Text
@@ -271,7 +255,6 @@ export const ProfileNavigator = ({ navigation }) => {
             name="LinkedAccountsScreen"
             component={LinkedAccounts}
           />
-          {/* <ProfileStack.Screen name="Tickets" component={Tickets} /> */}
         </ProfileStack.Navigator>
       </View>
     </View>

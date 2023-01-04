@@ -8,9 +8,14 @@ export const UsedPrimaryAppContext = () => {
 
 const PrimaryAppProvider = ({ children }) => {
   const [isShowUserProfileBar, setShowUserProfileBar] = useState(true);
+  const [userUpdate, setUserUpdate] = useState(false);
 
   const onShowUserProfileBar = (val) => {
     setShowUserProfileBar(val);
+  };
+
+  const onSetUserUpdate = (val) => {
+    setUserUpdate(val);
   };
 
   return (
@@ -18,6 +23,8 @@ const PrimaryAppProvider = ({ children }) => {
       value={{
         isShowUserProfileBar,
         ShowUserProfileBar: onShowUserProfileBar,
+        userUpdate,
+        SetUserUpdate: onSetUserUpdate,
       }}
     >
       {children}

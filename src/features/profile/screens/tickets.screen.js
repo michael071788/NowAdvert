@@ -29,12 +29,13 @@ const Tickets = ({ navigation }) => {
   useEffect(() => {
     contextProfile.SetCurrentLocation("Profile Screen");
     setLanguage(contextProfile.currentLanguage);
+    setEarnedTickets(contextProfile.userData.earnedTickets);
   }, [contextProfile]);
 
-  useEffect(() => {
-    setEarnedTickets(contextProfile.userData.earnedTickets);
-    // console.log("tickets ", contextProfile.userData.earnedTickets);
-  }, []);
+  // useEffect(() => {
+  //   setEarnedTickets(contextProfile.userData.earnedTickets);
+  //   // console.log("tickets ", contextProfile.userData.earnedTickets);
+  // }, []);
 
   const data = [
     {

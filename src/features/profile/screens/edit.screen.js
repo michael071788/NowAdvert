@@ -22,6 +22,7 @@ import { UsedUserAuthInfoContext } from "../../../services/user.auth.provider";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AxiosInstance } from "../../../utils";
+import { Buffer } from "buffer";
 
 const EditProfile = ({ navigation }) => {
   // const [userId, setUserId] = useState();
@@ -35,13 +36,6 @@ const EditProfile = ({ navigation }) => {
     contextProfile.SetCurrentLocation("Edit Profile");
     BackHandler.addEventListener("hardwareBackPress", handleBackPress);
   }, [contextProfile]);
-
-  // useEffect(() => {
-  //   AsyncStorage.getItem("userData").then((value) => {
-  //     const jsonData = JSON.parse(value);
-  //     setUserId(jsonData.user._id);
-  //   });
-  // }, []);
 
   const {
     control,
@@ -61,8 +55,7 @@ const EditProfile = ({ navigation }) => {
         `/api/users/update/${contextProfile.userData._id}`,
         userData
       ).then((response) => {
-        // console.log("Response ", response.data);
-        // contextProfile.SetUserData(response.data.user);
+        contextProfile.SetUserData(response.data.user);
         navigation.goBack();
       });
     } catch (error) {

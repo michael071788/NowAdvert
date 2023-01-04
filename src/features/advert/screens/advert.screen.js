@@ -1,5 +1,12 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { TouchableOpacity, View, Text, BackHandler, Alert } from "react-native";
+import {
+  TouchableOpacity,
+  View,
+  Text,
+  BackHandler,
+  Alert,
+  Image,
+} from "react-native";
 import Share from "react-native-share";
 import UsedTheme from "../../../infrastucture/theme/use.theme";
 import {
@@ -34,15 +41,19 @@ import { MOCK_DATA } from "../../../infrastucture/mockup/data.list";
 import { UsedUserAuthInfoContext } from "../../../services/user.auth.provider";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Buffer } from "buffer";
+
 // --
 export const AdvertScreen = ({ route, navigation }) => {
   // eslint-disable-next-line no-unused-vars
   const [language, setLanguage] = useState("");
   const [userId, setUserId] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [imageBase, setImageBase] = useState("");
+
   const [shareData, setShareData] = useState([]);
   const [alreadyShare, setAlreadyShare] = useState(false);
 
-  const [watchData, setWatchData] = useState();
   // --
   const userAuthInfoContext = UsedUserAuthInfoContext();
   // --
@@ -83,19 +94,12 @@ export const AdvertScreen = ({ route, navigation }) => {
       .substr(1);
 
   useEffect(() => {
-    setLanguage(contextProfile.currentLanguage);
+    if (contextProfile.hasUserData === true) {
+      if (contextProfile.hasProfile === true) {
+        setImageBase(contextProfile.userData.profile_image.data);
+      }
+    }
   }, [contextProfile]);
-
-  useEffect(() => {
-    console.log("advert ", contextProfile.userData._id);
-    //   if (userId === "") {
-    //     AsyncStorage.getItem("userData").then((value) => {
-    //       const jsonData = JSON.parse(value);
-    //       contextProfile.SetUserData(jsonData.user);
-    //       setUserId(contextProfile.userData._id);
-    //     });
-    //   }
-  }, []);
 
   const shareToSocial = useCallback(
     async (social) => {
@@ -448,7 +452,11 @@ export const AdvertScreen = ({ route, navigation }) => {
         {mounted && (
           <>
             <HeaderBarContainer>
-              <UserProfileBar isShown={true} navigation={navigation} />
+              <UserProfileBar
+                isShown={true}
+                navigation={navigation}
+                profile={imageBase}
+              />
             </HeaderBarContainer>
             <AdvertCarouselContainer>
               <AdvertCarousel

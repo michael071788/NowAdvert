@@ -92,6 +92,7 @@ const ChangePassword = ({ navigation }) => {
                     paddingVertical: 2,
                     fontSize: 22,
                   }}
+                  secureTextEntry={true}
                 />
               </View>
             )}
@@ -130,6 +131,7 @@ const ChangePassword = ({ navigation }) => {
                     paddingVertical: 2,
                     fontSize: 22,
                   }}
+                  secureTextEntry={true}
                 />
               </View>
             )}
@@ -168,6 +170,7 @@ const ChangePassword = ({ navigation }) => {
                     paddingVertical: 2,
                     fontSize: 22,
                   }}
+                  secureTextEntry={true}
                 />
               </View>
             )}
