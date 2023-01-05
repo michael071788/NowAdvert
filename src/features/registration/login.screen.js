@@ -1,4 +1,4 @@
-import React, { cloneElement, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -17,16 +17,13 @@ import { useForm, Controller } from "react-hook-form";
 import { Modal } from "react-native-paper";
 import { SvgIcon } from "../../components/svg.icon";
 import { AxiosInstance } from "../../utils";
-import axios from "axios";
+
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import UsedProfile from "../../services/use.user.profile";
-import { Buffer } from "buffer";
 
 const Login = ({ navigation }) => {
   const [result, setResult] = useState(false);
   const [message, setMessage] = useState("");
-  const [userId, setUserId] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const [visible, setVisible] = useState(false);
 
@@ -43,7 +40,6 @@ const Login = ({ navigation }) => {
 
   const theme = UsedTheme();
   const userAuthInfoContext = UsedUserAuthInfoContext();
-  const contextProfile = UsedProfile();
 
   useEffect(() => {
     getStatus();
@@ -63,7 +59,7 @@ const Login = ({ navigation }) => {
 
   const getStatus = async () => {
     let login = await AsyncStorage.getItem("token");
-    console.log("login ", login);
+
     if (login !== null) {
       navigation.replace("AdvertScreen");
     }

@@ -52,14 +52,13 @@ export const AppNavigator = () => {
   useEffect(() => {
     if (contextProfile.userUpdate === true) {
       getUser();
+      // AsyncStorage.setItem("userData", JSON.stringify(contextProfile.userData));
     }
   }, [contextProfile.userUpdate]);
 
   const getUser = async () => {
-    console.log("get user");
     await AxiosInstance.get(`/api/users/${contextProfile.userData._id}`)
       .then((res) => {
-        console.log("response");
         contextProfile.SetHasUserData(true);
         contextProfile.SetUserData(res.data);
         contextProfile.SetHasProfile(res.data.hasProfile);
@@ -72,6 +71,10 @@ export const AppNavigator = () => {
               imageBuffer.toString("base64");
           }
         }
+        // if (contextProfile.userUpdate === true) {
+        //   AsyncStorage.setItem("userData", JSON.stringify(res.data));
+        // }
+
         contextProfile.SetUserUpdate(false);
       })
       .catch((err) => {

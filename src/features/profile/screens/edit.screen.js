@@ -18,11 +18,8 @@ import UsedTheme from "../../../infrastucture/theme/use.theme";
 // import { tabBarTotalHeight } from "../../../infrastucture/theme/styles/app.navigator.style";
 import UsedProfile from "../../../services/use.user.profile";
 import { useTranslation } from "react-i18next";
-import { UsedUserAuthInfoContext } from "../../../services/user.auth.provider";
-import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import { AxiosInstance } from "../../../utils";
-import { Buffer } from "buffer";
 
 const EditProfile = ({ navigation }) => {
   // const [userId, setUserId] = useState();
@@ -30,7 +27,6 @@ const EditProfile = ({ navigation }) => {
   const theme = UsedTheme();
   const contextProfile = UsedProfile();
   const { t } = useTranslation();
-  const userAuthInfoContext = UsedUserAuthInfoContext();
 
   useEffect(() => {
     contextProfile.SetCurrentLocation("Edit Profile");
@@ -55,7 +51,8 @@ const EditProfile = ({ navigation }) => {
         `/api/users/update/${contextProfile.userData._id}`,
         userData
       ).then((response) => {
-        contextProfile.SetUserData(response.data.user);
+        contextProfile.SetUserUpdate(true);
+        // contextProfile.SetUserData(response.data.user);
         navigation.goBack();
       });
     } catch (error) {
@@ -67,200 +64,200 @@ const EditProfile = ({ navigation }) => {
     navigation.goBack();
   };
   return (
-    // <CommonScreenView theme={theme}>
-    <ScrollView vertical showsHorizontalScrollIndicator={false}>
-      {/* start input field */}
+    <>
+      <ScrollView vertical showsHorizontalScrollIndicator={false}>
+        {/* start input field */}
 
-      <SafeAreaView style={{ flex: 1, padding: 10, paddingHorizontal: 20 }}>
-        <View>
-          {/* first name input */}
-          <Controller
-            name="firstName"
-            control={control}
-            rules={{
-              required: "This is required",
-            }}
-            render={({ field: { onChange, value } }) => (
-              <View>
-                <Text
-                  style={{
-                    fontFamily: theme.typography.PRIMARY,
-                    color: "#aaa",
-                    textTransform: "uppercase",
-                  }}
-                >
-                  {t("FIRST NAME")}
-                </Text>
-                <TextInput
-                  onChangeText={onChange}
-                  value={value}
-                  style={{
-                    fontFamily: theme.typography.PRIMARY,
-                    borderBottomColor: "#aaa",
-                    borderBottomWidth: 1,
-                    paddingVertical: 2,
-                    fontSize: 22,
-                  }}
-                />
-              </View>
-            )}
-          />
-          <View style={{ height: 18, fontSize: 15 }}>
-            {errors.firstName && (
-              <Text style={{ color: "red" }}>This is required.</Text>
-            )}
+        <SafeAreaView style={{ flex: 1, padding: 10, paddingHorizontal: 20 }}>
+          <View>
+            {/* first name input */}
+            <Controller
+              name="firstName"
+              control={control}
+              rules={{
+                required: "This is required",
+              }}
+              render={({ field: { onChange, value } }) => (
+                <View>
+                  <Text
+                    style={{
+                      fontFamily: theme.typography.PRIMARY,
+                      color: "#aaa",
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    {t("FIRST NAME")}
+                  </Text>
+                  <TextInput
+                    onChangeText={onChange}
+                    value={value}
+                    style={{
+                      fontFamily: theme.typography.PRIMARY,
+                      borderBottomColor: "#aaa",
+                      borderBottomWidth: 1,
+                      paddingVertical: 2,
+                      fontSize: 22,
+                    }}
+                  />
+                </View>
+              )}
+            />
+            <View style={{ height: 18, fontSize: 15 }}>
+              {errors.firstName && (
+                <Text style={{ color: "red" }}>This is required.</Text>
+              )}
+            </View>
+
+            {/* last name input */}
+            <Controller
+              name="lastName"
+              control={control}
+              rules={{
+                required: "This is required",
+              }}
+              render={({ field: { onChange, value } }) => (
+                <View>
+                  <Text
+                    style={{
+                      fontFamily: theme.typography.PRIMARY,
+                      color: "#aaa",
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    {t("LAST NAME")}
+                  </Text>
+                  <TextInput
+                    onChangeText={onChange}
+                    value={value}
+                    style={{
+                      fontFamily: theme.typography.PRIMARY,
+                      borderBottomColor: "#aaa",
+                      borderBottomWidth: 1,
+                      paddingVertical: 2,
+                      fontSize: 22,
+                    }}
+                  />
+                </View>
+              )}
+            />
+            <View style={{ height: 18, fontSize: 15 }}>
+              {errors.lastName && (
+                <Text style={{ color: "red" }}>This is required.</Text>
+              )}
+            </View>
+
+            {/* email input */}
+            <Controller
+              name="email"
+              control={control}
+              rules={{
+                required: "This is required",
+              }}
+              render={({ field: { onChange, value } }) => (
+                <View>
+                  <Text
+                    style={{
+                      fontFamily: theme.typography.PRIMARY,
+                      color: "#aaa",
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    {t("EMAIL")}
+                  </Text>
+                  <TextInput
+                    onChangeText={onChange}
+                    value={value}
+                    style={{
+                      fontFamily: theme.typography.PRIMARY,
+                      borderBottomColor: "#aaa",
+                      borderBottomWidth: 1,
+                      paddingVertical: 2,
+                      fontSize: 22,
+                    }}
+                  />
+                </View>
+              )}
+            />
+            <View style={{ height: 18, fontSize: 15 }}>
+              {errors.email && (
+                <Text style={{ color: "red" }}>This is required.</Text>
+              )}
+            </View>
+
+            {/* phone input */}
+            <Controller
+              name="phone"
+              control={control}
+              rules={{
+                required: "This is required",
+              }}
+              render={({ field: { onChange, value } }) => (
+                <View>
+                  <Text
+                    style={{
+                      fontFamily: theme.typography.PRIMARY,
+                      color: "#aaa",
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    {t("MOBILE NUMBER")}
+                  </Text>
+                  <TextInput
+                    keyboardType="numeric"
+                    onChangeText={onChange}
+                    value={value}
+                    style={{
+                      fontFamily: theme.typography.PRIMARY,
+                      borderBottomColor: "#aaa",
+                      borderBottomWidth: 1,
+                      paddingVertical: 2,
+                      fontSize: 22,
+                    }}
+                  />
+                </View>
+              )}
+            />
+            <View style={{ height: 18, fontSize: 15 }}>
+              {errors.phone && (
+                <Text style={{ color: "red" }}>This is required.</Text>
+              )}
+            </View>
           </View>
+          {/* end input field */}
 
-          {/* last name input */}
-          <Controller
-            name="lastName"
-            control={control}
-            rules={{
-              required: "This is required",
-            }}
-            render={({ field: { onChange, value } }) => (
-              <View>
-                <Text
-                  style={{
-                    fontFamily: theme.typography.PRIMARY,
-                    color: "#aaa",
-                    textTransform: "uppercase",
-                  }}
-                >
-                  {t("LAST NAME")}
-                </Text>
-                <TextInput
-                  onChangeText={onChange}
-                  value={value}
-                  style={{
-                    fontFamily: theme.typography.PRIMARY,
-                    borderBottomColor: "#aaa",
-                    borderBottomWidth: 1,
-                    paddingVertical: 2,
-                    fontSize: 22,
-                  }}
-                />
-              </View>
-            )}
-          />
-          <View style={{ height: 18, fontSize: 15 }}>
-            {errors.lastName && (
-              <Text style={{ color: "red" }}>This is required.</Text>
-            )}
-          </View>
-
-          {/* email input */}
-          <Controller
-            name="email"
-            control={control}
-            rules={{
-              required: "This is required",
-            }}
-            render={({ field: { onChange, value } }) => (
-              <View>
-                <Text
-                  style={{
-                    fontFamily: theme.typography.PRIMARY,
-                    color: "#aaa",
-                    textTransform: "uppercase",
-                  }}
-                >
-                  {t("EMAIL")}
-                </Text>
-                <TextInput
-                  onChangeText={onChange}
-                  value={value}
-                  style={{
-                    fontFamily: theme.typography.PRIMARY,
-                    borderBottomColor: "#aaa",
-                    borderBottomWidth: 1,
-                    paddingVertical: 2,
-                    fontSize: 22,
-                  }}
-                />
-              </View>
-            )}
-          />
-          <View style={{ height: 18, fontSize: 15 }}>
-            {errors.email && (
-              <Text style={{ color: "red" }}>This is required.</Text>
-            )}
-          </View>
-
-          {/* phone input */}
-          <Controller
-            name="phone"
-            control={control}
-            rules={{
-              required: "This is required",
-            }}
-            render={({ field: { onChange, value } }) => (
-              <View>
-                <Text
-                  style={{
-                    fontFamily: theme.typography.PRIMARY,
-                    color: "#aaa",
-                    textTransform: "uppercase",
-                  }}
-                >
-                  {t("MOBILE NUMBER")}
-                </Text>
-                <TextInput
-                  keyboardType="numeric"
-                  onChangeText={onChange}
-                  value={value}
-                  style={{
-                    fontFamily: theme.typography.PRIMARY,
-                    borderBottomColor: "#aaa",
-                    borderBottomWidth: 1,
-                    paddingVertical: 2,
-                    fontSize: 22,
-                  }}
-                />
-              </View>
-            )}
-          />
-          <View style={{ height: 18, fontSize: 15 }}>
-            {errors.phone && (
-              <Text style={{ color: "red" }}>This is required.</Text>
-            )}
-          </View>
-        </View>
-        {/* end input field */}
-
-        {/* button */}
-        <View
-          style={{
-            marginTop: 20,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <TouchableOpacity
-            onPress={handleSubmit(onSubmit)}
+          {/* button */}
+          <View
             style={{
-              paddingVertical: 10,
-              width: "50%",
-              borderRadius: 20,
-              backgroundColor: "#333",
+              marginTop: 20,
+              justifyContent: "center",
               alignItems: "center",
             }}
           >
-            <Text
+            <TouchableOpacity
+              onPress={handleSubmit(onSubmit)}
               style={{
-                fontFamily: theme.typography.PRIMARY,
-                color: "#fff",
-                textTransform: "uppercase",
+                paddingVertical: 10,
+                width: "50%",
+                borderRadius: 20,
+                backgroundColor: "#333",
+                alignItems: "center",
               }}
             >
-              {t("UPDATE")}
-            </Text>
-          </TouchableOpacity>
-        </View>
-        {/* end of button */}
-      </SafeAreaView>
-    </ScrollView>
-    // </CommonScreenView>
+              <Text
+                style={{
+                  fontFamily: theme.typography.PRIMARY,
+                  color: "#fff",
+                  textTransform: "uppercase",
+                }}
+              >
+                {t("UPDATE")}
+              </Text>
+            </TouchableOpacity>
+          </View>
+          {/* end of button */}
+        </SafeAreaView>
+      </ScrollView>
+    </>
   );
 };
 export default EditProfile;

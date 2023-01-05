@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, Image, TextInput } from "react-native";
+import { View, Text, TouchableOpacity, Image } from "react-native";
 
 import EditProfile from "../../features/profile/screens/edit.screen";
 import ChangePassword from "../../features/profile/screens/change.password.screen";
@@ -15,8 +15,6 @@ import { List, Avatar } from "react-native-paper";
 import { useTranslation } from "react-i18next";
 import * as ImagePicker from "expo-image-picker";
 import { AxiosInstance } from "../../utils";
-
-import { Buffer } from "buffer";
 
 const ProfileStack = createStackNavigator();
 
@@ -35,9 +33,9 @@ export const ProfileNavigator = ({ navigation }) => {
   const contextProfile = UsedProfile();
 
   useEffect(() => {
-    // contextProfile.SetCurrentLocation("ProfileScreen");
     setLocation(contextProfile.currentLocation);
     setLanguage(contextProfile.currentLanguage);
+
     setFirstName(contextProfile.userData.firstName);
     setLastName(contextProfile.userData.lastName);
 
@@ -48,11 +46,6 @@ export const ProfileNavigator = ({ navigation }) => {
     }
   }, [contextProfile]);
 
-  // useEffect(() => {
-  //   if (contextProfile.hasUserData === true) {
-  //     setImageBase(contextProfile.userData.profile_image.data);
-  //   }
-  // }, []);
   const openImagePicker = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -91,37 +84,13 @@ export const ProfileNavigator = ({ navigation }) => {
       }
     )
       .then((res) => {
-        console.log("success");
         contextProfile.SetUserUpdate(true);
-        // contextProfile.SetUserData(res.data.userData);
-        // contextProfile.SetHasUserData(true);
-        // // contextProfile.SetUserUpdate(true);
-        // if (Array.isArray(contextProfile.userData.profile_image.data)) {
-        //   const imageBuffer = Buffer.from(
-        //     contextProfile.userData.profile_image.data
-        //   );
-        //   contextProfile.userData.profile_image.data =
-        //     imageBuffer.toString("base64");
-        // }
       })
       .catch((err) => {
         console.log("err ", err);
       });
   };
 
-  // const getImage = async () => {
-  //   console.log("get image");
-  //   console.log("id ", contextProfile.userData._id);
-  //   await AxiosInstance.get(
-  //     `/api/users/profile-image/${contextProfile.userData._id}`
-  //   )
-  //     .then((res) => {
-  //       const imageBuffer = Buffer.from(res.data.data);
-  //       const imageBase64 = imageBuffer.toString("base64");
-  //       setHasProfileImage(true);
-  //     })
-  //     .catch((err) => console.log("err profile ", err));
-  // };
   return (
     <View style={{ flex: 1 }}>
       <View
@@ -223,8 +192,7 @@ export const ProfileNavigator = ({ navigation }) => {
                   textTransform: "uppercase",
                 }}
               >
-                {firstName}
-                {lastName}
+                {firstName} {lastName}
               </Text>
             </View>
             <Text
