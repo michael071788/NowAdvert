@@ -69,19 +69,31 @@ export const ProfileScreen = ({ navigation }) => {
     setLanguage(contextProfile.currentLanguage);
   }, [contextProfile]);
 
-  const logoutUser = useCallback(() => {
+  const logoutUser = useCallback(async () => {
     contextProfile.SetCurrentLanguage("ENGLISH");
     i18n.changeLanguage("eng");
     I18nManager.forceRTL(false);
 
-    logOut();
+    // logOut();
+    try {
+      await AsyncStorage.setItem("islogged", JSON.stringify(false));
+      await AsyncStorage.removeItem("token");
+      await AsyncStorage.removeItem("userData");
+      navigation.replace("LoginScreen");
+    } catch (error) {
+      console.log(error);
+    }
   }, [contextProfile, i18n, userAuthInfoContext]);
 
-  const logOut = async () => {
-    await AsyncStorage.clear();
-    navigation.replace("LoginScreen");
-    AsyncStorage.setItem("islogged", "false");
-  };
+  // const logOut = async () => {
+  //   try {
+  //     await AsyncStorage.removeItem("userData");
+  //     AsyncStorage.setItem("islogged", JSON.stringify(false));
+  //     navigation.replace("LoginScreen");
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
   return (
     <ScrollView vertical showsHorizontalScrollIndicator={false}>
       {/* *START - ACCOUNT* */}
@@ -310,6 +322,7 @@ export const ProfileScreen = ({ navigation }) => {
         </View>
       </View>
       {/**END - NOTIFICATION**/}
+
       {/**START - TICKETS**/}
       <View
         style={{
@@ -380,6 +393,7 @@ export const ProfileScreen = ({ navigation }) => {
         </View>
       </View>
       {/**END - TICKETS**/}
+
       {/**START - LANGUAGE**/}
       <View
         style={{
@@ -459,26 +473,6 @@ export const ProfileScreen = ({ navigation }) => {
           alignItems: "center",
         }}
       >
-        {/* <TouchableOpacity
-          style={{
-            paddingVertical: 10,
-            width: "50%",
-            borderRadius: 20,
-            backgroundColor: "#333",
-            alignItems: "center",
-          }}
-        >
-          <Text
-            style={{
-              fontFamily: theme.typography.PRIMARY,
-              color: "#fff",
-              textTransform: "uppercase",
-            }}
-          >
-            {t("LOGOUT")}
-          </Text>
-          <View></View>
-        </TouchableOpacity> */}
         <Button
           style={{ borderRadius: 20 }}
           icon="login"

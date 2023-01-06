@@ -24,7 +24,7 @@ import UsedProfile from "../../services/use.user.profile";
 const Login = ({ navigation }) => {
   const [result, setResult] = useState(false);
   const [message, setMessage] = useState("");
-
+  const [userId, setUserId] = useState("");
   const [visible, setVisible] = useState(false);
 
   const showModal = () => setVisible(true);
@@ -40,6 +40,7 @@ const Login = ({ navigation }) => {
 
   const theme = UsedTheme();
   const userAuthInfoContext = UsedUserAuthInfoContext();
+  const contextProfile = UsedProfile();
 
   useEffect(() => {
     getStatus();
@@ -64,6 +65,7 @@ const Login = ({ navigation }) => {
       navigation.replace("AdvertScreen");
     }
   };
+
   const handleBackPress = async () => {
     let login = await AsyncStorage.getItem("token");
     if (login === null) {
@@ -81,13 +83,16 @@ const Login = ({ navigation }) => {
       ]);
     }
   };
+
   const onSubmit = async (userData) => {
     try {
       await AxiosInstance.post("/api/login", userData).then((response) => {
         if (response.status === 200) {
           AsyncStorage.setItem("islogged", JSON.stringify(true));
           AsyncStorage.setItem("token", JSON.stringify(response.data.token));
-          AsyncStorage.setItem("userData", JSON.stringify(response.data));
+          AsyncStorage.setItem("userData", JSON.stringify(response.data.user));
+          contextProfile.SetUserData(response.data.user);
+          setUserId(response.data.user._id);
           showModal();
           setResult(true);
           setMessage(response.data.message);

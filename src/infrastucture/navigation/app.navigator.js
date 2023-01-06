@@ -30,12 +30,16 @@ export const AppNavigator = () => {
   useEffect(() => {
     AsyncStorage.getItem("islogged").then((value) => {
       const islogged = JSON.parse(value);
+
       if (islogged === true) {
         setIsLoggedIn(true);
+
         if (userId === "" || userId === undefined) {
           AsyncStorage.getItem("userData").then((value) => {
             const jsonData = JSON.parse(value);
-            contextProfile.SetUserData(jsonData.user);
+            console.log("jsondata ", jsonData.firstName);
+            contextProfile.SetUserData(jsonData);
+
             setUserId(contextProfile.userData._id);
           });
         }
@@ -61,6 +65,7 @@ export const AppNavigator = () => {
       .then((res) => {
         contextProfile.SetHasUserData(true);
         contextProfile.SetUserData(res.data);
+
         contextProfile.SetHasProfile(res.data.hasProfile);
         if (contextProfile.hasProfile === true) {
           if (Array.isArray(contextProfile.userData.profile_image.data)) {
@@ -71,9 +76,6 @@ export const AppNavigator = () => {
               imageBuffer.toString("base64");
           }
         }
-        // if (contextProfile.userUpdate === true) {
-        //   AsyncStorage.setItem("userData", JSON.stringify(res.data));
-        // }
 
         contextProfile.SetUserUpdate(false);
       })
