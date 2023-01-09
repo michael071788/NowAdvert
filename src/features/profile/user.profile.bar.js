@@ -30,9 +30,13 @@ export const UserProfileBar = ({ isShown, navigation, profile }) => {
       <UserProfileBarContainer isShown={isShown}>
         <UserProfileBarImageContainer>
           <Image
-            source={{
-              uri: `data:image/png;base64,${profile}`,
-            }}
+            source={
+              profile !== ""
+                ? {
+                    uri: `data:image/png;base64,${profile}`,
+                  }
+                : require("../../../assets/avatar_profile_icon.png")
+            }
             style={{ height: 33, width: 33, borderRadius: 40 }}
           />
         </UserProfileBarImageContainer>

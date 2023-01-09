@@ -146,10 +146,11 @@ export const ProfileNavigator = ({ navigation }) => {
             >
               <Image
                 source={
-                  {
-                    uri: `data:image/png;base64,${imageBase}`,
-                  }
-                  // require("../../../assets/avatar_profile_icon.png")
+                  imageBase !== ""
+                    ? {
+                        uri: `data:image/png;base64,${imageBase}`,
+                      }
+                    : require("../../../assets/avatar_profile_icon.png")
                 }
                 style={{
                   backgroundColor: "#fff",
