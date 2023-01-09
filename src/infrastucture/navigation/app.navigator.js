@@ -31,12 +31,10 @@ export const AppNavigator = () => {
     AsyncStorage.getItem("islogged").then((value) => {
       const islogged = JSON.parse(value);
       if (islogged === true) {
-        // getUser();
         setIsLoggedIn(true);
         if (userId === "" || userId === undefined) {
           AsyncStorage.getItem("userData").then((value) => {
             const jsonData = JSON.parse(value);
-            // console.log("jsondata ", jsonData);
             contextProfile.SetUserData(jsonData);
             setUserId(contextProfile.userData._id);
           });
@@ -54,7 +52,6 @@ export const AppNavigator = () => {
   useEffect(() => {
     if (contextProfile.userUpdate === true) {
       getUser();
-      // AsyncStorage.setItem("userData", JSON.stringify(contextProfile.userData));
     }
   }, [contextProfile.userUpdate]);
 
@@ -74,7 +71,6 @@ export const AppNavigator = () => {
               imageBuffer.toString("base64");
           }
         }
-
         contextProfile.SetUserUpdate(false);
       })
       .catch((err) => {

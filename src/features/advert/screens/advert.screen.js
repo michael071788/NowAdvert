@@ -37,34 +37,19 @@ import { useTranslation } from "react-i18next";
 import UsedProfile from "../../../services/use.user.profile";
 import UsedCount from "../../../services/counts.user";
 import { MOCK_DATA } from "../../../infrastucture/mockup/data.list";
-// --
-import { UsedUserAuthInfoContext } from "../../../services/user.auth.provider";
-import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Buffer } from "buffer";
 
-// --
 export const AdvertScreen = ({ route, navigation }) => {
   // eslint-disable-next-line no-unused-vars
-  const [language, setLanguage] = useState("");
-  const [userId, setUserId] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [imageBase, setImageBase] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const [shareData, setShareData] = useState([]);
   const [alreadyShare, setAlreadyShare] = useState(false);
 
-  // --
-  const userAuthInfoContext = UsedUserAuthInfoContext();
-  // --
-
   const countViewContext = UsedCount();
-
-  const [selectedData, setSelectedData] = useState([]);
 
   const mounted = useRef(false);
   const [isPreloading, setIsPreloading] = useState(true);
-  const [advertListData, setAdvertListData] = useState([]);
 
   const { t } = useTranslation();
 
@@ -95,8 +80,10 @@ export const AdvertScreen = ({ route, navigation }) => {
 
   useEffect(() => {
     if (contextProfile.hasUserData === true) {
+      setLoading(false);
       if (contextProfile.hasProfile === true) {
         setImageBase(contextProfile.userData.profile_image.data);
+        setLoading(false);
       }
     }
   }, [contextProfile]);
@@ -444,6 +431,7 @@ export const AdvertScreen = ({ route, navigation }) => {
                 isShown={true}
                 navigation={navigation}
                 profile={imageBase}
+                loading={loading}
               />
             </HeaderBarContainer>
             <AdvertCarouselContainer>

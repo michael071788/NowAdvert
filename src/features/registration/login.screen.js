@@ -24,7 +24,7 @@ import UsedProfile from "../../services/use.user.profile";
 const Login = ({ navigation }) => {
   const [result, setResult] = useState(false);
   const [message, setMessage] = useState("");
-  const [userId, setUserId] = useState("");
+  // const [userId, setUserId] = useState("");
   const [visible, setVisible] = useState(false);
 
   const showModal = () => setVisible(true);
@@ -57,7 +57,33 @@ const Login = ({ navigation }) => {
       password: "",
     },
   });
+  const getUser = async () => {
+    AsyncStorage.getItem("userId").then((value) => {
+      const userId = JSON.parse(value);
+      console.log("id ", userId);
+      AxiosInstance.get(`/api/users/${userId}`)
+        .then((res) => {
+          AsyncStorage.setItem("userData", JSON.stringify(res.data));
+          contextProfile.SetHasUserData(true);
+          contextProfile.SetUserData(res.data);
+          contextProfile.SetHasProfile(res.data.hasProfile);
+          if (contextProfile.hasProfile === true) {
+            if (Array.isArray(contextProfile.userData.profile_image.data)) {
+              const imageBuffer = Buffer.from(
+                contextProfile.userData.profile_image.data
+              );
+              contextProfile.userData.profile_image.data =
+                imageBuffer.toString("base64");
+            }
+          }
 
+          contextProfile.SetUserUpdate(false);
+        })
+        .catch((err) => {
+          console.log("err app", err);
+        });
+    });
+  };
   const getStatus = async () => {
     let login = await AsyncStorage.getItem("token");
 
@@ -92,11 +118,11 @@ const Login = ({ navigation }) => {
           AsyncStorage.setItem("token", JSON.stringify(response.data.token));
           AsyncStorage.setItem("userData", JSON.stringify(response.data.user));
           contextProfile.SetUserData(response.data.user);
-          setUserId(response.data.user._id);
           showModal();
           setResult(true);
           setMessage(response.data.message);
           setTimeout(() => {
+            // getUser();
             navigation.replace("AdvertScreen");
           }, 2000);
         }

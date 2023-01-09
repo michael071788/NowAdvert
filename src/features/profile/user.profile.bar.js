@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Image, TouchableOpacity, View } from "react-native";
+import { Image, TouchableOpacity, View, ActivityIndicator } from "react-native";
 import UsedTheme from "../../infrastucture/theme/use.theme";
 import {
   UserProfileBarContainer,
@@ -7,18 +7,14 @@ import {
   UserFullName,
 } from "../../infrastucture/theme/styles/user.profile.style";
 
-import { UsedUserAuthInfoContext } from "../../services/user.auth.provider";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import UsedProfile from "../../services/use.user.profile";
-import { AxiosInstance } from "../../utils";
-import { Buffer } from "buffer";
 
-export const UserProfileBar = ({ isShown, navigation, profile }) => {
+export const UserProfileBar = ({ isShown, navigation, profile, loading }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [imageBase, setImageBase] = useState("");
 
   const theme = UsedTheme();
-  const userAuthInfoContext = UsedUserAuthInfoContext();
   const contextProfile = UsedProfile();
 
   useEffect(() => {
@@ -29,16 +25,20 @@ export const UserProfileBar = ({ isShown, navigation, profile }) => {
     <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
       <UserProfileBarContainer isShown={isShown}>
         <UserProfileBarImageContainer>
-          <Image
-            source={
-              profile !== ""
-                ? {
-                    uri: `data:image/png;base64,${profile}`,
-                  }
-                : require("../../../assets/avatar_profile_icon.png")
-            }
-            style={{ height: 33, width: 33, borderRadius: 40 }}
-          />
+          {loading === true ? (
+            <ActivityIndicator size="small" color="#00C853" />
+          ) : (
+            <Image
+              source={
+                contextProfile.hasProfile === true
+                  ? {
+                      uri: `data:image/png;base64,${profile}`,
+                    }
+                  : require("../../../assets/avatar_profile_icon.png")
+              }
+              style={{ height: 33, width: 33, borderRadius: 40 }}
+            />
+          )}
         </UserProfileBarImageContainer>
         <View style={{ justifyContent: "center", alignItems: "center" }}>
           <UserFullName theme={theme}>

@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  ActivityIndicator,
+} from "react-native";
 
 import EditProfile from "../../features/profile/screens/edit.screen";
 import ChangePassword from "../../features/profile/screens/change.password.screen";
@@ -23,6 +29,8 @@ export const ProfileNavigator = ({ navigation }) => {
   const [language, setLanguage] = useState("");
   const [imageBase, setImageBase] = useState("");
 
+  const [loading, setLoading] = useState(true);
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   // eslint-disable-next-line no-unused-vars
@@ -42,6 +50,7 @@ export const ProfileNavigator = ({ navigation }) => {
     if (contextProfile.hasUserData === true) {
       if (contextProfile.hasProfile === true) {
         setImageBase(contextProfile.userData.profile_image.data);
+        setLoading(false);
       }
     }
   }, [contextProfile]);
@@ -144,21 +153,30 @@ export const ProfileNavigator = ({ navigation }) => {
                 alignItems: "center",
               }}
             >
-              <Image
-                source={
-                  imageBase !== ""
-                    ? {
-                        uri: `data:image/png;base64,${imageBase}`,
-                      }
-                    : require("../../../assets/avatar_profile_icon.png")
-                }
+              <View
                 style={{
                   backgroundColor: "#fff",
                   height: 180,
                   width: 180,
                   borderRadius: 180,
                 }}
-              />
+              >
+                <Image
+                  source={
+                    contextProfile.hasProfile === true
+                      ? {
+                          uri: `data:image/png;base64,${imageBase}`,
+                        }
+                      : require("../../../assets/avatar_profile_icon.png")
+                  }
+                  style={{
+                    backgroundColor: "#fff",
+                    height: "100%",
+                    width: "100%",
+                    borderRadius: 180,
+                  }}
+                />
+              </View>
 
               <TouchableOpacity
                 onPress={openImagePicker}
