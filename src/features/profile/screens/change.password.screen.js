@@ -6,6 +6,7 @@ import {
   SafeAreaView,
   TextInput,
   TouchableOpacity,
+  BackHandler,
 } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import UsedTheme from "../../../infrastucture/theme/use.theme";
@@ -29,8 +30,13 @@ const ChangePassword = ({ navigation }) => {
 
   useEffect(() => {
     contextProfile.SetCurrentLocation("Change Password");
+    BackHandler.addEventListener("hardwareBackPress", handleBackPress);
   }, [contextProfile]);
 
+  const handleBackPress = async () => {
+    navigation.goBack();
+    // console.log("back");
+  };
   const {
     control,
     handleSubmit,

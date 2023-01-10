@@ -57,33 +57,7 @@ const Login = ({ navigation }) => {
       password: "",
     },
   });
-  const getUser = async () => {
-    AsyncStorage.getItem("userId").then((value) => {
-      const userId = JSON.parse(value);
-      console.log("id ", userId);
-      AxiosInstance.get(`/api/users/${userId}`)
-        .then((res) => {
-          AsyncStorage.setItem("userData", JSON.stringify(res.data));
-          contextProfile.SetHasUserData(true);
-          contextProfile.SetUserData(res.data);
-          contextProfile.SetHasProfile(res.data.hasProfile);
-          if (contextProfile.hasProfile === true) {
-            if (Array.isArray(contextProfile.userData.profile_image.data)) {
-              const imageBuffer = Buffer.from(
-                contextProfile.userData.profile_image.data
-              );
-              contextProfile.userData.profile_image.data =
-                imageBuffer.toString("base64");
-            }
-          }
 
-          contextProfile.SetUserUpdate(false);
-        })
-        .catch((err) => {
-          console.log("err app", err);
-        });
-    });
-  };
   const getStatus = async () => {
     let login = await AsyncStorage.getItem("token");
 

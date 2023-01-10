@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Image,
   ActivityIndicator,
+  BackHandler,
 } from "react-native";
 
 import EditProfile from "../../features/profile/screens/edit.screen";
@@ -47,6 +48,8 @@ export const ProfileNavigator = ({ navigation }) => {
     setFirstName(contextProfile.userData.firstName);
     setLastName(contextProfile.userData.lastName);
 
+    BackHandler.addEventListener("hardwareBackPress", handleBackPress);
+
     if (contextProfile.hasUserData === true) {
       if (contextProfile.hasProfile === true) {
         setImageBase(contextProfile.userData.profile_image.data);
@@ -55,6 +58,9 @@ export const ProfileNavigator = ({ navigation }) => {
     }
   }, [contextProfile]);
 
+  const handleBackPress = () => {
+    setLocation("Profile Screen");
+  };
   const openImagePicker = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,

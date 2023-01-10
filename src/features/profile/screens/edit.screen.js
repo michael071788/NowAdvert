@@ -33,6 +33,10 @@ const EditProfile = ({ navigation }) => {
     BackHandler.addEventListener("hardwareBackPress", handleBackPress);
   }, [contextProfile]);
 
+  // useEffect(() => {
+  //   BackHandler.addEventListener("hardwareBackPress", handleBackPress);
+  // }, []);
+
   const {
     control,
     handleSubmit,
@@ -61,7 +65,9 @@ const EditProfile = ({ navigation }) => {
     }
   };
   const handleBackPress = async () => {
+    // contextProfile.SetCurrentLocation("Profile Screen");
     navigation.goBack();
+    // console.log("back");
   };
   return (
     <>

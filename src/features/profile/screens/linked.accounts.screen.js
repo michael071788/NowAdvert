@@ -6,21 +6,27 @@ import {
   SafeAreaView,
   TextInput,
   TouchableOpacity,
+  BackHandler,
 } from "react-native";
 import UsedTheme from "../../../infrastucture/theme/use.theme";
 import UsedProfile from "../../../services/use.user.profile";
 import { useTranslation } from "react-i18next";
 import { useForm, Controller } from "react-hook-form";
 
-const LinkedAccounts = () => {
+const LinkedAccounts = ({ navigation }) => {
   const theme = UsedTheme();
   const contextProfile = UsedProfile();
   const { t } = useTranslation();
 
   useEffect(() => {
     contextProfile.SetCurrentLocation("Linked Accounts");
+    BackHandler.addEventListener("hardwareBackPress", handleBackPress);
   }, [contextProfile]);
 
+  const handleBackPress = async () => {
+    navigation.goBack();
+    // console.log("back");
+  };
   const {
     control,
     handleSubmit,
