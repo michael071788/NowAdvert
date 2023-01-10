@@ -6,6 +6,7 @@ import {
   Image,
   ActivityIndicator,
   BackHandler,
+  AppState,
 } from "react-native";
 
 import EditProfile from "../../features/profile/screens/edit.screen";
@@ -34,6 +35,9 @@ export const ProfileNavigator = ({ navigation }) => {
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+
+  const [appState, setAppState] = useState(AppState.currentState);
+  const [dateNow, setDateNow] = useState("");
   // eslint-disable-next-line no-unused-vars
 
   const { t } = useTranslation();
@@ -48,7 +52,33 @@ export const ProfileNavigator = ({ navigation }) => {
     setFirstName(contextProfile.userData.firstName);
     setLastName(contextProfile.userData.lastName);
 
-    BackHandler.addEventListener("hardwareBackPress", handleBackPress);
+    const handleAppStateChange = (nextAppState) => {
+      setAppState(nextAppState);
+    };
+
+    AppState.addEventListener("change", handleAppStateChange);
+
+    let now = new Date();
+    let months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+
+    let year = now.getFullYear();
+    let month = months[now.getMonth()];
+    let day = now.getDate();
+
+    setDateNow(`${year} ${month} ${day}`);
 
     if (contextProfile.hasUserData === true) {
       if (contextProfile.hasProfile === true) {
@@ -56,6 +86,7 @@ export const ProfileNavigator = ({ navigation }) => {
         setLoading(false);
       }
     }
+    BackHandler.addEventListener("hardwareBackPress", handleBackPress);
   }, [contextProfile]);
 
   const handleBackPress = () => {
@@ -229,7 +260,8 @@ export const ProfileNavigator = ({ navigation }) => {
               }}
             >
               {/* active: 26 May 2022 */}
-              {t("ACTIVE: 26 MAY 2022")}
+              {/* {t("ACTIVE: 26 MAY 2022")} */}
+              {appState} : {dateNow}
             </Text>
           </View>
         </View>
