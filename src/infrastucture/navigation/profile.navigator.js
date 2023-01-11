@@ -87,6 +87,10 @@ export const ProfileNavigator = ({ navigation }) => {
       }
     }
     BackHandler.addEventListener("hardwareBackPress", handleBackPress);
+
+    return () => {
+      BackHandler.removeEventListener("hardwareBackPress", handleBackPress);
+    };
   }, [contextProfile]);
 
   const handleBackPress = () => {
@@ -198,21 +202,29 @@ export const ProfileNavigator = ({ navigation }) => {
                   borderRadius: 180,
                 }}
               >
-                <Image
-                  source={
-                    contextProfile.hasProfile === true
-                      ? {
-                          uri: `data:image/png;base64,${imageBase}`,
-                        }
-                      : require("../../../assets/avatar_profile_icon.png")
-                  }
-                  style={{
-                    backgroundColor: "#fff",
-                    height: "100%",
-                    width: "100%",
-                    borderRadius: 180,
-                  }}
-                />
+                {loading === false ? (
+                  <Image
+                    source={
+                      contextProfile.hasProfile === true
+                        ? {
+                            uri: `data:image/png;base64,${imageBase}`,
+                          }
+                        : require("../../../assets/avatar_profile_icon.png")
+                    }
+                    style={{
+                      backgroundColor: "#fff",
+                      height: "100%",
+                      width: "100%",
+                      borderRadius: 180,
+                    }}
+                  />
+                ) : (
+                  <View
+                    style={{ justifyContent: "center", alignItems: "center" }}
+                  >
+                    <ActivityIndicator size="large" color="#00C853" />
+                  </View>
+                )}
               </View>
 
               <TouchableOpacity

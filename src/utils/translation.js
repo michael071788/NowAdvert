@@ -43,6 +43,10 @@ const resources = {
       "HOORAY! YOU JUST WON": "مرحى! لقد فزت للتو",
       "You'll Receive": "سوف تتلقى",
       "WATCH & WIN": "شاهد واربح",
+      "WANT TO WIN ANOTHER TICKET?": "هل تريد الفوز بتذكرة أخرى؟",
+      "DOWNLOAD THE APP AND DOUBLE YOUR CHANCE":
+        "قم بتنزيل التطبيق وضاعف فرصتك",
+      "DOWNLOAD NOW": "التحميل الان",
     },
   },
   fil: {

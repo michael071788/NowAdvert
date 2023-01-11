@@ -170,8 +170,6 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
       }
     )
       .then((response) => {
-        // console.log("response ", response.data.result);
-        // countViewContext.SetUserTickets(response.data.result.earnedTickets);
         contextProfile.SetUserData(response.data.result);
       })
       .then((err) => console.log(err));
@@ -351,7 +349,7 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
                         fontFamily: theme.typography.PRIMARY,
                       }}
                     >
-                      WANT TO WIN ANOTHER TICKET?
+                      {t("WANT TO WIN ANOTHER TICKET?")}
                     </Text>
                     <Text
                       style={{
@@ -359,7 +357,7 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
                         fontFamily: theme.typography.PRIMARY,
                       }}
                     >
-                      DOWNLOAD THE APP AND DOUBLE YOUR CHANCE
+                      {t("DOWNLOAD THE APP AND DOUBLE YOUR CHANCE")}
                     </Text>
                   </View>
                   <View
@@ -402,7 +400,7 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
                         fontFamily: theme.typography.PRIMARY,
                       }}
                     >
-                      DOWNLOAD NOW
+                      {t("DOWNLOAD NOW")}
                     </Button>
                   </View>
                 </View>
