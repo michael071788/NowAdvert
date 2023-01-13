@@ -90,10 +90,9 @@ export const ProfileNavigator = ({ navigation }) => {
     BackHandler.addEventListener("hardwareBackPress", handleBackPress);
 
     // console.log(contextProfile.userData.profile_image.data.data);
-    // return () => {
-    //   BackHandler.removeEventListener("hardwareBackPress", handleBackPress);
-    // };
-    return () => {};
+    return () => {
+      BackHandler.removeEventListener("hardwareBackPress", handleBackPress);
+    };
   }, [contextProfile]);
 
   const handleBackPress = () => {
