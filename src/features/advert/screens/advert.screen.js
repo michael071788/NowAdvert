@@ -37,6 +37,7 @@ import { useTranslation } from "react-i18next";
 import UsedProfile from "../../../services/use.user.profile";
 import UsedCount from "../../../services/counts.user";
 import { MOCK_DATA } from "../../../infrastucture/mockup/data.list";
+import { Buffer } from "buffer";
 
 export const AdvertScreen = ({ route, navigation }) => {
   // eslint-disable-next-line no-unused-vars
@@ -79,10 +80,12 @@ export const AdvertScreen = ({ route, navigation }) => {
       .substr(1);
 
   useEffect(() => {
+    // console.log(contextProfile.userData);
     if (contextProfile.hasUserData === true) {
       setLoading(false);
       if (contextProfile.hasProfile === true) {
         setImageBase(contextProfile.userData.profile_image.data);
+        // console.log(contextProfile.userData.profile_image.data.data);
         setLoading(false);
       }
     }
@@ -157,7 +160,7 @@ export const AdvertScreen = ({ route, navigation }) => {
           }
         });
         // setAdvertListData(newData);
-        console.log("context ", contextProfile.userData._id);
+
         countViewContext.SetAdvertData(newData);
       })
       .catch((error) => {

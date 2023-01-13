@@ -88,17 +88,26 @@ const Login = ({ navigation }) => {
     try {
       await AxiosInstance.post("/api/login", userData).then((response) => {
         if (response.status === 200) {
-          AsyncStorage.setItem("islogged", JSON.stringify(true));
-          AsyncStorage.setItem("token", JSON.stringify(response.data.token));
-          AsyncStorage.setItem("userData", JSON.stringify(response.data.user));
-          contextProfile.SetUserData(response.data.user);
-          showModal();
-          setResult(true);
-          setMessage(response.data.message);
-          setTimeout(() => {
-            // getUser();
-            navigation.replace("AdvertScreen");
-          }, 2000);
+          if (response.data.user.isVerified === false) {
+            navigation.navigate("VerificationScreen", {
+              userEmail: response.data.user.email,
+            });
+          } else {
+            AsyncStorage.setItem("islogged", JSON.stringify(true));
+            AsyncStorage.setItem("token", JSON.stringify(response.data.token));
+            AsyncStorage.setItem(
+              "userData",
+              JSON.stringify(response.data.user)
+            );
+            contextProfile.SetUserData(response.data.user);
+            showModal();
+            setResult(true);
+            setMessage(response.data.message);
+            setTimeout(() => {
+              // getUser();
+              navigation.replace("AdvertScreen");
+            }, 2000);
+          }
         }
       });
     } catch (error) {

@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useState, useRef, useEffect } from "react";
 import {
   View,
@@ -8,6 +9,8 @@ import {
 } from "react-native";
 import { HeaderText } from "../../infrastucture/theme/styles/auth.components";
 import UsedTheme from "../../infrastucture/theme/use.theme";
+import UsedProfile from "../../services/use.user.profile";
+import { AxiosInstance } from "../../utils";
 
 const inputs = Array(4).fill("");
 let newInputIndex = 0;
@@ -18,15 +21,34 @@ const isObjValid = (obj) => {
 
 const Verification = ({ route, navigation }) => {
   const theme = UsedTheme();
+  const contextProfile = UsedProfile();
+
+  const { userEmail } = route.params;
 
   const input = useRef();
-  const [OTP, setOTP] = useState({ 0: "", 1: "", 2: "", 3: "" });
+  const [OTPVal, setOTPVal] = useState({ 0: "", 1: "", 2: "", 3: "" });
   const [nextInputIndex, setNextInputIndex] = useState(0);
 
+  useEffect(() => {
+    generateOtp();
+  }, []);
+
+  const generateOtp = async () => {
+    console.log("email", userEmail);
+    try {
+      await AxiosInstance.post("/api/users/generate-otp", {
+        email: userEmail,
+      }).then((res) => {
+        console.log(res.data);
+      });
+    } catch (error) {
+      console.log(error.response.data.message);
+    }
+  };
   const handleChangeText = (text, index) => {
-    const newOTP = { ...OTP };
+    const newOTP = { ...OTPVal };
     newOTP[index] = text;
-    setOTP(newOTP);
+    setOTPVal(newOTP);
 
     const lastInputIndex = inputs.length - 1;
     if (!text) newInputIndex = index === 0 ? 0 : index - 1;
@@ -38,18 +60,40 @@ const Verification = ({ route, navigation }) => {
     input.current.focus();
   }, [nextInputIndex]);
 
-  const submitOTP = () => {
+  const verifyOTP = () => {
     Keyboard.dismiss();
 
-    if (isObjValid(OTP)) {
+    if (isObjValid(OTPVal)) {
       let val = "";
 
-      Object.values(OTP).forEach((v) => {
+      Object.values(OTPVal).forEach((v) => {
         val += v;
       });
-      console.log(val);
+      submitOTP(val);
+      // console.log("otp", val);
     }
   };
+
+  const submitOTP = async (otpVal) => {
+    try {
+      await AxiosInstance.post("/api/users/verify-otp", {
+        email: userEmail,
+        otp: otpVal,
+      }).then((res) => {
+        if (res.status === 200) {
+          AsyncStorage.setItem("islogged", JSON.stringify(true));
+          AsyncStorage.setItem("token", JSON.stringify(res.data.token));
+          AsyncStorage.setItem("userData", JSON.stringify(res.data.user));
+          contextProfile.SetUserData(res.data.user);
+          navigation.navigate("AdvertScreen");
+          // console.log("success ", res.data);
+        }
+      });
+    } catch (error) {
+      console.log(error.response.data.message);
+    }
+  };
+
   return (
     <View
       style={{
@@ -80,7 +124,7 @@ const Verification = ({ route, navigation }) => {
                 }}
               >
                 <TextInput
-                  value={OTP[index]}
+                  value={OTPVal[index]}
                   onChangeText={(text) => handleChangeText(text, index)}
                   ref={nextInputIndex === index ? input : null}
                   keyboardType="numeric"
@@ -100,7 +144,7 @@ const Verification = ({ route, navigation }) => {
           </View>
 
           <TouchableOpacity
-            onPress={submitOTP}
+            onPress={verifyOTP}
             style={{
               backgroundColor: "#333",
               borderRadius: 20,
@@ -149,7 +193,9 @@ const Verification = ({ route, navigation }) => {
                 >
                   DON'T RECEIVE A CODE?
                 </Text>
-                <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("LoginScreen")}
+                >
                   <Text style={{ fontFamily: theme.typography.PRIMARY }}>
                     RESEND
                   </Text>

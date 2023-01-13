@@ -81,6 +81,7 @@ export const ProfileNavigator = ({ navigation }) => {
     setDateNow(`${year} ${month} ${day}`);
 
     if (contextProfile.hasUserData === true) {
+      setLoading(false);
       if (contextProfile.hasProfile === true) {
         setImageBase(contextProfile.userData.profile_image.data);
         setLoading(false);
@@ -88,14 +89,17 @@ export const ProfileNavigator = ({ navigation }) => {
     }
     BackHandler.addEventListener("hardwareBackPress", handleBackPress);
 
-    return () => {
-      BackHandler.removeEventListener("hardwareBackPress", handleBackPress);
-    };
+    // console.log(contextProfile.userData.profile_image.data.data);
+    // return () => {
+    //   BackHandler.removeEventListener("hardwareBackPress", handleBackPress);
+    // };
+    return () => {};
   }, [contextProfile]);
 
   const handleBackPress = () => {
     setLocation("Profile Screen");
   };
+
   const openImagePicker = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -134,6 +138,7 @@ export const ProfileNavigator = ({ navigation }) => {
       }
     )
       .then((res) => {
+        console.log("success");
         contextProfile.SetUserUpdate(true);
       })
       .catch((err) => {

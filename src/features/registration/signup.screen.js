@@ -44,18 +44,20 @@ const SignUp = ({ navigation }) => {
   });
   const onSubmit = async (userData) => {
     try {
-      await AxiosInstance.post("/api/users/signup", userData)
-      .then((response) => {
-        console.log(response);
-        if (response.status === 201) {
-          setResult(true);
-          setMessage(response.data.message);
-          showModal();
-          setTimeout(() => {
-            navigation.navigate("VerificationScreen");
-          }, 2000);
+      await AxiosInstance.post("/api/users/signup", userData).then(
+        (response) => {
+          if (response.status === 201) {
+            setResult(true);
+            setMessage(response.data.message);
+            showModal();
+            setTimeout(() => {
+              navigation.navigate("VerificationScreen", {
+                userEmail: response.data.data.email,
+              });
+            }, 2000);
+          }
         }
-      });
+      );
     } catch (error) {
       setMessage(error.response.data.message);
       // console.log(error.response.data.message);

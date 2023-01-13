@@ -56,6 +56,7 @@ export const AppNavigator = () => {
   }, [contextProfile.userUpdate]);
 
   const getUser = async () => {
+    console.log("get user");
     await AxiosInstance.get(`/api/users/${contextProfile.userData._id}`)
       .then((res) => {
         AsyncStorage.setItem("userData", JSON.stringify(res.data));
@@ -71,6 +72,7 @@ export const AppNavigator = () => {
               imageBuffer.toString("base64");
           }
         }
+        // console.log(contextProfile.userData);
         contextProfile.SetUserUpdate(false);
       })
       .catch((err) => {
