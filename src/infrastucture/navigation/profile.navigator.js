@@ -138,7 +138,9 @@ export const ProfileNavigator = ({ navigation }) => {
     )
       .then((res) => {
         console.log("success");
+        setLoading(true);
         contextProfile.SetUserUpdate(true);
+        setLoading(false);
       })
       .catch((err) => {
         console.log("err ", err);
