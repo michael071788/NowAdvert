@@ -46,6 +46,7 @@ const SignUp = ({ navigation }) => {
     try {
       await AxiosInstance.post("/api/users/signup", userData).then(
         (response) => {
+          console.log("response", response.data);
           if (response.status === 201) {
             setResult(true);
             setMessage(response.data.message);
@@ -60,8 +61,6 @@ const SignUp = ({ navigation }) => {
       );
     } catch (error) {
       setMessage(error.response.data.message);
-
-      console.log(error.response);
       setResult(false);
       showModal();
     }

@@ -17,7 +17,6 @@ import UsedProfile from "../../services/use.user.profile";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AxiosInstance } from "../../utils";
 import { Buffer } from "buffer";
-import { TestScreen } from "../../features/home/screens/test.screen";
 
 const AppStackNavigator = createStackNavigator();
 
@@ -56,7 +55,6 @@ export const AppNavigator = () => {
   }, [contextProfile.userUpdate]);
 
   const getUser = async () => {
-    console.log("get user");
     await AxiosInstance.get(`/api/users/${contextProfile.userData._id}`)
       .then((res) => {
         AsyncStorage.setItem("userData", JSON.stringify(res.data));
@@ -105,8 +103,6 @@ export const AppNavigator = () => {
             name="LanguagesScreen"
             component={LanguageScreen}
           />
-
-          <AppStackNavigator.Screen name="TestScreen" component={TestScreen} />
 
           <AppStackNavigator.Screen
             name="LoginScreen"
