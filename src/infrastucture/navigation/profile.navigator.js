@@ -89,7 +89,6 @@ export const ProfileNavigator = ({ navigation }) => {
     }
     BackHandler.addEventListener("hardwareBackPress", handleBackPress);
 
-    // console.log(contextProfile.userData.profile_image.data.data);
     return () => {
       BackHandler.removeEventListener("hardwareBackPress", handleBackPress);
     };
@@ -105,7 +104,6 @@ export const ProfileNavigator = ({ navigation }) => {
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
-      // base64: true,
     });
 
     if (!result.cancelled) {
@@ -114,7 +112,6 @@ export const ProfileNavigator = ({ navigation }) => {
       } catch (error) {
         console.log(error);
       }
-      // setImage(result.uri);
     }
   };
 
@@ -164,7 +161,6 @@ export const ProfileNavigator = ({ navigation }) => {
               : navigation.navigate("ProfileScreen");
           }}
         >
-          {/* <List.Icon icon="chevron-left" /> */}
           <List.Icon
             icon={
               location === "Profile Screen"
@@ -277,8 +273,6 @@ export const ProfileNavigator = ({ navigation }) => {
                 textTransform: "uppercase",
               }}
             >
-              {/* active: 26 May 2022 */}
-              {/* {t("ACTIVE: 26 MAY 2022")} */}
               {appState} : {dateNow}
             </Text>
           </View>

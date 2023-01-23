@@ -62,7 +62,6 @@ const LanguageScreen = ({ navigation }) => {
       >
         <TouchableOpacity
           onPress={() => {
-            // setLocation("Profile Screen");
             navigation.navigate("ProfileScreen");
           }}
         >
@@ -75,8 +74,6 @@ const LanguageScreen = ({ navigation }) => {
             fontFamily: theme.typography.PRIMARY,
             fontSize: 20,
             textTransform: "uppercase",
-            // alignSelf: language === "Arabic" ? "center" : "flex-start",
-            // justifyContent: language === "Arabic" ? "flex-end" : "flex-start",
           }}
         >
           {t("CHOOSE LANGUAGE")}

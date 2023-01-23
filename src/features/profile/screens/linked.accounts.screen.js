@@ -25,7 +25,6 @@ const LinkedAccounts = ({ navigation }) => {
 
   const handleBackPress = async () => {
     navigation.goBack();
-    // console.log("back");
   };
   const {
     control,

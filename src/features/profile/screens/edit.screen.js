@@ -56,18 +56,15 @@ const EditProfile = ({ navigation }) => {
         userData
       ).then((response) => {
         contextProfile.SetUserUpdate(true);
-        // contextProfile.SetUserData(response.data.user);
+
         navigation.goBack();
       });
     } catch (error) {
-      // console.log(error.response.data.message);
       console.log("error ", error);
     }
   };
   const handleBackPress = async () => {
-    // contextProfile.SetCurrentLocation("Profile Screen");
     navigation.goBack();
-    // console.log("back");
   };
   return (
     <>

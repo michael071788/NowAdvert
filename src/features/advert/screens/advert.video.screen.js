@@ -37,8 +37,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export const AdvertVideoScreen = ({ route, navigation }) => {
   // eslint-disable-next-line no-unused-vars
   const [language, setLanguage] = useState("");
-  const [data, setData] = useState([]);
-  // const [userId, setUserId] = useState("");
+
   const [alreadyWatch, setAlreadyWatch] = useState(false);
   const [doneWatching, setDoneWatching] = useState(false);
   const [ticketNumber, setTicketNumber] = useState("");
@@ -73,10 +72,6 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
     setLanguage(contextProfile.currentLanguage);
   }, [contextProfile]);
 
-  // useEffect(() => {
-  //   countViewContext.alreadyWatch;
-  // }, [countViewContext]);
-
   useEffect(() => {
     if (doneWatching === true) {
       watchVideo(id);
@@ -108,8 +103,6 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
       //show modal ticket when done
       if (status.positionMillis === status.durationMillis) {
         if (status.didJustFinish) {
-          // countViewContext.SetAddViewCount(id);
-          // countViewContext.SetAlreadyWatch(true);
           showModal();
           if (!watch.includes(contextProfile.userData._id)) {
             if (alreadyWatch === false) {
@@ -150,7 +143,7 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
             return item;
           }
         });
-        // setData(newData);
+
         countViewContext.SetAdvertData(newData);
         setTicketNumber(random);
         earnTickets(id);
@@ -296,8 +289,6 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
                               color: theme.colors.PRIMARY,
                             }}
                           >
-                            {/* 000-01234687-4817-01 */}
-                            {/* {random} */}
                             {ticketNumber}
                           </Text>
                         </View>
@@ -406,9 +397,6 @@ export const AdvertVideoScreen = ({ route, navigation }) => {
                 </View>
               </View>
             </View>
-            {/*          
-            <ModalContainer3 style={{ flex: 20 }}>   
-            </ModalContainer3> */}
           </Modal>
         </>
       )}

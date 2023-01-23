@@ -24,7 +24,7 @@ import UsedProfile from "../../services/use.user.profile";
 const Login = ({ navigation }) => {
   const [result, setResult] = useState(false);
   const [message, setMessage] = useState("");
-  // const [userId, setUserId] = useState("");
+
   const [visible, setVisible] = useState(false);
 
   const showModal = () => setVisible(true);
@@ -104,7 +104,6 @@ const Login = ({ navigation }) => {
             setResult(true);
             setMessage(response.data.message);
             setTimeout(() => {
-              // getUser();
               navigation.replace("AdvertScreen");
             }, 2000);
           }

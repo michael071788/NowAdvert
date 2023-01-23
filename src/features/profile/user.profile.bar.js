@@ -12,7 +12,6 @@ import UsedProfile from "../../services/use.user.profile";
 export const UserProfileBar = ({ isShown, navigation, profile, loading }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [imageBase, setImageBase] = useState("");
 
   const theme = UsedTheme();
   const contextProfile = UsedProfile();

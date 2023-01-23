@@ -72,7 +72,7 @@ export const AppNavigator = () => {
               imageBuffer.toString("base64");
           }
         }
-        // console.log(contextProfile.userData);
+
         contextProfile.SetUserUpdate(false);
       })
       .catch((err) => {

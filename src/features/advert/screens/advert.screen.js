@@ -1,12 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import {
-  TouchableOpacity,
-  View,
-  Text,
-  BackHandler,
-  Alert,
-  Image,
-} from "react-native";
+import { TouchableOpacity, View, Text, BackHandler, Alert } from "react-native";
 import Share from "react-native-share";
 import UsedTheme from "../../../infrastucture/theme/use.theme";
 import {
@@ -80,12 +73,11 @@ export const AdvertScreen = ({ route, navigation }) => {
       .substr(1);
 
   useEffect(() => {
-    // console.log(contextProfile.userData);
     if (contextProfile.hasUserData === true) {
       setLoading(false);
       if (contextProfile.hasProfile === true) {
         setImageBase(contextProfile.userData.profile_image.data);
-        // console.log(contextProfile.userData.profile_image.data.data);
+
         setLoading(false);
       }
     }
@@ -119,8 +111,6 @@ export const AdvertScreen = ({ route, navigation }) => {
         const ShareResponse = await Share.shareSingle(shareOptions);
         const result = ShareResponse;
         if (result.success) {
-          // shareVideo(selectedItem._id);
-          // countViewContext.SetAddShareCount(selectedItem._id);
           hideShareModal();
 
           if (!shareData.includes(contextProfile.userData._id)) {
@@ -146,7 +136,6 @@ export const AdvertScreen = ({ route, navigation }) => {
   };
   const hideShareModal = () => setVisibleShareModal(false);
 
-  // initial
   const likeVideo = async (id) => {
     await AxiosInstance.put(`/api/advert/like/${contextProfile.userData._id}`, {
       videoId: id,
@@ -159,8 +148,6 @@ export const AdvertScreen = ({ route, navigation }) => {
             return item;
           }
         });
-        // setAdvertListData(newData);
-
         countViewContext.SetAdvertData(newData);
       })
       .catch((error) => {
@@ -182,7 +169,7 @@ export const AdvertScreen = ({ route, navigation }) => {
             return item;
           }
         });
-        // setAdvertListData(newData);
+
         countViewContext.SetAdvertData(newData);
       })
       .catch((err) => {
@@ -205,7 +192,7 @@ export const AdvertScreen = ({ route, navigation }) => {
             return item;
           }
         });
-        // advertListData(newData);
+
         countViewContext.SetAdvertData(newData);
       })
       .catch((err) => {
@@ -246,9 +233,8 @@ export const AdvertScreen = ({ route, navigation }) => {
                 companyName: item.companyName,
                 watch: item.watch,
                 random: random,
-                // userId: userId,
               });
-              // countViewContext.SetCurrentViews(item.watch);
+
               primaryContext.ShowUserProfileBar(false);
             }}
             activeOpacity={0.8}
@@ -280,10 +266,8 @@ export const AdvertScreen = ({ route, navigation }) => {
                         ? "red"
                         : ""
                     }
-                    // label={countViewContext.countLike(item._id)}
                     label={item.likes.length}
                     onpress={() => {
-                      // onlikeVideo(item._id);
                       item.likes.includes(contextProfile.userData._id)
                         ? unlikeVideo(item._id)
                         : likeVideo(item._id);
@@ -297,7 +281,6 @@ export const AdvertScreen = ({ route, navigation }) => {
                         ? "black"
                         : ""
                     }
-                    // label={countViewContext.countViews(item._id)}
                     label={item.watch.length}
                   />
                   <ButtonContainer
@@ -307,7 +290,6 @@ export const AdvertScreen = ({ route, navigation }) => {
                         ? "green"
                         : ""
                     }
-                    // label={countViewContext.countShare(item._id)}
                     label={item.share.length}
                     onpress={() => {
                       setLogoURI(item.logoURI);
@@ -396,9 +378,8 @@ export const AdvertScreen = ({ route, navigation }) => {
 
         .then((response) => {
           _data = response.data;
-          // setAdvertListData(response.data);
+
           countViewContext.SetAdvertData(response.data);
-          // setData(response.data);
         })
         .catch((e) => {
           console.log(e);
@@ -408,7 +389,6 @@ export const AdvertScreen = ({ route, navigation }) => {
 
     fetchData()
       .then((data) => {
-        // setAdvertListData(data);
         countViewContext.SetAdvertData(data);
 
         setIsPreloading(false);

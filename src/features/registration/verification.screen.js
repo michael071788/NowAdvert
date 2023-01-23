@@ -70,7 +70,6 @@ const Verification = ({ route, navigation }) => {
         val += v;
       });
       submitOTP(val);
-      // console.log("otp", val);
     }
   };
 
@@ -86,7 +85,6 @@ const Verification = ({ route, navigation }) => {
           AsyncStorage.setItem("userData", JSON.stringify(res.data.user));
           contextProfile.SetUserData(res.data.user);
           navigation.navigate("AdvertScreen");
-          // console.log("success ", res.data);
         }
       });
     } catch (error) {
@@ -209,8 +207,5 @@ const Verification = ({ route, navigation }) => {
     </View>
   );
 };
-
-// const { width } = Dimensions.get("window");
-// const inputWidth = Math.round(width / 6);
 
 export default Verification;

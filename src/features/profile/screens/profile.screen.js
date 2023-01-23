@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
 import {
-  // Image,
   I18nManager,
   ScrollView,
   Switch,
@@ -74,7 +73,6 @@ export const ProfileScreen = ({ navigation }) => {
     i18n.changeLanguage("eng");
     I18nManager.forceRTL(false);
 
-    // logOut();
     try {
       await AsyncStorage.setItem("islogged", JSON.stringify(false));
       await AsyncStorage.removeItem("token");
@@ -85,22 +83,13 @@ export const ProfileScreen = ({ navigation }) => {
     }
   }, [contextProfile, i18n, userAuthInfoContext]);
 
-  // const logOut = async () => {
-  //   try {
-  //     await AsyncStorage.removeItem("userData");
-  //     AsyncStorage.setItem("islogged", JSON.stringify(false));
-  //     navigation.replace("LoginScreen");
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
   return (
     <ScrollView vertical showsHorizontalScrollIndicator={false}>
       {/* *START - ACCOUNT* */}
       <View
         style={{
           flex: 1,
-          // backgroundColor: "#2138B0",
+
           margin: 10,
           borderRadius: 10,
         }}
@@ -128,7 +117,6 @@ export const ProfileScreen = ({ navigation }) => {
           <TouchableOpacity
             onPress={() => navigation.navigate("EditProfileScreen")}
           >
-            {/* <View style={{ flexDirection: "row" }}> */}
             <View
               style={{
                 flexDirection: language === "Arabic" ? "row-reverse" : "row",
@@ -158,7 +146,6 @@ export const ProfileScreen = ({ navigation }) => {
                   alignContent: "center",
                 }}
               >
-                {/* <List.Icon icon="chevron-right" /> */}
                 <List.Icon
                   icon={
                     language === "Arabic" ? "chevron-left" : "chevron-right"
@@ -257,7 +244,7 @@ export const ProfileScreen = ({ navigation }) => {
       <View
         style={{
           flex: 1,
-          // backgroundColor: "#15CE0C",
+
           margin: 10,
           borderRadius: 10,
         }}
@@ -327,7 +314,7 @@ export const ProfileScreen = ({ navigation }) => {
       <View
         style={{
           flex: 1,
-          // backgroundColor: "#15CE0C",
+
           margin: 10,
           borderRadius: 10,
         }}
@@ -398,7 +385,7 @@ export const ProfileScreen = ({ navigation }) => {
       <View
         style={{
           flex: 1,
-          // backgroundColor: "#15CE0C",
+
           margin: 10,
           borderRadius: 10,
         }}
@@ -444,7 +431,6 @@ export const ProfileScreen = ({ navigation }) => {
                   }}
                 >
                   {contextProfile.currentLanguage}
-                  {/* ENGLISH */}
                 </Text>
               </View>
               <View
@@ -479,7 +465,6 @@ export const ProfileScreen = ({ navigation }) => {
           mode="contained"
           color="#333"
           contentStyle={{ flexDirection: "row-reverse", paddingHorizontal: 20 }}
-          // onPress={() => navigation.navigate("LoginScreen")}
           onPress={() => logoutUser()}
         >
           {t("LOGOUT")}

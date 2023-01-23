@@ -60,7 +60,7 @@ const SignUp = ({ navigation }) => {
       );
     } catch (error) {
       setMessage(error.response.data.message);
-      // console.log(error.response.data.message);
+
       console.log(error.response);
       setResult(false);
       showModal();
@@ -261,7 +261,6 @@ const SignUp = ({ navigation }) => {
                         paddingVertical: 10,
                         justifyContent: "center",
                         alignItems: "center",
-                        // marginVertical: 10,
                       }}
                       onPress={handleSubmit(onSubmit)}
                     >
@@ -283,7 +282,6 @@ const SignUp = ({ navigation }) => {
           <View
             style={{
               flex: 1,
-              // justifyContent: "flex-end",
             }}
           >
             <View
