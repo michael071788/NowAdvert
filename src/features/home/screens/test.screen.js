@@ -1,93 +1,57 @@
 import React, { useEffect, useState } from "react";
-import { View, Text } from "react-native";
+import { View, Text, ScrollView, Image } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 import { Button } from "react-native-paper";
+import UsedProfile from "../../../services/use.user.profile";
 import { UsedUserAuthInfoContext } from "../../../services/user.auth.provider";
 // import AsyncStorage from "@react-native-async-storage/async-storage";
 // import { AxiosInstance } from "../../../utils";
-
+import { profileImage } from "../../../infrastucture/mockup/image";
 // const _myPostData = {
 //   title: "This is title 9 version",
 //   description: "this is description 9 version",
 // };
 
-export const TestScreen = () => {
-  const [info, setInfo] = useState("");
+export const TestScreen = ({ navigation }) => {
+  const [userData, setUserData] = useState([]);
+  const [imageBase, setImageBase] = useState("");
 
-  const userAuthInfoContext = UsedUserAuthInfoContext();
+  const contextProfile = UsedProfile();
 
-  const onPressButton = async () => {
-    console.log("onPressButton");
-    console.log("isLoading: true");
-
-    // console.log(userAuthInfoContext.userInfo.user.name);
-    // setInfo(userAuthInfoContext.userInfo.user.name);
-
-    // =======================================================================
-    // await axiosInstance.get("/api/advert/list").then((response) => {
-    //   console.log(response.data);
-    //   // console.log(response.data[0]._id);
-    // });
-    // // =======================================================================
-    // await axiosInstance
-    //   .post("/routes/posts", _myPostData)
-    //   .then((response) => {
-    //     console.log(response.data);
-    //   })
-    //   .catch((e) => {
-    //     console.log(e);
-    //   });
-    // // =======================================================================
-    // console.log("isLoading: false");
-  };
   useEffect(() => {
-    setInfo(userAuthInfoContext.userInfo.user);
-    // _retrieveData(info);
-    // AsyncStorage.getItem(userAuthInfoContext.userInfo);
-    // getData();
-  }, [userAuthInfoContext]);
-
-  // const _retrieveData = async (data) => {
-  //   try {
-  //     const value = await AsyncStorage.getItem(data);
-  //     if (value !== null) {
-  //       // We have data!!
-  //       console.log(value);
-  //     }
-  //   } catch (error) {
-  //     // Error retrieving data
-  //     console.log(error);
-  //   }
-  // };
+    // setUserData(profileImage);
+    // if (contextProfile.userData === null) {
+    //   setImageBase(contextProfile.userData.profile_image.data);
+    //   // console.log("profile ", contextProfile.userData.profile_image.data);
+    // }
+    // if (
+    //   contextProfile.userData !== null ||
+    //   contextProfile.userData !== undefined
+    // ) {
+    //   setUserData(contextProfile.userData);
+    // }
+  }, [contextProfile.userData]);
   return (
-    <View style={{ display: "flex", flex: 1 }}>
-      <View style={{ flex: 1 }}>
-        <Text>Test Screen</Text>
-      </View>
-      <View style={{ flex: 1 }}>
-        <Text>User Data:</Text>
-        <View style={{ flexDirection: "row" }}>
-          <Text>Name</Text>
-          <Text>{info.name}</Text>
-        </View>
-        <View style={{ flexDirection: "row" }}>
-          <Text>Phone</Text>
-          <Text>{info.phone}</Text>
-        </View>
-      </View>
-      <View style={{ flex: 1 }}>
-        <Button
-          mode="contained"
-          buttonColor="#000"
-          onPress={() => {
-            onPressButton();
-          }}
-          style={{
-            width: "50%",
-            borderRadius: 20,
-            backgroundColor: "#333",
-          }}
-        />
-      </View>
+    <View style={{ flex: 1 }}>
+      <TouchableOpacity>
+        <Text>Advert</Text>
+      </TouchableOpacity>
+      <ScrollView>
+        {userData.map((item) => {
+          return (
+            <View key={item.id}>
+              <Text>{item.firstName}</Text>
+              <Image
+                source={{
+                  uri: `data:image/png;base64,${item.image}`,
+                }}
+                style={{ height: 69, width: 69, borderRadius: 69 }}
+              />
+              <Text>{item.image.slice(0, 6)}</Text>
+            </View>
+          );
+        })}
+      </ScrollView>
     </View>
   );
 };

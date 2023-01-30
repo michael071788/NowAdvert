@@ -9,6 +9,12 @@ export const UsedUserProfileContext = () => {
 const UserProfileProvider = ({ children }) => {
   const [currentLocation, setCurrentLocation] = useState("");
   const [currentLanguage, setCurrentLanguage] = useState("ENGLISH");
+  const [userData, setUserData] = useState({});
+  const [hasProfile, setHasProfile] = useState(false);
+  const [hasUserData, setHasUserData] = useState(false);
+  const [userUpdate, setUserUpdate] = useState(false);
+
+  const [sampleData, setSampleData] = useState("");
 
   const onSetCurrentLocation = (val) => {
     setCurrentLocation(val);
@@ -18,6 +24,26 @@ const UserProfileProvider = ({ children }) => {
     setCurrentLanguage(val);
   };
 
+  const onSetUserData = (val) => {
+    setUserData(val);
+  };
+
+  const onSetHasUserData = (val) => {
+    setHasUserData(val);
+  };
+
+  const onSetUserUpdate = (val) => {
+    setUserUpdate(val);
+  };
+
+  const onSetHasProfile = (val) => {
+    setHasProfile(val);
+  };
+
+  //
+  const onSetSampleData = (val) => {
+    setSampleData(val);
+  };
   return (
     <UserProfileContext.Provider
       value={{
@@ -25,6 +51,17 @@ const UserProfileProvider = ({ children }) => {
         SetCurrentLocation: onSetCurrentLocation,
         currentLanguage,
         SetCurrentLanguage: onSetCurrentLanguage,
+        userData,
+        SetUserData: onSetUserData,
+        hasUserData,
+        SetHasUserData: onSetHasUserData,
+        userUpdate,
+        SetUserUpdate: onSetUserUpdate,
+        hasProfile,
+        SetHasProfile: onSetHasProfile,
+        //
+        sampleData,
+        SetSampleData: onSetSampleData,
       }}
     >
       {children}

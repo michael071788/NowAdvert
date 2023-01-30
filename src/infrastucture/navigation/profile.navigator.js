@@ -1,46 +1,150 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  ActivityIndicator,
+  BackHandler,
+  AppState,
+} from "react-native";
 
 import EditProfile from "../../features/profile/screens/edit.screen";
 import ChangePassword from "../../features/profile/screens/change.password.screen";
 import LinkedAccounts from "../../features/profile/screens/linked.accounts.screen";
-// import Tickets from "../../features/profile/screens/tickets.screen";
 import UsedTheme from "../../infrastucture/theme/use.theme";
 import UsedProfile from "../../services/use.user.profile";
+
 import { createStackNavigator } from "@react-navigation/stack";
 import { ProfileScreen } from "../../features/profile/screens/profile.screen";
 
 import { List, Avatar } from "react-native-paper";
 
 import { useTranslation } from "react-i18next";
-import { UsedUserAuthInfoContext } from "../../services/user.auth.provider";
-// import * as ImagePicker from "expo-image-picker";
+import * as ImagePicker from "expo-image-picker";
+import { AxiosInstance } from "../../utils";
 
 const ProfileStack = createStackNavigator();
 
 export const ProfileNavigator = ({ navigation }) => {
   const [location, setLocation] = useState("");
   const [language, setLanguage] = useState("");
+  const [imageBase, setImageBase] = useState("");
 
+  const [loading, setLoading] = useState(true);
+
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+
+  const [appState, setAppState] = useState(AppState.currentState);
+  const [dateNow, setDateNow] = useState("");
   // eslint-disable-next-line no-unused-vars
-  const [image, setImage] = useState(null);
 
   const { t } = useTranslation();
 
   const theme = UsedTheme();
   const contextProfile = UsedProfile();
-  const userAuthInfoContext = UsedUserAuthInfoContext();
-
-  // contextProfile.SetCurrentLocation("");
 
   useEffect(() => {
-    // contextProfile.SetCurrentLocation("ProfileScreen");
     setLocation(contextProfile.currentLocation);
     setLanguage(contextProfile.currentLanguage);
+
+    setFirstName(contextProfile.userData.firstName);
+    setLastName(contextProfile.userData.lastName);
+
+    const handleAppStateChange = (nextAppState) => {
+      setAppState(nextAppState);
+    };
+
+    AppState.addEventListener("change", handleAppStateChange);
+
+    let now = new Date();
+    let months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+
+    let year = now.getFullYear();
+    let month = months[now.getMonth()];
+    let day = now.getDate();
+
+    setDateNow(`${year} ${month} ${day}`);
+
+    if (contextProfile.hasUserData === true) {
+      setLoading(false);
+      if (contextProfile.hasProfile === true) {
+        setImageBase(contextProfile.userData.profile_image.data);
+        setLoading(false);
+      }
+    }
   }, [contextProfile]);
 
+  useEffect(() => {
+    BackHandler.addEventListener("hardwareBackPress", handleBackPress);
+
+    return () => {
+      BackHandler.removeEventListener("hardwareBackPress", handleBackPress);
+    };
+  }, []);
+
+  const handleBackPress = () => {
+    setLocation("Profile Screen");
+  };
+
   const openImagePicker = async () => {
-    console.log("picked");
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.cancelled) {
+      try {
+        await uploadImage(result);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
+  const uploadImage = async (image) => {
+    const formdata = new FormData();
+    formdata.append("image", {
+      name: "image",
+      uri: image.uri,
+      type: "image/png",
+    });
+
+    await AxiosInstance.post(
+      `/profile-image/${contextProfile.userData._id}`,
+      formdata,
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    )
+      .then((res) => {
+        console.log("success");
+        setLoading(true);
+        contextProfile.SetUserUpdate(true);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log("err ", err);
+      });
   };
 
   return (
@@ -60,7 +164,6 @@ export const ProfileNavigator = ({ navigation }) => {
               : navigation.navigate("ProfileScreen");
           }}
         >
-          {/* <List.Icon icon="chevron-left" /> */}
           <List.Icon
             icon={
               location === "Profile Screen"
@@ -96,15 +199,39 @@ export const ProfileNavigator = ({ navigation }) => {
                 alignItems: "center",
               }}
             >
-              <Avatar.Image
-                size={180}
-                source={
-                  image
-                    ? image
-                    : require("../../../assets/avatar_profile_icon.png")
-                }
-                style={{ backgroundColor: "#fff", elevation: 1 }}
-              />
+              <View
+                style={{
+                  backgroundColor: "#fff",
+                  height: 180,
+                  width: 180,
+                  borderRadius: 180,
+                }}
+              >
+                {loading === false ? (
+                  <Image
+                    source={
+                      contextProfile.hasProfile === true
+                        ? {
+                            uri: `data:image/png;base64,${imageBase}`,
+                          }
+                        : require("../../../assets/avatar_profile_icon.png")
+                    }
+                    style={{
+                      backgroundColor: "#fff",
+                      height: "100%",
+                      width: "100%",
+                      borderRadius: 180,
+                    }}
+                  />
+                ) : (
+                  <View
+                    style={{ justifyContent: "center", alignItems: "center" }}
+                  >
+                    <ActivityIndicator size="large" color="#00C853" />
+                  </View>
+                )}
+              </View>
+
               <TouchableOpacity
                 onPress={openImagePicker}
                 style={{
@@ -125,19 +252,22 @@ export const ProfileNavigator = ({ navigation }) => {
                 <List.Icon icon="pencil" color="#000" />
               </TouchableOpacity>
             </View>
-            {/* <Image
-              source={require("../../../assets/avatar_profile_icon.png")}
-              style={{ height: 180, width: 180 }}
-            /> */}
-            <Text
+
+            <View
               style={{
-                fontFamily: theme.typography.PRIMARY,
-                fontSize: 20,
-                textTransform: "uppercase",
+                flexDirection: "row",
               }}
             >
-              {userAuthInfoContext.userInfo.user.name}
-            </Text>
+              <Text
+                style={{
+                  fontFamily: theme.typography.PRIMARY,
+                  fontSize: 20,
+                  textTransform: "uppercase",
+                }}
+              >
+                {firstName} {lastName}
+              </Text>
+            </View>
             <Text
               style={{
                 color: theme.colors.SECONDARY,
@@ -146,8 +276,7 @@ export const ProfileNavigator = ({ navigation }) => {
                 textTransform: "uppercase",
               }}
             >
-              {/* active: 26 May 2022 */}
-              {t("ACTIVE: 26 MAY 2022")}
+              {appState} : {dateNow}
             </Text>
           </View>
         </View>
@@ -160,16 +289,18 @@ export const ProfileNavigator = ({ navigation }) => {
         >
           <ProfileStack.Screen name="ProfileScreen" component={ProfileScreen} />
 
-          <ProfileStack.Screen name="Edit Profile" component={EditProfile} />
           <ProfileStack.Screen
-            name="Change Password"
+            name="EditProfileScreen"
+            component={EditProfile}
+          />
+          <ProfileStack.Screen
+            name="ChangePasswordScreen"
             component={ChangePassword}
           />
           <ProfileStack.Screen
-            name="Linked Accounts"
+            name="LinkedAccountsScreen"
             component={LinkedAccounts}
           />
-          {/* <ProfileStack.Screen name="Tickets" component={Tickets} /> */}
         </ProfileStack.Navigator>
       </View>
     </View>

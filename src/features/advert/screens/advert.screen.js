@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { TouchableOpacity, View, Text } from "react-native";
+import { TouchableOpacity, View, Text, BackHandler, Alert } from "react-native";
 import Share from "react-native-share";
 import UsedTheme from "../../../infrastucture/theme/use.theme";
 import {
@@ -29,19 +29,19 @@ import { AxiosInstance } from "../../../utils";
 import { useTranslation } from "react-i18next";
 import UsedProfile from "../../../services/use.user.profile";
 import UsedCount from "../../../services/counts.user";
-import { MOCK_DATA } from "../../../infrastucture/mockup/data.list";
 
 export const AdvertScreen = ({ route, navigation }) => {
   // eslint-disable-next-line no-unused-vars
-  const [language, setLanguage] = useState("");
+  const [imageBase, setImageBase] = useState("");
+  const [loading, setLoading] = useState(true);
+
+  const [shareData, setShareData] = useState([]);
+  const [alreadyShare, setAlreadyShare] = useState(false);
 
   const countViewContext = UsedCount();
 
-  const [selectedData, setSelectedData] = useState([]);
-
   const mounted = useRef(false);
   const [isPreloading, setIsPreloading] = useState(true);
-  const [advertListData, setAdvertListData] = useState([]);
 
   const { t } = useTranslation();
 
@@ -53,15 +53,33 @@ export const AdvertScreen = ({ route, navigation }) => {
   const [selectedItem, setSelectedItem] = useState();
   const [logoURI, setLogoURI] = useState("");
 
-  useEffect(() => {
-    setLanguage(contextProfile.currentLanguage);
-    // setViewCounts(JSON.stringify(countViews));
-  }, [contextProfile]);
+  const random =
+    (parseInt(Math.floor(Math.random() * (999 - 0) + 0), 10) + 1000)
+      .toString()
+      .substr(1) +
+    "-" +
+    (parseInt(Math.floor(Math.random() * (999999999 - 0) + 0), 10) + 100000000)
+      .toString()
+      .substr(1) +
+    "-" +
+    (parseInt(Math.floor(Math.random() * (9999 - 0) + 0), 10) + 10000)
+      .toString()
+      .substr(1) +
+    "-" +
+    (parseInt(Math.floor(Math.random() * (99 - 0) + 0), 10) + 101)
+      .toString()
+      .substr(1);
 
   useEffect(() => {
-    countViewContext.SetMockData(MOCK_DATA);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    if (contextProfile.hasUserData === true) {
+      setLoading(false);
+      if (contextProfile.hasProfile === true) {
+        setImageBase(contextProfile.userData.profile_image.data);
+
+        setLoading(false);
+      }
+    }
+  }, [contextProfile]);
 
   const shareToSocial = useCallback(
     async (social) => {
@@ -91,9 +109,14 @@ export const AdvertScreen = ({ route, navigation }) => {
         const ShareResponse = await Share.shareSingle(shareOptions);
         const result = ShareResponse;
         if (result.success) {
-          countViewContext.SetAddShareCount(selectedItem._id);
-
           hideShareModal();
+
+          if (!shareData.includes(contextProfile.userData._id)) {
+            if (alreadyShare === false) {
+              shareVideo(selectedItem._id);
+              setAlreadyShare(true);
+            }
+          }
         }
       } catch (error) {
         console.log("Error =>", error);
@@ -111,16 +134,68 @@ export const AdvertScreen = ({ route, navigation }) => {
   };
   const hideShareModal = () => setVisibleShareModal(false);
 
-  const onlikeVideo = (item) => {
-    const tempArr = [...selectedData];
-    if (selectedData.includes(item)) {
-      tempArr.splice(selectedData.indexOf(item), 1);
-      countViewContext.SetSubtractLikeCount(item);
-    } else {
-      tempArr.push(item);
-      countViewContext.SetAddLikeCount(item);
-    }
-    setSelectedData(tempArr);
+  const likeVideo = async (id) => {
+    await AxiosInstance.put(`/api/advert/like/${contextProfile.userData._id}`, {
+      videoId: id,
+    })
+      .then((response) => {
+        const newData = countViewContext.advertData.map((item) => {
+          if (item._id == response.data._id) {
+            return response.data;
+          } else {
+            return item;
+          }
+        });
+        countViewContext.SetAdvertData(newData);
+      })
+      .catch((error) => {
+        console.log(error.response);
+      });
+  };
+  const unlikeVideo = async (id) => {
+    await AxiosInstance.put(
+      `/api/advert/unlike/${contextProfile.userData._id}`,
+      {
+        videoId: id,
+      }
+    )
+      .then((response) => {
+        const newData = countViewContext.advertData.map((item) => {
+          if (item._id == response.data._id) {
+            return response.data;
+          } else {
+            return item;
+          }
+        });
+
+        countViewContext.SetAdvertData(newData);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const shareVideo = async (id) => {
+    await AxiosInstance.put(
+      `/api/advert/share/${contextProfile.userData._id}`,
+      {
+        videoId: id,
+      }
+    )
+      .then((response) => {
+        setShareData(response.data.share);
+        const newData = countViewContext.advertData.map((item) => {
+          if (item._id == response.data._id) {
+            return response.data;
+          } else {
+            return item;
+          }
+        });
+
+        countViewContext.SetAdvertData(newData);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const renderItem = ({ item }) => {
@@ -135,7 +210,12 @@ export const AdvertScreen = ({ route, navigation }) => {
               navigation.navigate("AdvertVideoScreen", {
                 id: item._id,
                 videoURI: item.videoURI,
+                logoURI: item.logoURI,
+                companyName: item.companyName,
+                watch: item.watch,
+                random: random,
               });
+
               primaryContext.ShowUserProfileBar(false);
             }}
             activeOpacity={0.8}
@@ -162,21 +242,21 @@ export const AdvertScreen = ({ route, navigation }) => {
                 >
                   <ButtonContainer
                     name={"HEART"}
-                    label={countViewContext.countLike(item._id)}
+                    label={item.likes.length}
                     onpress={() => {
-                      onlikeVideo(item._id);
+                      item.likes.includes(contextProfile.userData._id)
+                        ? unlikeVideo(item._id)
+                        : likeVideo(item._id);
                     }}
                   />
 
-                  <ButtonContainer
-                    name={"EYE"}
-                    label={countViewContext.countViews(item._id)}
-                  />
+                  <ButtonContainer name={"EYE"} label={item.watch.length} />
                   <ButtonContainer
                     name={"SHARE"}
-                    label={countViewContext.countShare(item._id)}
+                    label={item.share.length}
                     onpress={() => {
                       setLogoURI(item.logoURI);
+                      setShareData(item.share);
                       showShareModal(item);
                     }}
                   />
@@ -258,9 +338,11 @@ export const AdvertScreen = ({ route, navigation }) => {
     const fetchData = async () => {
       let _data = [];
       await AxiosInstance.get("/api/advert/list")
+
         .then((response) => {
           _data = response.data;
-          setAdvertListData(response.data);
+
+          countViewContext.SetAdvertData(response.data);
         })
         .catch((e) => {
           console.log(e);
@@ -270,7 +352,8 @@ export const AdvertScreen = ({ route, navigation }) => {
 
     fetchData()
       .then((data) => {
-        setAdvertListData(data);
+        countViewContext.SetAdvertData(data);
+
         setIsPreloading(false);
       })
       .catch(console.error);
@@ -290,10 +373,18 @@ export const AdvertScreen = ({ route, navigation }) => {
         {mounted && (
           <>
             <HeaderBarContainer>
-              <UserProfileBar isShown={true} navigation={navigation} />
+              <UserProfileBar
+                isShown={true}
+                navigation={navigation}
+                profile={imageBase}
+                loading={loading}
+              />
             </HeaderBarContainer>
             <AdvertCarouselContainer>
-              <AdvertCarousel data={advertListData} renderItem={renderItem} />
+              <AdvertCarousel
+                data={countViewContext.advertData}
+                renderItem={renderItem}
+              />
             </AdvertCarouselContainer>
           </>
         )}

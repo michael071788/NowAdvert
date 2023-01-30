@@ -46,21 +46,21 @@ const SignUp = ({ navigation }) => {
       await AxiosInstance.post("/api/users/signup", userData).then(
         (response) => {
           if (response.status === 201) {
-            showModal();
             setResult(true);
             setMessage(response.data.message);
+            showModal();
             setTimeout(() => {
-              //navigation.navigate("VerificationScreen");
-              navigation.navigate("LoginScreen"); //Temporarily navigate to LoginScreen after sign up since OTP is still under construction.
+              navigation.navigate("VerificationScreen", {
+                userEmail: response.data.data.email,
+              });
             }, 2000);
           }
         }
       );
     } catch (error) {
-      showModal();
-      setResult(false);
       setMessage(error.response.data.message);
-      console.log(error.response.data.message);
+      setResult(false);
+      showModal();
     }
   };
   return (
@@ -140,7 +140,7 @@ const SignUp = ({ navigation }) => {
                   )}
                 />
                 <View style={{ height: 18, fontSize: 15 }}>
-                  {errors.name && (
+                  {errors.firstName && (
                     <Text style={{ color: "red" }}>This is required.</Text>
                   )}
                 </View>
@@ -160,7 +160,7 @@ const SignUp = ({ navigation }) => {
                   )}
                 />
                 <View style={{ height: 18, fontSize: 15 }}>
-                  {errors.name && (
+                  {errors.lastName && (
                     <Text style={{ color: "red" }}>This is required.</Text>
                   )}
                 </View>
@@ -258,7 +258,6 @@ const SignUp = ({ navigation }) => {
                         paddingVertical: 10,
                         justifyContent: "center",
                         alignItems: "center",
-                        // marginVertical: 10,
                       }}
                       onPress={handleSubmit(onSubmit)}
                     >
@@ -274,12 +273,12 @@ const SignUp = ({ navigation }) => {
                   </View>
                 </View>
               </View>
+              {/* end */}
             </View>
           </View>
           <View
             style={{
               flex: 1,
-              // justifyContent: "flex-end",
             }}
           >
             <View

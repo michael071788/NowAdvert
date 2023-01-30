@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Image, TouchableOpacity, View } from "react-native";
+import { Image, TouchableOpacity, View, ActivityIndicator } from "react-native";
 import UsedTheme from "../../infrastucture/theme/use.theme";
 import {
   UserProfileBarContainer,
@@ -7,37 +7,43 @@ import {
   UserFullName,
 } from "../../infrastucture/theme/styles/user.profile.style";
 
-import { UsedUserAuthInfoContext } from "../../services/user.auth.provider";
+import UsedProfile from "../../services/use.user.profile";
 
-export const UserProfileBar = ({ isShown, navigation }) => {
+export const UserProfileBar = ({ isShown, navigation, profile, loading }) => {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+
   const theme = UsedTheme();
-  const userAuthInfoContext = UsedUserAuthInfoContext();
-
-  const [fullName, setFullName] = useState("");
+  const contextProfile = UsedProfile();
 
   useEffect(() => {
-    if (userAuthInfoContext.userInfo !== undefined) {
-      setFullName(
-        userAuthInfoContext.userInfo.user.firstName +
-          (userAuthInfoContext.userInfo.user.lastName !== null ||
-          userAuthInfoContext.userInfo.user.lastName !== ""
-            ? " " + userAuthInfoContext.userInfo.user.lastName
-            : "")
-      );
-    }
-  }, [userAuthInfoContext.userInfo]);
+    setFirstName(contextProfile.userData.firstName);
+    setLastName(contextProfile.userData.lastName);
+  }, [contextProfile]);
 
   return (
     <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
       <UserProfileBarContainer isShown={isShown}>
         <UserProfileBarImageContainer>
-          <Image
-            source={require("../../../assets/avatar_profile_icon.png")}
-            style={{ height: 33, width: 33 }}
-          />
+          {loading === true ? (
+            <ActivityIndicator size="small" color="#00C853" />
+          ) : (
+            <Image
+              source={
+                contextProfile.hasProfile === true
+                  ? {
+                      uri: `data:image/png;base64,${profile}`,
+                    }
+                  : require("../../../assets/avatar_profile_icon.png")
+              }
+              style={{ height: 33, width: 33, borderRadius: 40 }}
+            />
+          )}
         </UserProfileBarImageContainer>
         <View style={{ justifyContent: "center", alignItems: "center" }}>
-          <UserFullName theme={theme}>{fullName}</UserFullName>
+          <UserFullName theme={theme}>
+            {firstName} {lastName}
+          </UserFullName>
         </View>
       </UserProfileBarContainer>
     </TouchableOpacity>

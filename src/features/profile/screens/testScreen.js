@@ -1,48 +1,41 @@
-import { View, Text, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
+import { View, Text, TouchableOpacity, Image } from "react-native";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { ButtonContainer } from "../../../infrastucture/theme/styles/advert.screen.style";
+import { UsedUserAuthInfoContext } from "../../../services/user.auth.provider";
+import { List } from "react-native-paper";
+import * as ImagePicker from "expo-image-picker";
+import UsedTheme from "../../../infrastucture/theme/use.theme";
 
 const TestScreenMock = () => {
-  const [count, setCount] = useState(0);
+  const [image, setImage] = useState("");
 
-  const dataList = [
-    {
-      id: 1,
-      likes: count,
-    },
-    {
-      id: 2,
-      likes: count,
-    },
-    {
-      id: 3,
-      likes: count,
-    },
-  ];
-  const result = dataList.filter((element) => element.id);
-  console.log(result);
+  const userAuthInfoContext = UsedUserAuthInfoContext();
+  const theme = UsedTheme();
 
-  const handleClick = (itemId) => {
-    console.log("Click");
-    console.log(result);
-    // console.log(itemId);
+  const [data, setData] = useState([]);
+  const [userId, setUserId] = useState("");
 
-    if (itemId === result) {
-      setCount(count + 1);
-    }
-  };
+  const [already, setAlready] = useState(true);
+
+  useEffect(() => {}, []);
+
   return (
-    <View>
-      <Text>testScreens</Text>
-
-      {dataList.map((item) => (
-        <View key={item.id} style={{ flexDirection: "row" }}>
-          <Text>{item.likes}</Text>
-          <TouchableOpacity onPress={() => handleClick(item.id)}>
-            <Text>Like</Text>
-          </TouchableOpacity>
-        </View>
-      ))}
-      {/* <Button title="Get User" onPress={() => handleClick()} /> */}
+    <View style={{ flex: 1, backgroundColor: "blue" }}>
+      {already === true ? (
+        <></>
+      ) : (
+        <>
+          <View style={{ flex: 1, backgroundColor: "green" }}>
+            <Text>Text 1</Text>
+          </View>
+        </>
+      )}
+      <View style={{ flex: 1, backgroundColor: "yellow" }}>
+        <Text>Text 2</Text>
+        <Text>Text 2</Text>
+        <Text>Text 2</Text>
+      </View>
     </View>
   );
 };

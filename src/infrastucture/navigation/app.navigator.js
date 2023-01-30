@@ -1,25 +1,82 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { SafeArea } from "../../components/safe.area.component";
 import { createStackNavigator } from "@react-navigation/stack";
 import { ProfileNavigator } from "./profile.navigator";
 import { AdvertScreen } from "../../features/advert/screens/advert.screen";
 import { AdvertVideoScreen } from "../../features/advert/screens/advert.video.screen";
-// import { TestScreen } from "../../features/home/screens/test.screen";
-// import TestScreenMock from "../../features/profile/screens/testScreen";
-
 import { appNavigatorScreenOptions } from "../theme/styles/app.navigator.style";
+
 import SignUpScreen from "../../features/registration/signup.screen";
 import LoginScreen from "../../features/registration/login.screen";
 import Tickets from "../../features/profile/screens/tickets.screen";
 import LanguageScreen from "../../features/profile/screens/languages.screen";
 import VerificationScreen from "../../features/registration/verification.screen";
 
-import { UsedUserAuthInfoContext } from "../../services/user.auth.provider";
+import UsedProfile from "../../services/use.user.profile";
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { AxiosInstance } from "../../utils";
+import { Buffer } from "buffer";
 
 const AppStackNavigator = createStackNavigator();
 
 export const AppNavigator = () => {
-  const userAuthInfoContext = UsedUserAuthInfoContext();
+  const [userId, setUserId] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const contextProfile = UsedProfile();
+
+  useEffect(() => {
+    AsyncStorage.getItem("islogged").then((value) => {
+      const islogged = JSON.parse(value);
+      if (islogged === true) {
+        setIsLoggedIn(true);
+        if (userId === "" || userId === undefined) {
+          AsyncStorage.getItem("userData").then((value) => {
+            const jsonData = JSON.parse(value);
+            contextProfile.SetUserData(jsonData);
+            setUserId(contextProfile.userData._id);
+          });
+        }
+      }
+    });
+  }, [contextProfile, isLoggedIn]);
+
+  useEffect(() => {
+    if (userId !== "") {
+      getUser();
+    }
+  }, [userId]);
+
+  useEffect(() => {
+    if (contextProfile.userUpdate === true) {
+      getUser();
+    }
+  }, [contextProfile.userUpdate]);
+
+  const getUser = async () => {
+    await AxiosInstance.get(`/api/users/${contextProfile.userData._id}`)
+      .then((res) => {
+        AsyncStorage.setItem("userData", JSON.stringify(res.data));
+        contextProfile.SetHasUserData(true);
+        contextProfile.SetUserData(res.data);
+        contextProfile.SetHasProfile(res.data.hasProfile);
+        if (contextProfile.hasProfile === true) {
+          if (Array.isArray(contextProfile.userData.profile_image.data)) {
+            const imageBuffer = Buffer.from(
+              contextProfile.userData.profile_image.data
+            );
+            contextProfile.userData.profile_image.data =
+              imageBuffer.toString("base64");
+          }
+        }
+
+        contextProfile.SetUserUpdate(false);
+      })
+      .catch((err) => {
+        console.log("err app", err);
+      });
+  };
 
   return (
     <>
@@ -28,45 +85,37 @@ export const AppNavigator = () => {
           screenOptions={appNavigatorScreenOptions}
           initialRouteName="LoginScreen"
         >
-          {userAuthInfoContext.userInfo.token ? (
-            <>
-              <AppStackNavigator.Screen
-                name="AdvertScreen"
-                component={AdvertScreen}
-              />
-              <AppStackNavigator.Screen
-                name="AdvertVideoScreen"
-                component={AdvertVideoScreen}
-              />
-              <AppStackNavigator.Screen
-                name="Profile"
-                component={ProfileNavigator}
-              />
-              <AppStackNavigator.Screen
-                name="TicketsScreen"
-                component={Tickets}
-              />
-              <AppStackNavigator.Screen
-                name="LanguagesScreen"
-                component={LanguageScreen}
-              />
-            </>
-          ) : (
-            <>
-              <AppStackNavigator.Screen
-                name="LoginScreen"
-                component={LoginScreen}
-              />
-              <AppStackNavigator.Screen
-                name="SignUpScreen"
-                component={SignUpScreen}
-              />
-              <AppStackNavigator.Screen
-                name="VerificationScreen"
-                component={VerificationScreen}
-              />
-            </>
-          )}
+          <AppStackNavigator.Screen
+            name="AdvertScreen"
+            component={AdvertScreen}
+          />
+          <AppStackNavigator.Screen
+            name="AdvertVideoScreen"
+            component={AdvertVideoScreen}
+          />
+          <AppStackNavigator.Screen
+            name="Profile"
+            component={ProfileNavigator}
+          />
+          <AppStackNavigator.Screen name="TicketsScreen" component={Tickets} />
+
+          <AppStackNavigator.Screen
+            name="LanguagesScreen"
+            component={LanguageScreen}
+          />
+
+          <AppStackNavigator.Screen
+            name="LoginScreen"
+            component={LoginScreen}
+          />
+          <AppStackNavigator.Screen
+            name="SignUpScreen"
+            component={SignUpScreen}
+          />
+          <AppStackNavigator.Screen
+            name="VerificationScreen"
+            component={VerificationScreen}
+          />
         </AppStackNavigator.Navigator>
       </SafeArea>
     </>

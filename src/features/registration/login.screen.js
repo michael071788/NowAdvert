@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  Alert,
+  BackHandler,
+} from "react-native";
 import UsedTheme from "../../infrastucture/theme/use.theme";
 import { UsedUserAuthInfoContext } from "../../services/user.auth.provider";
 import {
@@ -10,6 +17,9 @@ import { useForm, Controller } from "react-hook-form";
 import { Modal } from "react-native-paper";
 import { SvgIcon } from "../../components/svg.icon";
 import { AxiosInstance } from "../../utils";
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import UsedProfile from "../../services/use.user.profile";
 
 const Login = ({ navigation }) => {
   const [result, setResult] = useState(false);
@@ -30,6 +40,12 @@ const Login = ({ navigation }) => {
 
   const theme = UsedTheme();
   const userAuthInfoContext = UsedUserAuthInfoContext();
+  const contextProfile = UsedProfile();
+
+  useEffect(() => {
+    getStatus();
+    BackHandler.addEventListener("hardwareBackPress", handleBackPress);
+  }, []);
 
   const {
     control,
@@ -42,16 +58,55 @@ const Login = ({ navigation }) => {
     },
   });
 
+  const getStatus = async () => {
+    let login = await AsyncStorage.getItem("token");
+
+    if (login !== null) {
+      navigation.replace("AdvertScreen");
+    }
+  };
+
+  const handleBackPress = async () => {
+    let login = await AsyncStorage.getItem("token");
+    if (login === null) {
+      Alert.alert("Exit App", "Exiting the Apllication", [
+        {
+          text: "Cancel",
+          onPress: () => {
+            console.log("cancel pressed");
+          },
+        },
+        {
+          text: "OK",
+          onPress: () => BackHandler.exitApp(),
+        },
+      ]);
+    }
+  };
+
   const onSubmit = async (userData) => {
     try {
       await AxiosInstance.post("/api/login", userData).then((response) => {
         if (response.status === 200) {
-          showModal();
-          setResult(true);
-          setMessage(response.data.message);
-          setTimeout(() => {
-            userAuthInfoContext.SetCurrentUserInfo(response.data);
-          }, 2000);
+          if (response.data.user.isVerified === false) {
+            navigation.navigate("VerificationScreen", {
+              userEmail: response.data.user.email,
+            });
+          } else {
+            AsyncStorage.setItem("islogged", JSON.stringify(true));
+            AsyncStorage.setItem("token", JSON.stringify(response.data.token));
+            AsyncStorage.setItem(
+              "userData",
+              JSON.stringify(response.data.user)
+            );
+            contextProfile.SetUserData(response.data.user);
+            showModal();
+            setResult(true);
+            setMessage(response.data.message);
+            setTimeout(() => {
+              navigation.replace("AdvertScreen");
+            }, 2000);
+          }
         }
       });
     } catch (error) {
