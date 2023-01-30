@@ -87,12 +87,15 @@ export const ProfileNavigator = ({ navigation }) => {
         setLoading(false);
       }
     }
+  }, [contextProfile]);
+
+  useEffect(() => {
     BackHandler.addEventListener("hardwareBackPress", handleBackPress);
 
     return () => {
       BackHandler.removeEventListener("hardwareBackPress", handleBackPress);
     };
-  }, [contextProfile]);
+  }, []);
 
   const handleBackPress = () => {
     setLocation("Profile Screen");

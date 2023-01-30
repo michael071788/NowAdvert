@@ -11,52 +11,22 @@ import { Divider, List } from "react-native-paper";
 import UsedTheme from "../../../infrastucture/theme/use.theme";
 import UsedProfile from "../../../services/use.user.profile";
 import { useTranslation } from "react-i18next";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { AxiosInstance } from "../../../utils";
 import UsedCount from "../../../services/counts.user";
 
 const Tickets = ({ navigation }) => {
   const [language, setLanguage] = useState("");
-  const [userId, setUserId] = useState("");
+
   const [earnedTickets, setEarnedTickets] = useState([]);
 
   const theme = UsedTheme();
   const contextProfile = UsedProfile();
   const { t } = useTranslation();
 
-  const countViewContext = UsedCount();
-
   useEffect(() => {
     contextProfile.SetCurrentLocation("Profile Screen");
     setLanguage(contextProfile.currentLanguage);
     setEarnedTickets(contextProfile.userData.earnedTickets);
   }, [contextProfile]);
-
-  // useEffect(() => {
-  //   setEarnedTickets(contextProfile.userData.earnedTickets);
-  //   // console.log("tickets ", contextProfile.userData.earnedTickets);
-  // }, []);
-
-  const data = [
-    {
-      id: 1,
-      ticketNumber: "000-01234567-4817-01",
-      status: "ACTIVE",
-      expiresIn: "02 November 2022",
-    },
-    {
-      id: 2,
-      ticketNumber: "000-01234567-4817-02",
-      status: "EXPIRING SOON",
-      expiresIn: "02 November 2022",
-    },
-    {
-      id: 3,
-      ticketNumber: "000-01234567-4817-03",
-      status: "EXPIRED",
-      expiresIn: "02 November 2022",
-    },
-  ];
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "black" }}>
@@ -160,7 +130,7 @@ const Tickets = ({ navigation }) => {
                   {t(status)}
                 </Text>
               </View>
-              <View style={{ alignItems: "center" }}>
+              {/* <View style={{ alignItems: "center" }}>
                 <Text
                   style={{ fontSize: 15, fontFamily: theme.typography.PRIMARY }}
                 >
@@ -175,7 +145,7 @@ const Tickets = ({ navigation }) => {
                   02 November 2022
                   {expiresIn}
                 </Text>
-              </View>
+              </View> */}
             </View>
           </View>
         ))}

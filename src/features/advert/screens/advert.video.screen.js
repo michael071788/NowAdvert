@@ -32,7 +32,6 @@ import { useTranslation } from "react-i18next";
 import UsedProfile from "../../../services/use.user.profile";
 import UsedCount from "../../../services/counts.user";
 import { AxiosInstance } from "../../../utils";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const AdvertVideoScreen = ({ route, navigation }) => {
   // eslint-disable-next-line no-unused-vars

@@ -9,7 +9,6 @@ import { useForm, Controller } from "react-hook-form";
 import { Modal } from "react-native-paper";
 import { SvgIcon } from "../../components/svg.icon";
 import { AxiosInstance } from "../../utils";
-import axios from "axios";
 
 const SignUp = ({ navigation }) => {
   const [result, setResult] = useState(false);
@@ -46,7 +45,6 @@ const SignUp = ({ navigation }) => {
     try {
       await AxiosInstance.post("/api/users/signup", userData).then(
         (response) => {
-          console.log("response", response.data);
           if (response.status === 201) {
             setResult(true);
             setMessage(response.data.message);

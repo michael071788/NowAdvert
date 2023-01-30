@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   View,
   ScrollView,
@@ -22,8 +22,6 @@ import { useTranslation } from "react-i18next";
 import { AxiosInstance } from "../../../utils";
 
 const EditProfile = ({ navigation }) => {
-  // const [userId, setUserId] = useState();
-
   const theme = UsedTheme();
   const contextProfile = UsedProfile();
   const { t } = useTranslation();

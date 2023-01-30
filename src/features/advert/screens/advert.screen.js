@@ -29,8 +29,6 @@ import { AxiosInstance } from "../../../utils";
 import { useTranslation } from "react-i18next";
 import UsedProfile from "../../../services/use.user.profile";
 import UsedCount from "../../../services/counts.user";
-import { MOCK_DATA } from "../../../infrastucture/mockup/data.list";
-import { Buffer } from "buffer";
 
 export const AdvertScreen = ({ route, navigation }) => {
   // eslint-disable-next-line no-unused-vars
@@ -199,23 +197,6 @@ export const AdvertScreen = ({ route, navigation }) => {
         console.log(err);
       });
   };
-  const handleBackPress = () => {
-    Alert.alert("Exit App", "Exiting the application", [
-      {
-        text: "Cancel",
-        onPress: () => {
-          console.log("Cancel Pressed");
-        },
-        style: "cancel",
-      },
-      {
-        text: "OK",
-        onPress: () => {
-          BackHandler.exitApp();
-        },
-      },
-    ]);
-  };
 
   const renderItem = ({ item }) => {
     // Having an error on using themes here, still looking for a solution
@@ -261,11 +242,6 @@ export const AdvertScreen = ({ route, navigation }) => {
                 >
                   <ButtonContainer
                     name={"HEART"}
-                    bgcolor={
-                      item.likes.includes(contextProfile.userData._id)
-                        ? "red"
-                        : ""
-                    }
                     label={item.likes.length}
                     onpress={() => {
                       item.likes.includes(contextProfile.userData._id)
@@ -274,22 +250,9 @@ export const AdvertScreen = ({ route, navigation }) => {
                     }}
                   />
 
-                  <ButtonContainer
-                    name={"EYE"}
-                    bgcolor={
-                      item.watch.includes(contextProfile.userData._id)
-                        ? "black"
-                        : ""
-                    }
-                    label={item.watch.length}
-                  />
+                  <ButtonContainer name={"EYE"} label={item.watch.length} />
                   <ButtonContainer
                     name={"SHARE"}
-                    bgcolor={
-                      item.share.includes(contextProfile.userData._id)
-                        ? "green"
-                        : ""
-                    }
                     label={item.share.length}
                     onpress={() => {
                       setLogoURI(item.logoURI);

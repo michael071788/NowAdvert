@@ -34,7 +34,6 @@ const Verification = ({ route, navigation }) => {
   }, []);
 
   const generateOtp = async () => {
-    console.log("email", userEmail);
     try {
       await AxiosInstance.post("/api/users/generate-otp", {
         email: userEmail,
