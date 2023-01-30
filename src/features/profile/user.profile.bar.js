@@ -20,6 +20,7 @@ export const UserProfileBar = ({ isShown, navigation, profile, loading }) => {
     setFirstName(contextProfile.userData.firstName);
     setLastName(contextProfile.userData.lastName);
   }, [contextProfile]);
+
   return (
     <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
       <UserProfileBarContainer isShown={isShown}>
