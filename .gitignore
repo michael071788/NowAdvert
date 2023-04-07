@@ -72,4 +72,7 @@ buck-out/
 web-build/
 dist/
 
+# My Custom
+android/
+
 # @end expo-cli
